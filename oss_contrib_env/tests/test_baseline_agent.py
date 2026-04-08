@@ -45,6 +45,19 @@ class BaselineAgentTests(unittest.TestCase):
         }
         self.assertEqual(json.loads(choose_duplicate_action(observation)), [11])
 
+    def test_duplicate_prefers_duplicate_labeled_candidates(self):
+        observation = {
+            "task_type": "duplicate",
+            "issue": "Feature request around audio and image folder support for multiple columns.",
+            "candidates": [
+                {"id": 11, "title": "General enhancement", "labels": ["enhancement"], "summary": "support feature request for many datasets"},
+                {"id": 22, "title": "Support multiple image/audio columns", "labels": ["duplicate", "enhancement"], "summary": "imagefolder audiofolder multiple columns feature request"},
+                {"id": 33, "title": "Support video", "labels": ["duplicate", "enhancement"], "summary": "video support feature request"},
+            ],
+        }
+        picks = json.loads(choose_duplicate_action(observation))
+        self.assertIn(22, picks)
+
     def test_patch_localizer_ranks_matching_path_first(self):
         observation = {
             "task_type": "patch_loc",

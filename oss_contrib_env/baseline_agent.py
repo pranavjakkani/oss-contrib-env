@@ -78,14 +78,25 @@ def _duplicate_score(observation: dict[str, Any], candidate: dict[str, Any]) -> 
 
 def choose_duplicate_action(observation: dict[str, Any]) -> str:
     candidates = observation.get("candidates", [])
-    scored = sorted(
+    labeled = sorted(
+        (
+            (_duplicate_score(observation, candidate), candidate["id"])
+            for candidate in candidates
+            if "duplicate" in candidate.get("labels", [])
+        ),
+        key=lambda item: (-item[0], item[1]),
+    )
+    general = sorted(
         (
             (_duplicate_score(observation, candidate), candidate["id"])
             for candidate in candidates
         ),
         key=lambda item: (-item[0], item[1]),
     )
-    picks = [issue_id for score, issue_id in scored if score >= 0.18][:3]
+
+    picks = [issue_id for score, issue_id in labeled if score >= 0.08][:2]
+    if not picks:
+        picks = [issue_id for score, issue_id in general if score >= 0.18][:3]
     return json.dumps(picks)
 
 
