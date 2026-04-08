@@ -1,7 +1,7 @@
 ---
-title: Oss Contrib Env Environment Server
-emoji: 🎳
-colorFrom: yellow
+title: OSS Contrib Env
+emoji: "🛠️"
+colorFrom: blue
 colorTo: green
 sdk: docker
 pinned: false
@@ -9,247 +9,369 @@ app_port: 8000
 base_path: /web
 tags:
   - openenv
+  - reinforcement-learning
+  - code-agents
+  - debugging
 ---
 
-# Oss Contrib Env Environment
+# OSS Contrib Env
 
-A simple test environment that echoes back messages. Perfect for testing the env APIs as well as demonstrating environment usage patterns.
+OSS Contrib Env is an OpenEnv environment that simulates a lightweight open source contribution workflow.  
+An agent receives a bug report, reads buggy Python code, submits a fix or diagnosis, and gets reward feedback based on how correct the submission is.
 
-## Quick Start
+This project was built for the Meta PyTorch x Scaler OpenEnv Hackathon Round 1, where the goal is to create a real-world environment with:
 
-The simplest way to use the Oss Contrib Env environment is through the `OssContribEnv` class:
+- typed action, observation, and state models
+- `reset()`, `step()`, and `state()` support
+- at least 3 graded tasks
+- reward values in the range `0.0` to `1.0`
+- a working baseline inference script
+- a working Dockerfile and Hugging Face deployment
 
-```python
-from oss_contrib_env import OssContribAction, OssContribEnv
+Live Space: [BhargaviThati/oss_contrib_env](https://huggingface.co/spaces/BhargaviThati/oss_contrib_env)
 
-try:
-    # Create environment from Docker image
-    oss_contrib_envenv = OssContribEnv.from_docker_image("oss_contrib_env-env:latest")
+## Why This Environment
 
-    # Reset
-    result = oss_contrib_envenv.reset()
-    print(f"Reset: {result.observation.echoed_message}")
+Many coding benchmarks focus only on final correctness. Real engineering work is more structured:
 
-    # Send multiple messages
-    messages = ["Hello, World!", "Testing echo", "Final message"]
+- understand an issue report
+- inspect broken code
+- produce the right format of response
+- improve over multiple attempts
+- learn from partial feedback
 
-    for msg in messages:
-        result = oss_contrib_envenv.step(OssContribAction(message=msg))
-        print(f"Sent: '{msg}'")
-        print(f"  → Echoed: '{result.observation.echoed_message}'")
-        print(f"  → Length: {result.observation.message_length}")
-        print(f"  → Reward: {result.reward}")
+OSS Contrib Env turns that workflow into a compact environment that is easy to run, easy to grade, and meaningful for agent evaluation.
 
-finally:
-    # Always clean up
-    oss_contrib_envenv.close()
+## Round 1 Scope
+
+Round 1 focuses on a complete and deployable OpenEnv environment.
+
+This repository includes:
+
+- 3 tasks: `easy`, `medium`, `hard`
+- task-specific graders
+- partial reward signals
+- HTTP endpoints for `reset`, `step`, and `state`
+- Docker support
+- Hugging Face Spaces deployment
+- a reproducible `inference.py` baseline using the OpenAI client
+
+## Tasks
+
+### Easy
+The agent must identify:
+
+- which function contains the bug
+- what type of error it is
+
+Reward logic:
+
+- `1.0` if both function and error type are correct
+- `0.5` if only the function is correct
+- `0.0` otherwise
+
+### Medium
+The agent must return only the corrected Python function for `reverse_string`.
+
+Reward logic:
+
+- score is based on test cases passed
+- final reward includes an attempt penalty after repeated tries
+
+### Hard
+The agent must return the full corrected file content for multiple broken utility functions.
+
+Reward logic:
+
+- score is based on the full test suite
+- final reward includes an attempt penalty after repeated tries
+
+## Environment API
+
+### Reset
+
+```http
+POST /reset
+Content-Type: application/json
 ```
 
-That's it! The `OssContribEnv.from_docker_image()` method handles:
-- Starting the Docker container
-- Waiting for the server to be ready
-- Connecting to the environment
-- Container cleanup when you call `close()`
+Example body:
 
-## Building the Docker Image
-
-Before using the environment, you need to build the Docker image:
-
-```bash
-# From project root
-docker build -t oss_contrib_env-env:latest -f server/Dockerfile .
+```json
+{"task_id":"easy"}
 ```
 
-## Deploying to Hugging Face Spaces
+### Step
 
-You can easily deploy your OpenEnv environment to Hugging Face Spaces using the `openenv push` command:
-
-```bash
-# From the environment directory (where openenv.yaml is located)
-openenv push
-
-# Or specify options
-openenv push --namespace my-org --private
+```http
+POST /step
+Content-Type: application/json
 ```
 
-The `openenv push` command will:
-1. Validate that the directory is an OpenEnv environment (checks for `openenv.yaml`)
-2. Prepare a custom build for Hugging Face Docker space (enables web interface)
-3. Upload to Hugging Face (ensuring you're logged in)
+Example body:
 
-### Prerequisites
-
-- Authenticate with Hugging Face: The command will prompt for login if not already authenticated
-
-### Options
-
-- `--directory`, `-d`: Directory containing the OpenEnv environment (defaults to current directory)
-- `--repo-id`, `-r`: Repository ID in format 'username/repo-name' (defaults to 'username/env-name' from openenv.yaml)
-- `--base-image`, `-b`: Base Docker image to use (overrides Dockerfile FROM)
-- `--private`: Deploy the space as private (default: public)
-
-### Examples
-
-```bash
-# Push to your personal namespace (defaults to username/env-name from openenv.yaml)
-openenv push
-
-# Push to a specific repository
-openenv push --repo-id my-org/my-env
-
-# Push with a custom base image
-openenv push --base-image ghcr.io/meta-pytorch/openenv-base:latest
-
-# Push as a private space
-openenv push --private
-
-# Combine options
-openenv push --repo-id my-org/my-env --base-image custom-base:latest --private
+```json
+{
+  "action": {
+    "response": "The bug is in calculate_average and it is an off-by-one error."
+  }
+}
 ```
 
-After deployment, your space will be available at:
-`https://huggingface.co/spaces/<repo-id>`
+### State
 
-The deployed space includes:
-- **Web Interface** at `/web` - Interactive UI for exploring the environment
-- **API Documentation** at `/docs` - Full OpenAPI/Swagger interface
-- **Health Check** at `/health` - Container health monitoring
-- **WebSocket** at `/ws` - Persistent session endpoint for low-latency interactions
+```http
+GET /state
+```
 
-## Environment Details
+## Typed Spaces
 
 ### Action
-**OssContribAction**: Contains a single field
-- `message` (str) - The message to echo back
+
+`OSSAction`
+
+```python
+response: str
+```
+
+The action is the agent submission. Depending on the task, this can be:
+
+- a diagnosis
+- a corrected function
+- a corrected full file
 
 ### Observation
-**OssContribObservation**: Contains the echo response and metadata
-- `echoed_message` (str) - The message echoed back
-- `message_length` (int) - Length of the message
-- `reward` (float) - Reward based on message length (length × 0.1)
-- `done` (bool) - Always False for echo environment
-- `metadata` (dict) - Additional info like step count
 
-### Reward
-The reward is calculated as: `message_length × 0.1`
-- "Hi" → reward: 0.2
-- "Hello, World!" → reward: 1.3
-- Empty message → reward: 0.0
-
-## Advanced Usage
-
-### Connecting to an Existing Server
-
-If you already have a Oss Contrib Env environment server running, you can connect directly:
+`OSSObservation`
 
 ```python
-from oss_contrib_env import OssContribEnv
-
-# Connect to existing server
-oss_contrib_envenv = OssContribEnv(base_url="<ENV_HTTP_URL_HERE>")
-
-# Use as normal
-result = oss_contrib_envenv.reset()
-result = oss_contrib_envenv.step(OssContribAction(message="Hello!"))
+task_id: str
+difficulty: Literal["easy", "medium", "hard"]
+issue: str
+code: str
+test_output: Optional[str]
+attempts_remaining: int
+done: bool
+reward: float
 ```
 
-Note: When connecting to an existing server, `oss_contrib_envenv.close()` will NOT stop the server.
+The observation contains the bug report, the buggy code, reward feedback, and remaining attempts.
 
-### Using the Context Manager
+### State
 
-The client supports context manager usage for automatic connection management:
+`OSSState`
 
 ```python
-from oss_contrib_env import OssContribAction, OssContribEnv
-
-# Connect with context manager (auto-connects and closes)
-with OssContribEnv(base_url="http://localhost:8000") as env:
-    result = env.reset()
-    print(f"Reset: {result.observation.echoed_message}")
-    # Multiple steps with low latency
-    for msg in ["Hello", "World", "!"]:
-        result = env.step(OssContribAction(message=msg))
-        print(f"Echoed: {result.observation.echoed_message}")
+episode_id: str
+step_count: int
+current_task: str
+difficulty: str
 ```
 
-The client uses WebSocket connections for:
-- **Lower latency**: No HTTP connection overhead per request
-- **Persistent session**: Server maintains your environment state
-- **Efficient for episodes**: Better for many sequential steps
+## Reward Design
 
-### Concurrent WebSocket Sessions
+Rewards are intentionally shaped to reflect real debugging progress:
 
-The server supports multiple concurrent WebSocket connections. To enable this,
-modify `server/app.py` to use factory mode:
+- correct submissions receive `1.0`
+- partially correct submissions can receive intermediate scores
+- repeated attempts reduce reward through an attempt penalty
+- all rewards are clamped to the required `0.0` to `1.0` range
 
-```python
-# In server/app.py - use factory mode for concurrent sessions
-app = create_app(
-    OssContribEnvironment,  # Pass class, not instance
-    OssContribAction,
-    OssContribObservation,
-    max_concurrent_envs=4,  # Allow 4 concurrent sessions
-)
-```
-
-Then multiple clients can connect simultaneously:
-
-```python
-from oss_contrib_env import OssContribAction, OssContribEnv
-from concurrent.futures import ThreadPoolExecutor
-
-def run_episode(client_id: int):
-    with OssContribEnv(base_url="http://localhost:8000") as env:
-        result = env.reset()
-        for i in range(10):
-            result = env.step(OssContribAction(message=f"Client {client_id}, step {i}"))
-        return client_id, result.observation.message_length
-
-# Run 4 episodes concurrently
-with ThreadPoolExecutor(max_workers=4) as executor:
-    results = list(executor.map(run_episode, range(4)))
-```
-
-## Development & Testing
-
-### Direct Environment Testing
-
-Test the environment logic directly without starting the HTTP server:
-
-```bash
-# From the server directory
-python3 server/oss_contrib_env_environment.py
-```
-
-This verifies that:
-- Environment resets correctly
-- Step executes actions properly
-- State tracking works
-- Rewards are calculated correctly
-
-### Running Locally
-
-Run the server locally for development:
-
-```bash
-uvicorn server.app:app --reload
-```
+This makes the environment more useful than a binary pass/fail benchmark.
 
 ## Project Structure
 
-```
+```text
 oss_contrib_env/
-├── .dockerignore         # Docker build exclusions
-├── __init__.py            # Module exports
-├── README.md              # This file
-├── openenv.yaml           # OpenEnv manifest
-├── pyproject.toml         # Project metadata and dependencies
-├── uv.lock                # Locked dependencies (generated)
-├── client.py              # OssContribEnv client
-├── models.py              # Action and Observation models
+├── README.md
+├── openenv.yaml
+├── pyproject.toml
+├── uv.lock
+├── __init__.py
+├── client.py
+├── inference.py
+├── models.py
+├── REVIEW_INFERENCE.md
 └── server/
-    ├── __init__.py        # Server module exports
-    ├── oss_contrib_env_environment.py  # Core environment logic
-    ├── app.py             # FastAPI application (HTTP + WebSocket endpoints)
-    └── Dockerfile         # Container image definition
+    ├── app.py
+    ├── Dockerfile
+    ├── __init__.py
+    ├── oss_contrib_env_environment.py
+    └── requirements.txt
 ```
+
+## Local Setup
+
+### 1. Install dependencies
+
+```bash
+cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
+uv sync
+```
+
+### 2. Run the server
+
+```bash
+uv run python -m server.app --port 8000
+```
+
+### 3. Test the API
+
+Health:
+
+```bash
+curl -sS http://localhost:8000/health
+```
+
+Reset:
+
+```bash
+curl -sS -X POST http://localhost:8000/reset \
+  -H "Content-Type: application/json" \
+  -d '{"task_id":"easy"}'
+```
+
+Step:
+
+```bash
+curl -sS -X POST http://localhost:8000/step \
+  -H "Content-Type: application/json" \
+  -d '{"action":{"response":"The bug is in calculate_average and it is an off-by-one error."}}'
+```
+
+## Baseline Inference Script
+
+The baseline runner is:
+
+- [inference.py](/Users/bhargavi/oss-contrib-env/oss_contrib_env/inference.py)
+
+It:
+
+- uses the OpenAI client for all LLM calls
+- reads `API_BASE_URL`, `MODEL_NAME`, `HF_TOKEN`, and `ENV_URL`
+- runs all tasks: `easy`, `medium`, `hard`
+- emits strict structured logs with `[START]`, `[STEP]`, and `[END]`
+- stays within the expected runtime envelope for Round 1
+
+### Environment Variables
+
+```python
+API_BASE_URL = os.environ.get("API_BASE_URL", "https://huggingface.co/api/inference-proxy/together")
+MODEL_NAME = os.environ.get("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
+HF_TOKEN = os.environ.get("HF_TOKEN", "")
+ENV_URL = os.environ.get("ENV_URL", "http://localhost:8000")
+```
+
+### Run the baseline
+
+Start the server in one terminal:
+
+```bash
+cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
+uv run python -m server.app --port 8000
+```
+
+Run inference in another terminal:
+
+```bash
+cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
+uv run --with openai python /Users/bhargavi/oss-contrib-env/oss_contrib_env/inference.py
+```
+
+## Docker
+
+Build:
+
+```bash
+cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
+docker build -t oss-contrib-env -f server/Dockerfile .
+```
+
+Run:
+
+```bash
+docker run --rm -p 8000:8000 oss-contrib-env
+```
+
+The Dockerized server was validated with:
+
+- `GET /health`
+- `POST /reset`
+- `POST /step`
+
+## Hugging Face Deployment
+
+This environment is deployed as a Hugging Face Space and can be pushed with:
+
+```bash
+cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
+openenv push
+```
+
+Deployed Space:
+
+- [https://huggingface.co/spaces/BhargaviThati/oss_contrib_env](https://huggingface.co/spaces/BhargaviThati/oss_contrib_env)
+
+## Round 2 Direction: MCP-Connected OSS Workflow
+
+Round 1 proves that the environment, grader, baseline, Docker setup, and HF deployment all work.
+
+For Round 2, the goal is to evolve this from a compact debugging benchmark into a richer agent workflow powered by MCP-connected tools.
+
+### What MCP Adds
+
+Model Context Protocol can let the agent interact with external tools and structured context instead of relying only on a static prompt.
+
+Planned Round 2 MCP-connected capabilities:
+
+- GitHub MCP
+  - fetch real issues, PRs, comments, and repository context
+  - ground tasks in live open source workflows
+- Filesystem / codebase MCP
+  - inspect project files directly
+  - support multi-file debugging and repo-aware fixes
+- Test runner MCP
+  - execute tests, inspect failures, and retry with richer feedback
+- Search / docs MCP
+  - fetch framework or library documentation relevant to the task
+- Patch / edit MCP
+  - move from “submit an answer” to “propose or apply a patch”
+
+### Round 2 Vision
+
+The Round 2 version of this environment can simulate a fuller contribution loop:
+
+1. read a real issue
+2. inspect a repository through MCP tools
+3. run tests
+4. generate a patch
+5. get graded on correctness, efficiency, and tool usage
+
+That would move the benchmark from isolated bug fixing toward realistic agentic software engineering.
+
+### Why This Matters
+
+This gives us a strong bridge from Round 1 to Round 2:
+
+- Round 1: OpenEnv compliance, baseline reproducibility, deployability
+- Round 2: MCP-native agent workflows, richer tooling, more realistic contribution tasks
+
+## Submission Checklist
+
+This repository is structured to satisfy the key Round 1 expectations:
+
+- working OpenEnv environment
+- typed models
+- `reset`, `step`, and `state` support
+- minimum 3 graded tasks
+- reward range `0.0` to `1.0`
+- working Dockerfile
+- working Hugging Face Space
+- baseline `inference.py`
+- reproducible local evaluation flow
+
+## References
+
+- Scaler Meta PyTorch Hackathon Dashboard: [https://www.scaler.com/school-of-technology/meta-pytorch-hackathon/dashboard](https://www.scaler.com/school-of-technology/meta-pytorch-hackathon/dashboard)
+- Hugging Face Space: [https://huggingface.co/spaces/BhargaviThati/oss_contrib_env](https://huggingface.co/spaces/BhargaviThati/oss_contrib_env)
+
