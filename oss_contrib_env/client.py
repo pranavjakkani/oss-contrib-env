@@ -12,11 +12,11 @@ from openenv.core import EnvClient
 from openenv.core.client_types import StepResult
 from openenv.core.env_server.types import State
 
-from .models import OssContribAction, OssContribObservation
+from .models import OSSAction, OSSObservation
 
 
 class OssContribEnv(
-    EnvClient[OssContribAction, OssContribObservation, State]
+    EnvClient[OSSAction, OSSObservation, State]
 ):
     """
     Client for the Oss Contrib Env Environment.
@@ -31,56 +31,59 @@ class OssContribEnv(
         ...     result = client.reset()
         ...     print(result.observation.echoed_message)
         ...
-        ...     result = client.step(OssContribAction(message="Hello!"))
-        ...     print(result.observation.echoed_message)
+        ...     result = client.step(OSSAction(response="Hello!"))
+        ...     print(result.observation.task_id)
 
     Example with Docker:
         >>> # Automatically start container and connect
         >>> client = OssContribEnv.from_docker_image("oss_contrib_env-env:latest")
         >>> try:
         ...     result = client.reset()
-        ...     result = client.step(OssContribAction(message="Test"))
+        ...     result = client.step(OSSAction(response="Test"))
         ... finally:
         ...     client.close()
     """
 
-    def _step_payload(self, action: OssContribAction) -> Dict:
+    def _step_payload(self, action: OSSAction) -> Dict:
         """
-        Convert OssContribAction to JSON payload for step message.
+        Convert OSSAction to JSON payload for step message.
 
         Args:
-            action: OssContribAction instance
+            action: OSSAction instance
 
         Returns:
             Dictionary representation suitable for JSON encoding
         """
         return {
-            "message": action.message,
+            "response": action.response,
         }
 
-    def _parse_result(self, payload: Dict) -> StepResult[OssContribObservation]:
+    def _parse_result(self, payload: Dict) -> StepResult[OSSObservation]:
         """
-        Parse server response into StepResult[OssContribObservation].
+        Parse server response into StepResult[OSSObservation].
 
         Args:
             payload: JSON response data from server
 
         Returns:
-            StepResult with OssContribObservation
+            StepResult with OSSObservation
         """
         obs_data = payload.get("observation", {})
-        observation = OssContribObservation(
-            echoed_message=obs_data.get("echoed_message", ""),
-            message_length=obs_data.get("message_length", 0),
-            done=payload.get("done", False),
-            reward=payload.get("reward"),
-            metadata=obs_data.get("metadata", {}),
+        observation = OSSObservation(
+            task_id=obs_data.get("task_id", ""),
+            difficulty=obs_data.get("difficulty", "easy"),
+            issue=obs_data.get("issue", ""),
+            code=obs_data.get("code", ""),
+            test_output=obs_data.get("test_output"),
+            attempts_remaining=obs_data.get("attempts_remaining", 0),
+            done=obs_data.get("done", payload.get("done", False)),
+            reward=obs_data.get("reward", payload.get("reward", 0.0)),
         )
 
         return StepResult(
             observation=observation,
-            reward=payload.get("reward"),
-            done=payload.get("done", False),
+            reward=payload.get("reward", observation.reward),
+            done=payload.get("done", observation.done),
         )
 
     def _parse_state(self, payload: Dict) -> State:
