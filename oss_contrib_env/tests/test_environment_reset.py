@@ -75,10 +75,11 @@ class EnvironmentResetTests(unittest.TestCase):
         env.reset(task_id="patch_loc", seed=1)
         action = self.models.OSSAction(response="src/datasets/iterable_dataset.py")
         first = env.step(action)
-        self.assertEqual(first.reward, 0.0)
+        self.assertGreaterEqual(first.reward, -0.2)
         self.assertEqual(first.attempts_remaining, 2)
         self.assertFalse(first.done)
-        self.assertEqual(first.info["status"], "pending_grading")
+        self.assertEqual(first.info["status"], "graded")
+        self.assertIn("progress", first.info)
 
 
 if __name__ == "__main__":

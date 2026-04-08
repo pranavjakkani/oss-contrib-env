@@ -11,9 +11,11 @@ from openenv.core.env_server.interfaces import Environment
 
 try:
     from ..benchmark import load_benchmark
+    from ..grading import score_episode
     from ..models import OSSAction, OSSObservation, OSSState
 except (ImportError, ModuleNotFoundError):
     from benchmark import load_benchmark
+    from grading import score_episode
     from models import OSSAction, OSSObservation, OSSState
 
 
@@ -42,6 +44,7 @@ _shared: dict[str, Any] = {
     "attempts": 0,
     "max_attempts": MAX_ATTEMPTS,
     "done": False,
+    "last_score": None,
     "state": OSSState(
         episode_id="ep_00000",
         step_count=0,
@@ -72,6 +75,7 @@ class OSSContribEnvironment(Environment):
         _shared["current_episode"] = episode
         _shared["attempts"] = 0
         _shared["done"] = False
+        _shared["last_score"] = None
         _shared["state"] = OSSState(
             episode_id=episode_id or f"ep_{rng.randint(10000, 99999)}",
             step_count=0,
@@ -100,16 +104,24 @@ class OSSContribEnvironment(Environment):
         _shared["attempts"] += 1
         _shared["state"].step_count += 1
         attempts_remaining = max(0, _shared["max_attempts"] - _shared["attempts"])
-        _shared["done"] = attempts_remaining == 0
 
         response = (action.response or "").strip()
+        score = score_episode(
+            _shared["task_type"],
+            response,
+            _shared["current_episode"],
+            _shared["attempts"],
+        )
+        _shared["last_score"] = score
+        _shared["done"] = score["done"] or attempts_remaining == 0
         feedback = (
-            f"Received action for {_shared['task_type']}. "
-            f"Task-native scoring will be applied in the grading phase. "
-            f"Submission length={len(response)}."
+            f"Progress={score['progress']:.4f} | "
+            f"Penalty={score['penalty']:.4f} | "
+            f"Reward={score['reward']:.4f} | "
+            f"Malformed={str(score['malformed']).lower()}"
         )
         return self._make_obs(
-            reward=0.0,
+            reward=score["reward"],
             test_output=feedback,
             attempts_remaining=attempts_remaining,
         )
@@ -121,6 +133,13 @@ class OSSContribEnvironment(Environment):
         attempts_remaining: int = 0,
     ) -> OSSObservation:
         episode = _shared["current_episode"]
+        score = _shared["last_score"] or {
+            "progress": 0.0,
+            "penalty": 0.0,
+            "metrics": {},
+            "malformed": False,
+            "prediction": None,
+        }
         return OSSObservation(
             task_id=episode["task_id"],
             task_type=episode["task_type"],
@@ -133,8 +152,12 @@ class OSSContribEnvironment(Environment):
             done=_shared["done"],
             reward=reward,
             info={
-                "progress": 0.0,
-                "status": "loaded" if not _shared["state"].step_count else "pending_grading",
+                "progress": score["progress"],
+                "penalty": score["penalty"],
+                "malformed": score["malformed"],
+                "prediction": score["prediction"],
+                "metrics": score["metrics"],
+                "status": "loaded" if not _shared["state"].step_count else "graded",
                 "ground_truth_available": True,
             },
         )
