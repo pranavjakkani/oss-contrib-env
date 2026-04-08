@@ -7,10 +7,10 @@
 """Oss Contrib Env Environment."""
 
 from .client import OssContribEnv
-from .models import OssContribAction, OssContribObservation
+from .models import OSSAction, OSSObservation
 
 __all__ = [
-    "OssContribAction",
-    "OssContribObservation",
+    "OSSAction",
+    "OSSObservation",
     "OssContribEnv",
 ]
