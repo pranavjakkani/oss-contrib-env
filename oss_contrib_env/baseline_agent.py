@@ -112,6 +112,34 @@ def choose_patch_loc_action(observation: dict[str, Any]) -> str:
     return json.dumps(top_paths)
 
 
+def choose_route_action(observation: dict[str, Any]) -> str:
+    task_type = observation.get("task_type", "triage")
+    info = observation.get("info", {})
+    inspected = set(info.get("inspected_targets", []))
+
+    if task_type == "triage":
+        best_issue_id = choose_triage_action(observation)
+        if best_issue_id and best_issue_id not in inspected:
+            return f"inspect {best_issue_id}"
+        return f"submit {best_issue_id}"
+
+    if task_type == "duplicate":
+        picks = json.loads(choose_duplicate_action(observation) or "[]")
+        for issue_id in picks[:2]:
+            if str(issue_id) not in inspected:
+                return f"inspect {issue_id}"
+        return f"submit {json.dumps(picks)}"
+
+    if task_type == "patch_loc":
+        paths = json.loads(choose_patch_loc_action(observation) or "[]")
+        for path in paths[:2]:
+            if path not in inspected:
+                return f"inspect {path}"
+        return f"submit {json.dumps(paths)}"
+
+    return choose_baseline_action(observation)
+
+
 def choose_baseline_action(observation: dict[str, Any]) -> str:
     task_type = observation.get("task_type", "triage")
     if task_type == "triage":

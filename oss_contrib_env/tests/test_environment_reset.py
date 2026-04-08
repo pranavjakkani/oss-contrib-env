@@ -72,14 +72,25 @@ class EnvironmentResetTests(unittest.TestCase):
 
     def test_step_tracks_attempts_without_scoring_yet(self):
         env = self.env_module.OSSContribEnvironment()
-        env.reset(task_id="patch_loc", seed=1)
-        action = self.models.OSSAction(response="src/datasets/iterable_dataset.py")
+        observation = env.reset(task_id="patch_loc", seed=1)
+        candidate_path = observation.candidates[0]["path"]
+        action = self.models.OSSAction(response=f"inspect {candidate_path}")
         first = env.step(action)
-        self.assertGreaterEqual(first.reward, -0.2)
-        self.assertEqual(first.attempts_remaining, 2)
+        self.assertEqual(first.reward, 0.0)
+        self.assertEqual(first.attempts_remaining, 4)
         self.assertFalse(first.done)
-        self.assertEqual(first.info["status"], "graded")
+        self.assertEqual(first.info["status"], "inspect")
         self.assertIn("progress", first.info)
+        self.assertTrue(first.info["last_inspection"])
+
+    def test_submit_after_inspect_can_finish_episode(self):
+        env = self.env_module.OSSContribEnvironment()
+        observation = env.reset(task_id="triage", seed=1)
+        top_candidate_id = observation.candidates[0]["id"]
+        env.step(self.models.OSSAction(response=f"inspect {top_candidate_id}"))
+        second = env.step(self.models.OSSAction(response=f"submit {top_candidate_id}"))
+        self.assertEqual(second.info["status"], "submit")
+        self.assertIn("inspected_targets", second.info)
 
 
 if __name__ == "__main__":

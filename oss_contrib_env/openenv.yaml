@@ -15,19 +15,19 @@ tasks:
   - id: triage
     description: "Given 5 issues and a contributor profile, pick the best issue to work on"
     difficulty: easy
-    max_steps: 3
+    max_steps: 5
     reward_range: [-0.2, 1.0]
 
   - id: duplicate
     description: "Given a new issue and candidate prior issues, return duplicate issue IDs"
     difficulty: medium
-    max_steps: 3
+    max_steps: 5
     reward_range: [-0.2, 1.0]
 
   - id: patch_loc
     description: "Given a bug report, return a ranked list of likely file paths to edit"
     difficulty: hard
-    max_steps: 3
+    max_steps: 5
     reward_range: [-0.2, 1.0]
 
 api:

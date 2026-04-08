@@ -23,6 +23,8 @@ tags:
 
 The benchmark is offline at runtime. `data/snapshot.json` is the cached GitHub issue history, and `data/benchmark.json` is the curated benchmark built from that snapshot for task-ready episodes and ground truth.
 
+The environment now supports interactive multi-step routes. An agent can inspect candidates or paths first, then submit a final answer later in the trajectory. This makes the environment closer to a long-running workflow instead of a single-shot classifier with retries.
+
 ## Reward Design
 
 Rewards stay close to the task metric, with mild negative shaping for clearly wrong or malformed actions.
@@ -31,6 +33,7 @@ Rewards stay close to the task metric, with mild negative shaping for clearly wr
 - `duplicate`: F1 score over predicted duplicate issue IDs.
 - `patch_loc`: `MRR + 0.1 * recall@5`, capped at `1.0`.
 - Wrong-action shaping: malformed actions and repeated fully wrong attempts can push the final reward mildly negative, down to `-0.2`.
+- Exploration actions such as `inspect ...` are allowed during the trajectory and keep the episode alive for later submission.
 - `info["progress"]` always reports the unpenalized task progress so logs still show partial learning signal clearly.
 
 ## Observation Shape
@@ -81,9 +84,10 @@ curl -X POST http://localhost:8000/step \
 
 Example action formats:
 
-- `triage`: `"7931"`
-- `duplicate`: `"[6450]"`
-- `patch_loc`: `"[\"src/datasets/iterable_dataset.py\", \"tests/test_iterable_dataset.py\"]"`
+- `triage`: `"submit 7931"`
+- `duplicate`: `"submit [6450]"`
+- `patch_loc`: `"submit [\"src/datasets/iterable_dataset.py\", \"tests/test_iterable_dataset.py\"]"`
+- inspect route: `"inspect 7931"` or `"inspect src/datasets/iterable_dataset.py"`
 
 ## Benchmark Builder
 
@@ -112,6 +116,7 @@ This writes:
 - heuristic reranking for each task
 - optional LLM refinement if `HF_TOKEN` is set and the OpenAI-compatible client is available
 - fallback to heuristic-only execution otherwise
+- route-aware behavior that can inspect first and submit later, producing multi-step trajectories in the logs
 
 Run it against a local server:
 

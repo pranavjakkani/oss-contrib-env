@@ -4,7 +4,7 @@ import textwrap
 from typing import Any, Dict, List, Optional, Tuple
 from urllib import error, request
 
-from baseline_agent import build_candidate_preview, choose_baseline_action
+from baseline_agent import build_candidate_preview, choose_route_action
 
 
 API_BASE_URL = os.environ.get("API_BASE_URL", "https://huggingface.co/api/inference-proxy/together")
@@ -13,7 +13,7 @@ HF_TOKEN = os.environ.get("HF_TOKEN", "")
 ENV_URL = os.environ.get("ENV_URL", "http://localhost:8000")
 
 TASKS = ["triage", "duplicate", "patch_loc"]
-MAX_STEPS = 3
+MAX_STEPS = 5
 HTTP_TIMEOUT_SECONDS = 30
 MODEL_TIMEOUT_SECONDS = 90
 MAX_COMPLETION_TOKENS = 700
@@ -113,6 +113,7 @@ def build_user_prompt(observation: Dict[str, Any], step: int, history: List[str]
         Task ID: {observation.get("task_id", "unknown")}
         Attempts remaining: {observation.get("attempts_remaining", "unknown")}
         Current progress: {info.get("progress", 0.0)}
+        Available actions: {info.get("available_actions", [])}
 
         Task:
         {observation.get("issue", "")}
@@ -129,6 +130,8 @@ def build_user_prompt(observation: Dict[str, Any], step: int, history: List[str]
         Heuristic baseline suggestion:
         {heuristic_action or "None"}
 
+        Choose the best next action for an interactive trajectory.
+        You may inspect first and submit later.
         Improve on the heuristic if you can, otherwise return it exactly.
         """
     ).strip()
@@ -173,7 +176,7 @@ def normalize_action(observation: Dict[str, Any], action: str, heuristic_action:
 
 
 def choose_hybrid_action(client, observation: Dict[str, Any], step: int, history: List[str]) -> str:
-    heuristic_action = choose_baseline_action(observation)
+    heuristic_action = choose_route_action(observation)
     if client is None:
         return heuristic_action
     model_action = get_model_response(client, observation, step, history, heuristic_action)

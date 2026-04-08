@@ -13,6 +13,7 @@ from baseline_agent import (
     choose_baseline_action,
     choose_duplicate_action,
     choose_patch_loc_action,
+    choose_route_action,
     choose_triage_action,
 )
 
@@ -70,6 +71,23 @@ class BaselineAgentTests(unittest.TestCase):
             "candidates": [{"path": "src/datasets/foo.py"}],
         }
         self.assertEqual(json.loads(choose_baseline_action(observation)), ["src/datasets/foo.py"])
+
+    def test_route_action_inspects_before_submit(self):
+        observation = {
+            "task_type": "triage",
+            "issue": (
+                "IssueTriage: choose the single best issue.\n\n"
+                'Contributor profile: {"focus_labels": ["enhancement"], "focus_paths": ["src/datasets/audio.py"], '
+                '"focus_terms": ["audio", "metadata", "column"]}'
+            ),
+            "candidates": [
+                {"id": 2, "title": "Audio metadata column support", "labels": ["enhancement"], "summary": "audio metadata column bug", "path_hints": ["src/datasets/audio.py"]},
+            ],
+            "info": {"inspected_targets": []},
+        }
+        self.assertEqual(choose_route_action(observation), "inspect 2")
+        observation["info"]["inspected_targets"] = ["2"]
+        self.assertEqual(choose_route_action(observation), "submit 2")
 
 
 if __name__ == "__main__":
