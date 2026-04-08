@@ -41,6 +41,15 @@ class GradingTests(unittest.TestCase):
         self.assertEqual(score["metrics"]["precision"], 1.0)
         self.assertEqual(score["metrics"]["recall"], 0.5)
 
+    def test_duplicate_accepts_string_ids_in_json(self):
+        episode = {
+            "ground_truth": {"duplicate_issue_ids": [6450]},
+        }
+        score = score_duplicate('["6450"]', episode, attempt_number=1)
+        self.assertEqual(score["progress"], 1.0)
+        self.assertEqual(score["reward"], 1.0)
+        self.assertFalse(score["malformed"])
+
     def test_patch_localization_uses_mrr_plus_recall_bonus(self):
         episode = {
             "ground_truth": {"files": ["src/a.py", "src/b.py"]},

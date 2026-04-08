@@ -8,7 +8,7 @@ from baseline_agent import build_candidate_preview, choose_route_action
 
 
 API_BASE_URL = os.environ.get("API_BASE_URL", "https://huggingface.co/api/inference-proxy/together")
-MODEL_NAME = os.environ.get("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
+MODEL_NAME = os.environ.get("MODEL_NAME", "openai/gpt-oss-120b:cerebras")
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
 ENV_URL = os.environ.get("ENV_URL", "http://localhost:8000")
 
@@ -132,6 +132,8 @@ def build_user_prompt(observation: Dict[str, Any], step: int, history: List[str]
 
         Choose the best next action for an interactive trajectory.
         You may inspect first and submit later.
+        Do not inspect the same target more than once.
+        If a target is already inspected, prefer a submit action.
         Improve on the heuristic if you can, otherwise return it exactly.
         """
     ).strip()
@@ -172,7 +174,17 @@ def normalize_action(observation: Dict[str, Any], action: str, heuristic_action:
         if lines and lines[-1].strip() == "```":
             lines = lines[:-1]
         cleaned = "\n".join(lines).strip()
-    return cleaned or heuristic_action
+    if not cleaned:
+        return heuristic_action
+
+    inspected_targets = {str(item) for item in observation.get("info", {}).get("inspected_targets", [])}
+    lowered = cleaned.lower()
+    if lowered.startswith("inspect "):
+        target = cleaned.split(" ", 1)[1].strip()
+        if target in inspected_targets:
+            return heuristic_action
+
+    return cleaned
 
 
 def choose_hybrid_action(client, observation: Dict[str, Any], step: int, history: List[str]) -> str:

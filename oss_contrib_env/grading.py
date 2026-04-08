@@ -57,9 +57,16 @@ def parse_duplicate_predictions(response: str) -> tuple[list[int], bool]:
     try:
         parsed = json.loads(text)
         if isinstance(parsed, list):
-            values = [int(item) for item in parsed if isinstance(item, int)]
+            values = []
+            for item in parsed:
+                if isinstance(item, int):
+                    values.append(item)
+                elif isinstance(item, str) and item.strip().isdigit():
+                    values.append(int(item.strip()))
         elif isinstance(parsed, int):
             values = [parsed]
+        elif isinstance(parsed, str) and parsed.strip().isdigit():
+            values = [int(parsed.strip())]
         else:
             values = _extract_ints(text)
     except json.JSONDecodeError:
