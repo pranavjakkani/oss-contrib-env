@@ -16,13 +16,16 @@ class OSSAction(Action):
 class OSSObservation(Observation):
     """What the agent sees each step"""
     task_id: str
+    task_type: Literal["triage", "duplicate", "patch_loc"] = "triage"
     difficulty: Literal["easy", "medium", "hard"]
     issue: str                        # GitHub issue description
+    candidates: list[dict] = []
     code: str                         # The buggy code
     test_output: Optional[str] = None # Feedback after step() calls
     attempts_remaining: int
     done: bool = False
     reward: float = 0.0
+    info: dict = {}
 
 
 class OSSState(State):
