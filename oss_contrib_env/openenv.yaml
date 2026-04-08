@@ -4,4 +4,32 @@ type: space
 runtime: fastapi
 app: server.app:app
 port: 8000
+version: "0.1.0"
+description: >
+  An RL environment where an LLM agent learns to identify and fix bugs
+  in Python code given a GitHub issue description and broken codebase.
+  Simulates a real-world open source contribution workflow.
 
+tasks:
+  - id: easy
+    description: "Identify the buggy function and error type from an issue"
+    difficulty: easy
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+  - id: medium
+    description: "Fix a broken Python function to pass unit tests"
+    difficulty: medium
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+  - id: hard
+    description: "Patch multiple broken functions to pass a full test suite"
+    difficulty: hard
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+api:
+  reset: /reset
+  step: /step
+  state: /state

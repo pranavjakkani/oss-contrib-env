@@ -36,18 +36,18 @@ except Exception as e:  # pragma: no cover
     ) from e
 
 try:
-    from ..models import OssContribAction, OssContribObservation
-    from .oss_contrib_env_environment import OssContribEnvironment
-except ModuleNotFoundError:
-    from models import OssContribAction, OssContribObservation
-    from server.oss_contrib_env_environment import OssContribEnvironment
+    from ..models import OSSAction, OSSObservation
+    from .oss_contrib_env_environment import OSSContribEnvironment
+except ImportError:
+    from models import OSSAction, OSSObservation
+    from server.oss_contrib_env_environment import OSSContribEnvironment
 
 
 # Create the app with web interface and README integration
 app = create_app(
-    OssContribEnvironment,
-    OssContribAction,
-    OssContribObservation,
+    OSSContribEnvironment,
+    OSSAction,
+    OSSObservation,
     env_name="oss_contrib_env",
     max_concurrent_envs=1,  # increase this number to allow more concurrent WebSocket sessions
 )

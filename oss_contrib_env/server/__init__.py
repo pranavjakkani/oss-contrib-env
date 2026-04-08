@@ -6,6 +6,6 @@
 
 """Oss Contrib Env environment server components."""
 
-from .oss_contrib_env_environment import OssContribEnvironment
+from .oss_contrib_env_environment import OSSContribEnvironment
 
-__all__ = ["OssContribEnvironment"]
+__all__ = ["OSSContribEnvironment"]
