@@ -53,32 +53,33 @@ app = create_app(
 )
 
 
-def main(host: str = "0.0.0.0", port: int = 8000):
+def run_server(host: str = "0.0.0.0", port: int = 8000) -> None:
     """
-    Entry point for direct execution via uv run or python -m.
+    Run the FastAPI app with uvicorn.
 
-    This function enables running the server without Docker:
-        uv run --project . server
-        uv run --project . server --port 8001
-        python -m oss_contrib_env.server.app
-
-    Args:
-        host: Host address to bind to (default: "0.0.0.0")
-        port: Port number to listen on (default: 8000)
-
-    For production deployments, consider using uvicorn directly with
-    multiple workers:
-        uvicorn oss_contrib_env.server.app:app --workers 4
+    Keeping the actual runner separate makes the public `main()` entrypoint
+    validator-friendly while still allowing reuse in scripts and tests.
     """
     import uvicorn
 
     uvicorn.run(app, host=host, port=port)
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    Entry point for direct execution via `uv run` or `python -m`.
+
+    This zero-argument signature is intentionally simple so repository
+    validators can detect it reliably for multi-mode deployment.
+    """
     import argparse
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
-    main(port=args.port)
+    run_server(host=args.host, port=args.port)
+
+
+if __name__ == "__main__":
+    main()
