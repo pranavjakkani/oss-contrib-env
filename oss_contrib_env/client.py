@@ -71,13 +71,16 @@ class OssContribEnv(
         obs_data = payload.get("observation", {})
         observation = OSSObservation(
             task_id=obs_data.get("task_id", ""),
+            task_type=obs_data.get("task_type", "triage"),
             difficulty=obs_data.get("difficulty", "easy"),
             issue=obs_data.get("issue", ""),
+            candidates=obs_data.get("candidates", []),
             code=obs_data.get("code", ""),
             test_output=obs_data.get("test_output"),
             attempts_remaining=obs_data.get("attempts_remaining", 0),
             done=obs_data.get("done", payload.get("done", False)),
             reward=obs_data.get("reward", payload.get("reward", 0.0)),
+            info=obs_data.get("info", {}),
         )
 
         return StepResult(

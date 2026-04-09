@@ -1,0 +1,3124 @@
+{
+  "meta": {
+    "source_repo": "huggingface/datasets",
+    "source_snapshot_count": 500,
+    "offline": true,
+    "seed": 0,
+    "stats": {
+      "triage": {
+        "episodes": 24
+      },
+      "duplicate": {
+        "episodes": 3
+      },
+      "patch_loc": {
+        "episodes": 24
+      }
+    }
+  },
+  "episodes": {
+    "triage": [
+      {
+        "task_id": "triage_7931",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"access\", \"based\", \"behavior\", \"blocking\", \"blog\", \"bridge\", \"browser\", \"cas\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6190,
+            "title": "`Invalid user token` even when correct user token is passed!",
+            "labels": [],
+            "created_at": "2023-08-29T12:37:03Z",
+            "summary": "`Invalid user token` even when correct user token is passed! ### Describe the bug I'm working on a dataset which comprises other datasets on the hub. URL: https://huggingface.co/datasets/open-asr-leaderboard/datasets-test-only Note: Some of the sub-datasets in this metadataset require explicit access. All the other datasets work fine, except, `common_voice`. ### Steps to reproduce the bug https://github.com/Vaibhavs1",
+            "path_hints": []
+          },
+          {
+            "id": 7931,
+            "title": "Enable CORS + HTTP Range support for browser partial reads on cas-bridge.xethub.hf.co (Parquet row-group access)",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2026-01-03T04:23:54Z",
+            "summary": "Enable CORS + HTTP Range support for browser partial reads on cas-bridge.xethub.hf.co (Parquet row-group access) ### Feature request ## Summary Browser-based data tools need Range requests to read Parquet efficiently (footer + selected row groups). Downloads from the Hub redirect to cas-bridge.xethub.hf.co (Xet bridge). The redirected host fails CORS preflight for Range/HEAD workflows, blocking partial reads. ([Huggi",
+            "path_hints": []
+          },
+          {
+            "id": 6125,
+            "title": "Reinforcement Learning and Robotics are not task categories in HF datasets metadata",
+            "labels": [],
+            "created_at": "2023-08-05T23:59:42Z",
+            "summary": "Reinforcement Learning and Robotics are not task categories in HF datasets metadata ### Describe the bug In https://huggingface.co/models there are task categories for RL and robotics but none in https://huggingface.co/datasets Our lab is currently moving our datasets over to hugging face and would like to be able to add those 2 tags Moreover we see some older datasets that do have that tag, but we can't seem to add ",
+            "path_hints": []
+          },
+          {
+            "id": 8078,
+            "title": "Inconsistent loading of LFS-hosted files in Dangindev/viet-cultural-vqa dataset",
+            "labels": [],
+            "created_at": "2026-03-17T06:44:01Z",
+            "summary": "Inconsistent loading of LFS-hosted files in Dangindev/viet-cultural-vqa dataset ### Describe the bug Describe the bug Some files in the Dangindev/viet-cultural-vqa dataset fail to load via the Hugging Face datasets library. xet-hosted files load fine LFS-hosted files sometimes fail Example: Fails: https://huggingface.co/datasets/Dangindev/viet-cultural-vqa/blob/main/images/am_thuc/banh_chung_Tet/000004.jpg Works: htt",
+            "path_hints": []
+          },
+          {
+            "id": 6441,
+            "title": "Trouble Loading a Gated Dataset For User with Granted Permission",
+            "labels": [],
+            "created_at": "2023-11-21T19:24:36Z",
+            "summary": "Trouble Loading a Gated Dataset For User with Granted Permission ### Describe the bug I have granted permissions to several users to access a gated huggingface dataset. The users accepted the invite and when trying to load the dataset using their access token they get `FileNotFoundError: Couldn't find a dataset script at .....` . Also when they try to click the url link for the dataset they get a 404 error. ### Steps",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7931,
+          "top_3_issue_ids": [
+            7931,
+            8078,
+            6441
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7931,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7916",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"description\", \"provided\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6371,
+            "title": "`Dataset.from_generator` should not try to download from HF GCS",
+            "labels": [],
+            "created_at": "2023-11-01T17:36:17Z",
+            "summary": "`Dataset.from_generator` should not try to download from HF GCS ### Describe the bug When using [`Dataset.from_generator`](https://github.com/huggingface/datasets/blob/c9c1166e1cf81d38534020f9c167b326585339e5/src/datasets/arrow_dataset.py#L1072) with `streaming=False`, the internal logic will call [`download_and_prepare`](https://github.com/huggingface/datasets/blob/main/src/datasets/io/generator.py#L47) which will a",
+            "path_hints": [
+              "src/datasets/arrow_dataset.py",
+              "src/datasets/io/generator.py"
+            ]
+          },
+          {
+            "id": 7320,
+            "title": "ValueError: You should supply an encoding or a list of encodings to this method that includes input_ids, but you provided ['label']",
+            "labels": [],
+            "created_at": "2024-12-10T20:23:11Z",
+            "summary": "ValueError: You should supply an encoding or a list of encodings to this method that includes input_ids, but you provided ['label'] ### Describe the bug I am trying to create a PEFT model from DISTILBERT model, and run a training loop. However, the trainer.train() is giving me this error: ValueError: You should supply an encoding or a list of encodings to this method that includes input_ids, but you provided ['label'",
+            "path_hints": []
+          },
+          {
+            "id": 7590,
+            "title": "`Sequence(Features(...))` causes PyArrow cast error in `load_dataset` despite correct schema.",
+            "labels": [],
+            "created_at": "2025-05-29T22:53:36Z",
+            "summary": "`Sequence(Features(...))` causes PyArrow cast error in `load_dataset` despite correct schema. ### Description When loading a dataset with a field declared as a list of structs using `Sequence(Features(...))`, `load_dataset` incorrectly infers the field as a plain `struct<...>` instead of a `list<struct<...>>`. This leads to the following error: ``` ArrowNotImplementedError: Unsupported cast from list<item: struct<id:",
+            "path_hints": []
+          },
+          {
+            "id": 6123,
+            "title": "Inaccurate Bounding Boxes in \"wildreceipt\" Dataset",
+            "labels": [],
+            "created_at": "2023-08-05T14:34:13Z",
+            "summary": "Inaccurate Bounding Boxes in \"wildreceipt\" Dataset ### Describe the bug I would like to bring to your attention an issue related to the accuracy of bounding boxes within the \"wildreceipt\" dataset, which is made available through the Hugging Face API. Specifically, I have identified a discrepancy between the bounding boxes generated by the dataset loading commands, namely `load_dataset(\"Theivaprakasham/wildreceipt\")` ",
+            "path_hints": []
+          },
+          {
+            "id": 7916,
+            "title": "No description provided.",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-12-27T16:33:11Z",
+            "summary": "No description provided.",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7916,
+          "top_3_issue_ids": [
+            7916,
+            7590,
+            6371
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7916,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7792",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"able\", \"and\", \"applies\", \"assuming\", \"balanced\", \"between\", \"both\", \"can\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6466,
+            "title": "Can't align optional features of struct",
+            "labels": [],
+            "created_at": "2023-12-03T15:57:07Z",
+            "summary": "Can't align optional features of struct ### Describe the bug Hello! I'm currently experiencing an issue where I can't concatenate datasets if an inner field of a Feature is Optional. I have a column named `speaker`, and this holds some information about a speaker. ```python @dataclass class Speaker: name: str email: Optional[str] ``` If I have two datasets, one happens to have `email` always None, then I get `The fea",
+            "path_hints": []
+          },
+          {
+            "id": 6565,
+            "title": " `drop_last_batch=True` for IterableDataset map function is ignored with multiprocessing DataLoader ",
+            "labels": [],
+            "created_at": "2024-01-07T02:46:50Z",
+            "summary": "`drop_last_batch=True` for IterableDataset map function is ignored with multiprocessing DataLoader ### Describe the bug Scenario: - Interleaving two iterable datasets of unequal lengths (`all_exhausted`), followed by a batch mapping with batch size 2 to effectively merge the two datasets and get a sample from each dataset in a single batch, with `drop_last_batch=True` to skip the last batch in case it doesn't have tw",
+            "path_hints": []
+          },
+          {
+            "id": 7792,
+            "title": "Concatenate IterableDataset instances and distribute underlying shards in a RoundRobin manner",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-09-26T10:05:19Z",
+            "summary": "Concatenate IterableDataset instances and distribute underlying shards in a RoundRobin manner ### Feature request I would like to be able to concatenate multiple `IterableDataset` with possibly different features. I would like to then be able to stream the results in parallel (both using DDP and multiple workers in the pytorch DataLoader). I want the merge of datasets to be well balanced between the different process",
+            "path_hints": []
+          },
+          {
+            "id": 7470,
+            "title": "Is it possible to shard a single-sharded IterableDataset?",
+            "labels": [],
+            "created_at": "2025-03-21T04:33:37Z",
+            "summary": "Is it possible to shard a single-sharded IterableDataset? I thought https://github.com/huggingface/datasets/pull/7252 might be applicable but looking at it maybe not. Say we have a process, eg. a database query, that can return data in slightly different order each time. So, the initial query needs to be run by a single thread (not to mention running multiple times incurs more cost too). But the results are also big ",
+            "path_hints": []
+          },
+          {
+            "id": 6483,
+            "title": "Iterable Dataset: rename column clashes with remove column",
+            "labels": [
+              "streaming"
+            ],
+            "created_at": "2023-12-08T16:11:30Z",
+            "summary": "Iterable Dataset: rename column clashes with remove column ### Describe the bug Suppose I have a two iterable datasets, one with the features: * `{\"audio\", \"text\", \"column_a\"}` And the other with the features: * `{\"audio\", \"sentence\", \"column_b\"}` I want to combine both datasets using `interleave_datasets`, which requires me to unify the column names. I would typically do this by: 1. Renaming the common columns to th",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7792,
+          "top_3_issue_ids": [
+            7792,
+            7470,
+            6565
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7792,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7741",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"are\", \"class\", \"com\", \"contribution\", \"discussion_r2285605374\", \"features\", \"files\", \"flattened\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7837,
+            "title": "mono parameter to the Audio feature is missing",
+            "labels": [],
+            "created_at": "2025-10-31T15:41:39Z",
+            "summary": "mono parameter to the Audio feature is missing According to the docs, there is a \"mono\" parameter to the Audio feature, which turns any stereo into mono. In practice the signal is not touched and the mono parameter, even though documented, does not exist. https://github.com/huggingface/datasets/blob/41c05299348a499807432ab476e1cdc4143c8772/src/datasets/features/audio.py#L52C1-L54C22",
+            "path_hints": [
+              "src/datasets/features/audio.py"
+            ]
+          },
+          {
+            "id": 7918,
+            "title": "datasets.load_from_disk doesn't show progress bar",
+            "labels": [],
+            "created_at": "2025-12-28T09:14:41Z",
+            "summary": "datasets.load_from_disk doesn't show progress bar ### Describe the bug This is the inverse of the bug at [https://github.com/huggingface/datasets/issues/7030](https://github.com/huggingface/datasets/issues/7030), i.e. that `datasets.load_from_disk(path)` displays no progress bar. My dataset has > 16 files in it. I am redirecting stdout as I capture the log, could this have something to do with it? All other progress ",
+            "path_hints": []
+          },
+          {
+            "id": 7741,
+            "title": "Preserve tree structure when loading HDF5",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-08-19T15:42:05Z",
+            "summary": "Preserve tree structure when loading HDF5 ### Feature request https://github.com/huggingface/datasets/pull/7740#discussion_r2285605374 ### Motivation `datasets` has the `Features` class for representing nested features. HDF5 files have groups of datasets which are nested, though in #7690 the keys are flattened. We should preserve that structure for the user. ### Your contribution I'll open a PR (#7743)",
+            "path_hints": []
+          },
+          {
+            "id": 6830,
+            "title": "Add a doc page for the convert_to_parquet CLI",
+            "labels": [
+              "documentation"
+            ],
+            "created_at": "2024-04-23T09:49:04Z",
+            "summary": "Add a doc page for the convert_to_parquet CLI Follow-up to https://github.com/huggingface/datasets/pull/6795. Useful for https://github.com/huggingface/dataset-viewer/issues/2742. cc @albertvillanova",
+            "path_hints": []
+          },
+          {
+            "id": 6679,
+            "title": "Node.js 16 GitHub Actions are deprecated",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2024-02-19T09:47:37Z",
+            "summary": "Node.js 16 GitHub Actions are deprecated `Node.js` 16 GitHub Actions are deprecated. See: https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/ We should update them to Node 20. See warnings in our CI, e.g.: https://github.com/huggingface/datasets/actions/runs/7957295009?pr=6678 > Node.js 16 actions are deprecated. Please update the following actions to use Node.js 20: actions",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7741,
+          "top_3_issue_ids": [
+            7741,
+            7837,
+            7918
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7741,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7607",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"and\", \"audio\", \"both\", \"can\", \"case\", \"contribution\", \"cool\", \"dataclass\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7493,
+            "title": "push_to_hub does not upload videos",
+            "labels": [],
+            "created_at": "2025-04-01T17:00:20Z",
+            "summary": "push_to_hub does not upload videos ### Describe the bug Hello, I would like to upload a video dataset (some .mp4 files and some segments within them), i.e. rows correspond to subsequences from videos. Videos might be referenced by several rows. I created a dataset locally and it references the videos and the video readers can read them correctly. I use push_to_hub() to upload the dataset to the hub. Expectation: A us",
+            "path_hints": []
+          },
+          {
+            "id": 6394,
+            "title": "TorchFormatter images (H, W, C) instead of (C, H, W) format",
+            "labels": [],
+            "created_at": "2023-11-09T16:02:15Z",
+            "summary": "TorchFormatter images (H, W, C) instead of (C, H, W) format ### Describe the bug Using .set_format(\"torch\") leads to images having shape (H, W, C), the same as in numpy. However, pytorch normally uses (C, H, W) format. Maybe I'm missing something but this makes the format a lot less useful as I then have to permute it anyways. If not using the format it is possible to directly use torchvision transforms but any non-t",
+            "path_hints": []
+          },
+          {
+            "id": 6783,
+            "title": "AttributeError: module 'numpy' has no attribute 'object'. in Kaggle Notebook",
+            "labels": [],
+            "created_at": "2024-04-05T14:31:48Z",
+            "summary": "AttributeError: module 'numpy' has no attribute 'object'. in Kaggle Notebook ### Describe the bug # problem I can't resample audio dataset in Kaggle Notebook. It looks like some code in `datasets` library use aliases that were deprecated in NumPy 1.20. ## code for resampling ``` from datasets import load_dataset, Audio from transformers import AutoFeatureExtractor from transformers import AutoModelForAudioClassificat",
+            "path_hints": []
+          },
+          {
+            "id": 7841,
+            "title": "DOC: `mode` parameter on pdf and video features unused",
+            "labels": [],
+            "created_at": "2025-11-02T12:37:47Z",
+            "summary": "DOC: `mode` parameter on pdf and video features unused Following up on https://github.com/huggingface/datasets/pull/7840 I asked claude code to check for undocumented parameters for other features and it found: - mode parameter on video is documented but unused: https://github.com/huggingface/datasets/blob/main/src/datasets/features/video.py#L48-L49 - the same goes for the mode parameter on the pdf feature: https://g",
+            "path_hints": [
+              "src/datasets/features/pdf.py",
+              "src/datasets/features/video.py"
+            ]
+          },
+          {
+            "id": 7607,
+            "title": "Video and audio decoding with torchcodec",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-06-11T07:02:30Z",
+            "summary": "Video and audio decoding with torchcodec ### Feature request Pytorch is migrating video processing to torchcodec and it's pretty cool. It would be nice to migrate both the audio and video features to use torchcodec instead of torchaudio/video. ### Motivation My use case is I'm working on a multimodal AV model, and what's nice about torchcodec is I can extract the audio tensors directly from MP4 files. Also, I can eas",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7607,
+          "top_3_issue_ids": [
+            7607,
+            7493,
+            6394
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7607,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7597",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"adds\", \"and\", \"but\", \"clone\", \"com\", \"configurable\", \"context\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6533,
+            "title": "ted_talks_iwslt | Error: Config name is missing",
+            "labels": [],
+            "created_at": "2023-12-26T00:38:18Z",
+            "summary": "ted_talks_iwslt | Error: Config name is missing ### Describe the bug Running load_dataset using the newest `datasets` library like below on the ted_talks_iwslt using year pair data will throw an error \"Config name is missing\" see also: https://huggingface.co/datasets/ted_talks_iwslt/discussions/3 likely caused by #6493, where the `and not config_kwargs` part in the if logic was removed https://github.com/huggingface/",
+            "path_hints": [
+              "src/datasets/builder.py"
+            ]
+          },
+          {
+            "id": 6125,
+            "title": "Reinforcement Learning and Robotics are not task categories in HF datasets metadata",
+            "labels": [],
+            "created_at": "2023-08-05T23:59:42Z",
+            "summary": "Reinforcement Learning and Robotics are not task categories in HF datasets metadata ### Describe the bug In https://huggingface.co/models there are task categories for RL and robotics but none in https://huggingface.co/datasets Our lab is currently moving our datasets over to hugging face and would like to be able to add those 2 tags Moreover we see some older datasets that do have that tag, but we can't seem to add ",
+            "path_hints": []
+          },
+          {
+            "id": 6130,
+            "title": "default config name doesn't work when config kwargs are specified.",
+            "labels": [],
+            "created_at": "2023-08-09T12:43:15Z",
+            "summary": "default config name doesn't work when config kwargs are specified. ### Describe the bug https://github.com/huggingface/datasets/blob/12cfc1196e62847e2e8239fbd727a02cbc86ddec/src/datasets/builder.py#L518-L522 If `config_name` is `None`, `DEFAULT_CONFIG_NAME` should be select. But once users pass `config_kwargs` to their customized `BuilderConfig`, the logic is ignored, and dataset cannot select the default config from",
+            "path_hints": [
+              "src/datasets/builder.py"
+            ]
+          },
+          {
+            "id": 7597,
+            "title": "Download datasets from a private hub in 2025",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-06-06T07:55:19Z",
+            "summary": "Download datasets from a private hub in 2025 ### Feature request In the context of a private hub deployment, customers would like to use load_dataset() to load datasets from their hub, not from the public hub. This doesn't seem to be configurable at the moment and it would be nice to add this feature. The obvious workaround is to clone the repo first and then load it from local storage, but this adds an extra step. I",
+            "path_hints": []
+          },
+          {
+            "id": 6440,
+            "title": "`.map` not hashing under python 3.9",
+            "labels": [],
+            "created_at": "2023-11-21T15:14:54Z",
+            "summary": "`.map` not hashing under python 3.9 ### Describe the bug The `.map` function cannot hash under python 3.9. Tried to use [the solution here](https://github.com/huggingface/datasets/issues/4521#issuecomment-1205166653), but still get the same message: `Parameter 'function'=<function map_to_pred at 0x7fa0b49ead30> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was ",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7597,
+          "top_3_issue_ids": [
+            7597,
+            6440,
+            6130
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7597,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7591",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"and\", \"are\", \"can\", \"currently\", \"done\", \"faster\", \"for\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7010,
+            "title": "Re-enable raising error from huggingface-hub FutureWarning in CI",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2024-06-28T07:23:40Z",
+            "summary": "Re-enable raising error from huggingface-hub FutureWarning in CI Re-enable raising error from huggingface-hub FutureWarning in CI, which was disabled by PR: - #6876 Note that this can only be done once transformers releases the fix: - https://github.com/huggingface/transformers/pull/31007",
+            "path_hints": []
+          },
+          {
+            "id": 6347,
+            "title": "Incorrect example code in 'Create a dataset' docs",
+            "labels": [],
+            "created_at": "2023-10-24T11:01:21Z",
+            "summary": "Incorrect example code in 'Create a dataset' docs ### Describe the bug On [this](https://huggingface.co/docs/datasets/create_dataset) page, the example code for loading in images and audio is incorrect. Currently, examples are: ``` python from datasets import ImageFolder dataset = load_dataset(\"imagefolder\", data_dir=\"/path/to/pokemon\") ``` and ``` python from datasets import AudioFolder dataset = load_dataset(\"audio",
+            "path_hints": []
+          },
+          {
+            "id": 7022,
+            "title": "There is dead code after we require pyarrow >= 15.0.0",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2024-07-03T08:52:57Z",
+            "summary": "There is dead code after we require pyarrow >= 15.0.0 There are code lines specific for pyarrow versions < 15.0.0. However, we require pyarrow >= 15.0.0 since the merge of PR: - #6892 Those code lines are now dead code and should be removed.",
+            "path_hints": []
+          },
+          {
+            "id": 7346,
+            "title": "OSError: Invalid flatbuffers message.",
+            "labels": [],
+            "created_at": "2024-12-25T11:38:52Z",
+            "summary": "OSError: Invalid flatbuffers message. ### Describe the bug When loading a large 2D data (1000 \u00d7 1152) with a large number of (2,000 data in this case) in `load_dataset`, the error message `OSError: Invalid flatbuffers message` is reported. When only 300 pieces of data of this size (1000 \u00d7 1152) are stored, they can be loaded correctly. When 2,000 2D arrays are stored in each file, about 100 files are generated, each ",
+            "path_hints": []
+          },
+          {
+            "id": 7591,
+            "title": "Add num_proc parameter to push_to_hub",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-06-04T13:19:15Z",
+            "summary": "Add num_proc parameter to push_to_hub ### Feature request A number of processes parameter to the dataset.push_to_hub method ### Motivation Shards are currently uploaded serially which makes it slow for many shards, uploading can be done in parallel and much faster",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7591,
+          "top_3_issue_ids": [
+            7591,
+            7346,
+            6347
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7591,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7538",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"bug\"], \"focus_paths\": [], \"focus_terms\": [\"and\", \"batch\", \"case\", \"checkpoint\", \"child\", \"counter\", \"drop\", \"drops\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7475,
+            "title": "IterableDataset's state_dict shard_example_idx is always equal to the number of samples in a shard",
+            "labels": [],
+            "created_at": "2025-03-25T13:58:07Z",
+            "summary": "IterableDataset's state_dict shard_example_idx is always equal to the number of samples in a shard ### Describe the bug I've noticed a strange behaviour with Iterable state_dict: the value of shard_example_idx is always equal to the amount of samples in a shard. ### Steps to reproduce the bug I am reusing the example from the doc ```python from datasets import Dataset ds = Dataset.from_dict({\"a\": range(6)}).to_iterab",
+            "path_hints": []
+          },
+          {
+            "id": 8079,
+            "title": "StepExamplesIterable._iter_arrow drops samples for non-zero ranks for single-sharded",
+            "labels": [],
+            "created_at": "2026-03-19T04:38:51Z",
+            "summary": "StepExamplesIterable._iter_arrow drops samples for non-zero ranks for single-sharded ### Describe the bug As titled ### Steps to reproduce the bug Running following Python script: ``` \"\"\" Reproducer for HuggingFace datasets 4.x bug: StepExamplesIterable._iter_arrow drops samples for non-zero ranks when Arrow batches have size 1 (e.g. single-shard streaming WebDataset). Bug: split_dataset_by_node with world_size > num",
+            "path_hints": []
+          },
+          {
+            "id": 7538,
+            "title": "`IterableDataset` drops samples when resuming from a checkpoint",
+            "labels": [
+              "bug"
+            ],
+            "created_at": "2025-04-27T19:34:49Z",
+            "summary": "`IterableDataset` drops samples when resuming from a checkpoint When resuming from a checkpoint, `IterableDataset` will drop samples if `num_shards % world_size == 0` and the underlying example supports `iter_arrow` and needs to be formatted. In that case, the `FormattedExamplesIterable` fetches a batch of samples from the child iterable's `iter_arrow` and yields them one by one (after formatting). However, the child",
+            "path_hints": []
+          },
+          {
+            "id": 7163,
+            "title": "Set explicit seed in iterable dataset ddp shuffling example ",
+            "labels": [],
+            "created_at": "2024-09-23T11:34:06Z",
+            "summary": "Set explicit seed in iterable dataset ddp shuffling example ### Describe the bug In the examples section of the iterable dataset docs https://huggingface.co/docs/datasets/en/package_reference/main_classes#datasets.IterableDataset the ddp example shuffles without seeding ```python from datasets.distributed import split_dataset_by_node ids = ds.to_iterable_dataset(num_shards=512) ids = ids.shuffle(buffer_size=10_000) #",
+            "path_hints": []
+          },
+          {
+            "id": 6565,
+            "title": " `drop_last_batch=True` for IterableDataset map function is ignored with multiprocessing DataLoader ",
+            "labels": [],
+            "created_at": "2024-01-07T02:46:50Z",
+            "summary": "`drop_last_batch=True` for IterableDataset map function is ignored with multiprocessing DataLoader ### Describe the bug Scenario: - Interleaving two iterable datasets of unequal lengths (`all_exhausted`), followed by a batch mapping with batch size 2 to effectively merge the two datasets and get a sample from each dataset in a single batch, with `drop_last_batch=True` to skip the last batch in case it doesn't have tw",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7538,
+          "top_3_issue_ids": [
+            7538,
+            7475,
+            6565
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7538,
+          "profile_labels": [
+            "bug"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7527",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"accepted\", \"add\", \"auto\", \"automatic\", \"command\", \"commits\", \"contribution\", \"convert\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7869,
+            "title": "Why does dataset merge fail when tools have different parameters?",
+            "labels": [],
+            "created_at": "2025-11-18T08:33:04Z",
+            "summary": "Why does dataset merge fail when tools have different parameters? Hi, I have a question about SFT (Supervised Fine-tuning) for an agent model. Suppose I want to fine-tune an agent model that may receive two different tools: tool1 and tool2. These tools have different parameters and types in their schema definitions. When I try to merge datasets containing different tool definitions, I get the following error: TypeErr",
+            "path_hints": []
+          },
+          {
+            "id": 7527,
+            "title": "Auto-merge option for `convert-to-parquet`",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-04-18T16:03:22Z",
+            "summary": "Auto-merge option for `convert-to-parquet` ### Feature request Add a command-line option, e.g. `--auto-merge-pull-request` that enables automatic merging of the commits created by the `convert-to-parquet` tool. ### Motivation Large datasets may result in dozens of PRs due to the splitting mechanism. Each of these has to be manually accepted via the website. ### Your contribution Happy to look into submitting a PR if ",
+            "path_hints": []
+          },
+          {
+            "id": 7777,
+            "title": "push_to_hub not overwriting but stuck in a loop when there are existing commits",
+            "labels": [],
+            "created_at": "2025-09-17T03:15:35Z",
+            "summary": "push_to_hub not overwriting but stuck in a loop when there are existing commits ### Describe the bug `get_deletions_and_dataset_card` stuck at error a commit has happened error since push to hub for http error 412 for tag 4.1.0. The error does not exists in 4.0.0. ### Steps to reproduce the bug Create code to use push_to_hub, ran twice each time with different content for datasets.Dataset. The code will stuck in time",
+            "path_hints": []
+          },
+          {
+            "id": 7486,
+            "title": "`shared_datadir` fixture is missing",
+            "labels": [],
+            "created_at": "2025-03-27T18:17:12Z",
+            "summary": "`shared_datadir` fixture is missing ### Describe the bug Running the tests for the latest release fails due to missing `shared_datadir` fixture. ### Steps to reproduce the bug Running `pytest` while building a package for Arch Linux leads to these errors: ``` ==================================== ERRORS ==================================== _________ ERROR at setup of test_pdf_feature_encode_example[<lambda>1] ________",
+            "path_hints": [
+              "src/datasets-3.5.0/tests/features/test_pdf.py"
+            ]
+          },
+          {
+            "id": 6565,
+            "title": " `drop_last_batch=True` for IterableDataset map function is ignored with multiprocessing DataLoader ",
+            "labels": [],
+            "created_at": "2024-01-07T02:46:50Z",
+            "summary": "`drop_last_batch=True` for IterableDataset map function is ignored with multiprocessing DataLoader ### Describe the bug Scenario: - Interleaving two iterable datasets of unequal lengths (`all_exhausted`), followed by a batch mapping with batch size 2 to effectively merge the two datasets and get a sample from each dataset in a single batch, with `drop_last_batch=True` to skip the last batch in case it doesn't have tw",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7527,
+          "top_3_issue_ids": [
+            7527,
+            7869,
+            7486
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7527,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7481",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"arrow_reader\", \"deal\", \"dist\", \"dozens\", \"format\", \"frames\", \"huggingfaceh4\", \"instruction\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6638,
+            "title": "Cannot download wmt16 dataset",
+            "labels": [],
+            "created_at": "2024-02-01T19:41:42Z",
+            "summary": "Cannot download wmt16 dataset ### Describe the bug As of this morning (PST) 2/1/2024, seeing the wmt16 dataset is missing from opus , could you suggest an alternative? ``` Downloading data files: 0%| | 0/4 [00:00<?, ?it/s]Traceback (most recent call last): File \"test.py\", line 2, in <module> raw_datasets = load_dataset(\"wmt16\",\"ro-en\",split=\"train\") File \"/usr/local/lib/python3.8/dist-packages/datasets/load.py\", line",
+            "path_hints": []
+          },
+          {
+            "id": 6824,
+            "title": "Winogrande does not seem to be compatible with datasets version of 1.18.0",
+            "labels": [],
+            "created_at": "2024-04-18T16:11:04Z",
+            "summary": "Winogrande does not seem to be compatible with datasets version of 1.18.0 ### Describe the bug I get the following error when simply running `load_dataset('winogrande','winogrande_xl')`. I do not have such an issue in the 1.17.0 version. ```Traceback (most recent call last): File \"<stdin>\", line 1, in <module> File \"/usr/local/lib/python3.10/dist-packages/datasets/load.py\", line 2556, in load_dataset builder_instance",
+            "path_hints": []
+          },
+          {
+            "id": 6670,
+            "title": "ValueError",
+            "labels": [],
+            "created_at": "2024-02-16T11:05:17Z",
+            "summary": "ValueError ### Describe the bug ValueError Traceback (most recent call last) [<ipython-input-11-9b99bc80ec23>](https://localhost:8080/#) in <cell line: 11>() 9 import numpy as np 10 import matplotlib.pyplot as plt ---> 11 from datasets import DatasetDict, Dataset 12 from transformers import AutoTokenizer, AutoModelForSequenceClassification 13 from transformers import Trainer, TrainingArguments 5 frames [/usr/local/li",
+            "path_hints": []
+          },
+          {
+            "id": 6246,
+            "title": "Add new column to dataset",
+            "labels": [],
+            "created_at": "2023-09-17T16:59:48Z",
+            "summary": "Add new column to dataset ### Describe the bug ``` --------------------------------------------------------------------------- KeyError Traceback (most recent call last) [<ipython-input-9-bd197b36b6a0>](https://localhost:8080/#) in <cell line: 1>() ----> 1 dataset['train']['/workspace/data'] 3 frames [/usr/local/lib/python3.10/dist-packages/datasets/formatting/formatting.py](https://localhost:8080/#) in _check_valid_",
+            "path_hints": []
+          },
+          {
+            "id": 7481,
+            "title": "deal with python `10_000` legal number in slice syntax",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-03-26T20:10:54Z",
+            "summary": "deal with python `10_000` legal number in slice syntax ### Feature request ``` In [6]: ds = datasets.load_dataset(\"HuggingFaceH4/ultrachat_200k\", split=\"train_sft[:1000]\") In [7]: ds = datasets.load_dataset(\"HuggingFaceH4/ultrachat_200k\", split=\"train_sft[:1_000]\") [dozens of frames skipped] File /usr/local/lib/python3.10/dist-packages/datasets/arrow_reader.py:444, in _str_to_read_instruction(spec) 442 res = _SUB_SPE",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7481,
+          "top_3_issue_ids": [
+            7481,
+            6246,
+            6638
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7481,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7471",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [\"src/datasets/data_files.py\"], \"focus_terms\": [\"a256b85cbc67aa3f0e75d32d6586afc507cf535b\", \"adding\", \"all\", \"already\", \"appropriate\", \"argument\", \"blob\", \"callable\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7005,
+            "title": "EmptyDatasetError: The directory at /metadata.jsonl doesn't contain any data files",
+            "labels": [],
+            "created_at": "2024-06-27T15:08:26Z",
+            "summary": "EmptyDatasetError: The directory at /metadata.jsonl doesn't contain any data files ### Describe the bug while trying to load custom dataset from jsonl file, I get the error: \"metadata.jsonl doesn't contain any data files\" ### Steps to reproduce the bug This is my [metadata_v2.jsonl](https://github.com/user-attachments/files/16016011/metadata_v2.json) file. I have this file in the folder with all images mentioned in t",
+            "path_hints": []
+          },
+          {
+            "id": 7033,
+            "title": "`from_generator` does not allow to specify the split name",
+            "labels": [],
+            "created_at": "2024-07-09T07:47:58Z",
+            "summary": "`from_generator` does not allow to specify the split name ### Describe the bug I'm building train, dev, and test using `from_generator`; however, in all three cases, the logger prints `Generating train split:` It's not possible to change the split name since it seems to be hardcoded: https://github.com/huggingface/datasets/blob/main/src/datasets/packaged_modules/generator/generator.py ### Steps to reproduce the bug `",
+            "path_hints": [
+              "src/datasets/packaged_modules/generator/generator.py"
+            ]
+          },
+          {
+            "id": 6798,
+            "title": "`DatasetBuilder._split_generators` incomplete type annotation",
+            "labels": [],
+            "created_at": "2024-04-10T14:38:50Z",
+            "summary": "`DatasetBuilder._split_generators` incomplete type annotation ### Describe the bug The [`DatasetBuilder._split_generators`](https://github.com/huggingface/datasets/blob/0f27d7b77c73412cfc50b24354bfd7a3e838202f/src/datasets/builder.py#L1449) function has currently the following signature: ```python class DatasetBuilder: def _split_generators(self, dl_manager: DownloadManager): ... ``` However, the `dl_manager` argumen",
+            "path_hints": [
+              "src/datasets/builder.py",
+              "src/datasets/download/streaming_download_manager.py"
+            ]
+          },
+          {
+            "id": 7471,
+            "title": "Adding argument to `_get_data_files_patterns`",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-03-21T07:17:53Z",
+            "summary": "Adding argument to `_get_data_files_patterns` ### Feature request How about adding if the user already know about the pattern? https://github.com/huggingface/datasets/blob/a256b85cbc67aa3f0e75d32d6586afc507cf535b/src/datasets/data_files.py#L252 ### Motivation While using this load_dataset people might use 10M of images for the local files. However, due to searching all the appropriate file pattern in fsspec, purely s",
+            "path_hints": [
+              "src/datasets/data_files.py"
+            ]
+          },
+          {
+            "id": 7055,
+            "title": "WebDataset with different prefixes are unsupported",
+            "labels": [],
+            "created_at": "2024-07-22T01:14:19Z",
+            "summary": "WebDataset with different prefixes are unsupported ### Describe the bug Consider a WebDataset with multiple images for each item where the number of images may vary: [example](https://huggingface.co/datasets/bigdata-pw/fashion-150k) Due to this [code](https://github.com/huggingface/datasets/blob/87f4c2088854ff33e817e724e75179e9975c1b02/src/datasets/packaged_modules/webdataset/webdataset.py#L76-L80) an error is given.",
+            "path_hints": [
+              "src/datasets/packaged_modules/webdataset/webdataset.py"
+            ]
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7471,
+          "top_3_issue_ids": [
+            7471,
+            7005,
+            6798
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7471,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7457",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"and\", \"appreciated\", \"avoid\", \"but\", \"cache\", \"case\", \"depreciation\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7457,
+            "title": "Document the HF_DATASETS_CACHE env variable",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-03-17T12:24:50Z",
+            "summary": "Document the HF_DATASETS_CACHE env variable ### Feature request Hello, I have a use case where my team is sharing models and dataset in shared directory to avoid duplication. I noticed that the [cache documentation for datasets](https://huggingface.co/docs/datasets/main/en/cache) only mention the `HF_HOME` environment variable but never the `HF_DATASETS_CACHE`. It should be nice to add `HF_DATASETS_CACHE` to datasets",
+            "path_hints": []
+          },
+          {
+            "id": 6897,
+            "title": "datasets template guide :: issue in documentation YAML",
+            "labels": [],
+            "created_at": "2024-05-13T17:33:59Z",
+            "summary": "datasets template guide :: issue in documentation YAML ### Describe the bug There is a YAML error at the top of the page, and I don't think it's supposed to be there ### Steps to reproduce the bug 1. Browse to [this tutorial document](https://github.com/huggingface/datasets/blob/main/templates/README_guide.md) 2. Observe a big red error at the top 3. The rest of the document remains functional ### Expected behavior I",
+            "path_hints": []
+          },
+          {
+            "id": 7323,
+            "title": "Unexpected cache behaviour using load_dataset",
+            "labels": [],
+            "created_at": "2024-12-12T14:03:00Z",
+            "summary": "Unexpected cache behaviour using load_dataset ### Describe the bug Following the (Cache management)[https://huggingface.co/docs/datasets/en/cache] docu and previous behaviour from datasets version 2.18.0, one is able to change the cache directory. Previously, all downloaded/extracted/etc files were found in this folder. As i have recently update to the latest version this is not the case anymore. Downloaded files are",
+            "path_hints": []
+          },
+          {
+            "id": 6720,
+            "title": "TypeError: 'str' object is not callable",
+            "labels": [],
+            "created_at": "2024-03-07T11:07:09Z",
+            "summary": "TypeError: 'str' object is not callable ### Describe the bug I am trying to get the HPLT datasets on the hub. Downloading/re-uploading would be too time- and resource consuming so I wrote [a dataset loader script](https://huggingface.co/datasets/BramVanroy/hplt_mono_v1_2/blob/main/hplt_mono_v1_2.py). I think I am very close but for some reason I always get the error below. It happens during the clean-up phase where t",
+            "path_hints": []
+          },
+          {
+            "id": 7516,
+            "title": "unsloth/DeepSeek-R1-Distill-Qwen-32B server error",
+            "labels": [],
+            "created_at": "2025-04-15T09:26:53Z",
+            "summary": "unsloth/DeepSeek-R1-Distill-Qwen-32B server error ### Describe the bug hfhubhttperror: 500 server error: internal server error for url: https://huggingface.co/api/models/unsloth/deepseek-r1-distill-qwen-32b-bnb-4bit/commits/main (request id: root=1-67fe23fa-3a2150eb444c2a823c388579;de3aed68-c397-4da5-94d4-6565efd3b919) internal error - we're working hard to fix this as soon as possible! ### Steps to reproduce the bug",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7457,
+          "top_3_issue_ids": [
+            7457,
+            6720,
+            6897
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7457,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7442",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"and\", \"becomes\", \"but\", \"can\", \"codebase\", \"contribution\", \"def\", \"done\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7442,
+            "title": "Flexible Loader",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-03-09T16:55:03Z",
+            "summary": "Flexible Loader ### Feature request Can we have a utility function that will use `load_from_disk` when given the local path and `load_dataset` if given an HF dataset? It can be something as simple as this one: ``` def load_hf_dataset(path_or_name): if os.path.exists(path_or_name): return load_from_disk(path_or_name) else: return load_dataset(path_or_name) ``` ### Motivation This can be done inside the user codebase, ",
+            "path_hints": []
+          },
+          {
+            "id": 6353,
+            "title": "load_dataset save_to_disk load_from_disk error",
+            "labels": [],
+            "created_at": "2023-10-26T03:47:06Z",
+            "summary": "load_dataset save_to_disk load_from_disk error ### Describe the bug datasets version\uff1a 2.10.1 I `load_dataset `and `save_to_disk` sucessfully on windows10( **and I `load_from_disk(/LLM/data/wiki)` succcesfully on windows10**), and I copy the dataset `/LLM/data/wiki` into a ubuntu system, but when I `load_from_disk(/LLM/data/wiki)` on ubuntu, something weird happens: ``` load_from_disk('/LLM/data/wiki') File \"/usr/loca",
+            "path_hints": []
+          },
+          {
+            "id": 6982,
+            "title": "cannot split dataset when using load_dataset",
+            "labels": [],
+            "created_at": "2024-06-19T08:07:16Z",
+            "summary": "cannot split dataset when using load_dataset ### Describe the bug when I use load_dataset methods to load mozilla-foundation/common_voice_7_0, it can successfully download and extracted the dataset but It cannot generating the arrow document, This bug happened in my server, my laptop, so as #6906 , but it won't happen in the google colab. I work for it for days, even I load the datasets from local path, it can Genera",
+            "path_hints": []
+          },
+          {
+            "id": 6689,
+            "title": ".load_dataset() method defaults to zstandard",
+            "labels": [],
+            "created_at": "2024-02-22T17:39:27Z",
+            "summary": ".load_dataset() method defaults to zstandard ### Describe the bug Regardless of what method I use, datasets defaults to zstandard for unpacking my datasets. This is poor behavior, because not only is zstandard not a dependency in the huggingface package (and therefore, your dataset loading will be interrupted while it asks you to install the package), but it happens on datasets that are uploaded in json format too, m",
+            "path_hints": []
+          },
+          {
+            "id": 6949,
+            "title": "load_dataset error",
+            "labels": [],
+            "created_at": "2024-06-04T01:24:45Z",
+            "summary": "load_dataset error ### Describe the bug Why does the program get stuck when I use load_dataset method, and it still gets stuck after loading for several hours? In fact, my json file is only 21m, and I can load it in one go using open('', 'r'). ### Steps to reproduce the bug 1. pip install datasets==2.19.2 2. from datasets import Dataset, DatasetDict, NamedSplit, Split, load_dataset 3. data = load_dataset('json', data",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7442,
+          "top_3_issue_ids": [
+            7442,
+            6353,
+            6949
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7442,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7423",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"batch\", \"case\", \"checks\", \"def\", \"due\", \"elif\", \"formatting\", \"indexing\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 8037,
+            "title": "IterableDataset.filter() chaining fails due to features being lost when is_typed=True",
+            "labels": [],
+            "created_at": "2026-03-02T02:30:24Z",
+            "summary": "IterableDataset.filter() chaining fails due to features being lost when is_typed=True ### Describe the bug Chaining multiple .filter() calls on an IterableDataset raises a TypeError: 'NoneType' object is not a mapping on the second .filter() call. In `IterableDataset.filter()`, the internal `ex_iterable` is wrapped with FormattedExamplesIterable: ```python ex_iterable = FormattedExamplesIterable( ex_iterable, formatt",
+            "path_hints": []
+          },
+          {
+            "id": 6246,
+            "title": "Add new column to dataset",
+            "labels": [],
+            "created_at": "2023-09-17T16:59:48Z",
+            "summary": "Add new column to dataset ### Describe the bug ``` --------------------------------------------------------------------------- KeyError Traceback (most recent call last) [<ipython-input-9-bd197b36b6a0>](https://localhost:8080/#) in <cell line: 1>() ----> 1 dataset['train']['/workspace/data'] 3 frames [/usr/local/lib/python3.10/dist-packages/datasets/formatting/formatting.py](https://localhost:8080/#) in _check_valid_",
+            "path_hints": []
+          },
+          {
+            "id": 7423,
+            "title": "Row indexing a dataset with numpy integers",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-02-25T18:44:45Z",
+            "summary": "Row indexing a dataset with numpy integers ### Feature request Allow indexing datasets with a scalar numpy integer type. ### Motivation Indexing a dataset with a scalar numpy.int* object raises a TypeError. This is due to the test in `datasets/formatting/formatting.py:key_to_query_type` ``` python def key_to_query_type(key: Union[int, slice, range, str, Iterable]) -> str: if isinstance(key, int): return \"row\" elif is",
+            "path_hints": []
+          },
+          {
+            "id": 7006,
+            "title": "CI is broken after ruff-0.5.0: E721",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2024-06-28T05:03:28Z",
+            "summary": "CI is broken after ruff-0.5.0: E721 After ruff-0.5.0 release (https://github.com/astral-sh/ruff/releases/tag/0.5.0), our CI is broken due to E721 rule. See: https://github.com/huggingface/datasets/actions/runs/9707641618/job/26793170961?pr=6983 > src/datasets/features/features.py:844:12: E721 Use `is` and `is not` for type comparisons, or `isinstance()` for isinstance checks",
+            "path_hints": [
+              "src/datasets/features/features.py"
+            ]
+          },
+          {
+            "id": 7446,
+            "title": "pyarrow.lib.ArrowTypeError: Expected dict key of type str or bytes, got 'int'",
+            "labels": [],
+            "created_at": "2025-03-12T07:48:37Z",
+            "summary": "pyarrow.lib.ArrowTypeError: Expected dict key of type str or bytes, got 'int' ### Describe the bug A dict with its keys are all str but get following error ```python test_data=[{'input_ids':[1,2,3],'labels':[[Counter({2:1})]]}] dataset = datasets.Dataset.from_list(test_data) ``` ```bash pyarrow.lib.ArrowTypeError: Expected dict key of type str or bytes, got 'int' ``` ### Steps to reproduce the bug . ### Expected beha",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7423,
+          "top_3_issue_ids": [
+            7423,
+            8037,
+            7446
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7423,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7406",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"adding\", \"and\", \"contributing\", \"contribution\", \"core\", \"doesn\", \"each\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6906,
+            "title": "irc_disentangle - Issue with splitting data",
+            "labels": [],
+            "created_at": "2024-05-17T23:19:37Z",
+            "summary": "irc_disentangle - Issue with splitting data ### Describe the bug I am trying to access your database through python using \"datasets.load_dataset(\"irc_disentangle\")\" and I am getting this error message: ValueError: Instruction \"train\" corresponds to no data! ### Steps to reproduce the bug import datasets ds = datasets.load_dataset('irc_disentangle') ds ### Expected behavior The data is supposed to load into ds and be ",
+            "path_hints": []
+          },
+          {
+            "id": 7022,
+            "title": "There is dead code after we require pyarrow >= 15.0.0",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2024-07-03T08:52:57Z",
+            "summary": "There is dead code after we require pyarrow >= 15.0.0 There are code lines specific for pyarrow versions < 15.0.0. However, we require pyarrow >= 15.0.0 since the merge of PR: - #6892 Those code lines are now dead code and should be removed.",
+            "path_hints": []
+          },
+          {
+            "id": 6868,
+            "title": "datasets.BuilderConfig does not work.",
+            "labels": [],
+            "created_at": "2024-05-05T08:08:55Z",
+            "summary": "datasets.BuilderConfig does not work. ### Describe the bug I custom a BuilderConfig and GeneratorBasedBuilder. Here is the code for BuilderConfig ``` class UIEConfig(datasets.BuilderConfig): def __init__( self, *args, data_dir=None, instruction_file=None, instruction_strategy=None, task_config_dir=None, num_examples=None, max_num_instances_per_task=None, max_num_instances_per_eval_task=None, over_sampling=None, **kwa",
+            "path_hints": []
+          },
+          {
+            "id": 7406,
+            "title": "Adding Core Maintainer List to CONTRIBUTING.md",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-02-17T00:32:40Z",
+            "summary": "Adding Core Maintainer List to CONTRIBUTING.md ### Feature request I propose adding a core maintainer list to the `CONTRIBUTING.md` file. ### Motivation The Transformers and Liger-Kernel projects maintain lists of core maintainers for each module. However, the Datasets project doesn't have such a list. ### Your contribution I have nothing to add here.",
+            "path_hints": []
+          },
+          {
+            "id": 7320,
+            "title": "ValueError: You should supply an encoding or a list of encodings to this method that includes input_ids, but you provided ['label']",
+            "labels": [],
+            "created_at": "2024-12-10T20:23:11Z",
+            "summary": "ValueError: You should supply an encoding or a list of encodings to this method that includes input_ids, but you provided ['label'] ### Describe the bug I am trying to create a PEFT model from DISTILBERT model, and run a training loop. However, the trainer.train() is giving me this error: ValueError: You should supply an encoding or a list of encodings to this method that includes input_ids, but you provided ['label'",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7406,
+          "top_3_issue_ids": [
+            7406,
+            7320,
+            6868
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7406,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7386",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"adding\", \"and\", \"azw\", \"azw3\", \"barrier\", \"book\", \"bookfolder\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7386,
+            "title": "Add bookfolder Dataset Builder for Digital Book Formats",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-02-08T14:27:55Z",
+            "summary": "Add bookfolder Dataset Builder for Digital Book Formats ### Feature request This feature proposes adding a new dataset builder called bookfolder to the datasets library. This builder would allow users to easily load datasets consisting of various digital book formats, including: AZW, AZW3, CB7, CBR, CBT, CBZ, EPUB, MOBI, and PDF. ### Motivation Currently, loading datasets of these digital book files requires manual e",
+            "path_hints": []
+          },
+          {
+            "id": 6123,
+            "title": "Inaccurate Bounding Boxes in \"wildreceipt\" Dataset",
+            "labels": [],
+            "created_at": "2023-08-05T14:34:13Z",
+            "summary": "Inaccurate Bounding Boxes in \"wildreceipt\" Dataset ### Describe the bug I would like to bring to your attention an issue related to the accuracy of bounding boxes within the \"wildreceipt\" dataset, which is made available through the Hugging Face API. Specifically, I have identified a discrepancy between the bounding boxes generated by the dataset loading commands, namely `load_dataset(\"Theivaprakasham/wildreceipt\")` ",
+            "path_hints": []
+          },
+          {
+            "id": 6125,
+            "title": "Reinforcement Learning and Robotics are not task categories in HF datasets metadata",
+            "labels": [],
+            "created_at": "2023-08-05T23:59:42Z",
+            "summary": "Reinforcement Learning and Robotics are not task categories in HF datasets metadata ### Describe the bug In https://huggingface.co/models there are task categories for RL and robotics but none in https://huggingface.co/datasets Our lab is currently moving our datasets over to hugging face and would like to be able to add those 2 tags Moreover we see some older datasets that do have that tag, but we can't seem to add ",
+            "path_hints": []
+          },
+          {
+            "id": 6188,
+            "title": "[Feature Request] Check the length of batch before writing so that empty batch is allowed",
+            "labels": [],
+            "created_at": "2023-08-29T06:37:34Z",
+            "summary": "[Feature Request] Check the length of batch before writing so that empty batch is allowed ### Use Case I use `dataset.map(process_fn, batched=True)` to process the dataset, with data **augmentations or filtering**. However, when all examples within a batch is filtered out, i.e. **an empty batch is returned**, the following error will be thrown: ``` ValueError: Schema and number of arrays unequal ``` This is because t",
+            "path_hints": []
+          },
+          {
+            "id": 6441,
+            "title": "Trouble Loading a Gated Dataset For User with Granted Permission",
+            "labels": [],
+            "created_at": "2023-11-21T19:24:36Z",
+            "summary": "Trouble Loading a Gated Dataset For User with Granted Permission ### Describe the bug I have granted permissions to several users to access a gated huggingface dataset. The users accepted the invite and when trying to load the dataset using their access token they get `FileNotFoundError: Couldn't find a dataset script at .....` . Also when they try to click the url link for the dataset they get a 404 error. ### Steps",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7386,
+          "top_3_issue_ids": [
+            7386,
+            6125,
+            6123
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7386,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7381",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"able\", \"again\", \"always\", \"and\", \"api\", \"are\", \"bad\", \"best\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7475,
+            "title": "IterableDataset's state_dict shard_example_idx is always equal to the number of samples in a shard",
+            "labels": [],
+            "created_at": "2025-03-25T13:58:07Z",
+            "summary": "IterableDataset's state_dict shard_example_idx is always equal to the number of samples in a shard ### Describe the bug I've noticed a strange behaviour with Iterable state_dict: the value of shard_example_idx is always equal to the amount of samples in a shard. ### Steps to reproduce the bug I am reusing the example from the doc ```python from datasets import Dataset ds = Dataset.from_dict({\"a\": range(6)}).to_iterab",
+            "path_hints": []
+          },
+          {
+            "id": 6184,
+            "title": "Map cache does not detect function changes in another module",
+            "labels": [
+              "duplicate"
+            ],
+            "created_at": "2023-08-25T22:59:14Z",
+            "summary": "Map cache does not detect function changes in another module ```python # dataset.py import os import datasets if not os.path.exists('/tmp/test.json'): with open('/tmp/test.json', 'w') as file: file.write('[{\"text\": \"hello\"}]') def transform(example): text = example['text'] # text += ' world' return {'text': text} data = datasets.load_dataset('json', data_files=['/tmp/test.json'], split='train') data = data.map(transf",
+            "path_hints": []
+          },
+          {
+            "id": 7129,
+            "title": "Inconsistent output in documentation example: `num_classes` not displayed in `ClassLabel` output",
+            "labels": [],
+            "created_at": "2024-08-28T12:27:48Z",
+            "summary": "Inconsistent output in documentation example: `num_classes` not displayed in `ClassLabel` output In the documentation for [ClassLabel](https://huggingface.co/docs/datasets/v2.21.0/en/package_reference/main_classes#datasets.ClassLabel), there is an example of usage with the following code: ```` from datasets import Features features = Features({'label': ClassLabel(num_classes=3, names=['bad', 'ok', 'good'])}) features",
+            "path_hints": []
+          },
+          {
+            "id": 7381,
+            "title": "Iterating over values of a column in the IterableDataset",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-01-28T13:17:36Z",
+            "summary": "Iterating over values of a column in the IterableDataset ### Feature request I would like to be able to iterate (and re-iterate if needed) over a column of an `IterableDataset` instance. The following example shows the supposed API: ```python def gen(): yield {\"text\": \"Good\", \"label\": 0} yield {\"text\": \"Bad\", \"label\": 1} ds = IterableDataset.from_generator(gen) texts = ds[\"text\"] for v in texts: print(v) # Prints \"Go",
+            "path_hints": []
+          },
+          {
+            "id": 7033,
+            "title": "`from_generator` does not allow to specify the split name",
+            "labels": [],
+            "created_at": "2024-07-09T07:47:58Z",
+            "summary": "`from_generator` does not allow to specify the split name ### Describe the bug I'm building train, dev, and test using `from_generator`; however, in all three cases, the logger prints `Generating train split:` It's not possible to change the split name since it seems to be hardcoded: https://github.com/huggingface/datasets/blob/main/src/datasets/packaged_modules/generator/generator.py ### Steps to reproduce the bug `",
+            "path_hints": [
+              "src/datasets/packaged_modules/generator/generator.py"
+            ]
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7381,
+          "top_3_issue_ids": [
+            7381,
+            6184,
+            7033
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7381,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7364",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"access\", \"agreement\", \"and\", \"api\", \"approach\", \"approval\", \"authors\", \"automatic\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6958,
+            "title": "My Private Dataset doesn't exist on the Hub or cannot be accessed",
+            "labels": [],
+            "created_at": "2024-06-06T06:52:19Z",
+            "summary": "My Private Dataset doesn't exist on the Hub or cannot be accessed ### Describe the bug ``` File \"/root/miniconda3/envs/gino_conda/lib/python3.9/site-packages/datasets/load.py\", line 1852, in dataset_module_factory raise DatasetNotFoundError(msg + f\" at revision '{revision}'\" if revision else msg) datasets.exceptions.DatasetNotFoundError: Dataset 'xxx' doesn't exist on the Hub or cannot be accessed >>> dataset = load_",
+            "path_hints": []
+          },
+          {
+            "id": 6190,
+            "title": "`Invalid user token` even when correct user token is passed!",
+            "labels": [],
+            "created_at": "2023-08-29T12:37:03Z",
+            "summary": "`Invalid user token` even when correct user token is passed! ### Describe the bug I'm working on a dataset which comprises other datasets on the hub. URL: https://huggingface.co/datasets/open-asr-leaderboard/datasets-test-only Note: Some of the sub-datasets in this metadataset require explicit access. All the other datasets work fine, except, `common_voice`. ### Steps to reproduce the bug https://github.com/Vaibhavs1",
+            "path_hints": []
+          },
+          {
+            "id": 7364,
+            "title": "API endpoints for gated dataset access requests",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-01-09T06:21:20Z",
+            "summary": "API endpoints for gated dataset access requests ### Feature request I would like a programatic way of requesting access to gated datasets. The current solution to gain access forces me to visit a website and physically click an \"agreement\" button (as per the [documentation](https://huggingface.co/docs/hub/en/datasets-gated#access-gated-datasets-as-a-user)). An ideal approach would be HF API download methods that nego",
+            "path_hints": []
+          },
+          {
+            "id": 6605,
+            "title": "ELI5 no longer available, but referenced in example code",
+            "labels": [],
+            "created_at": "2024-01-19T10:21:52Z",
+            "summary": "ELI5 no longer available, but referenced in example code Here, an example code is given: https://huggingface.co/docs/transformers/tasks/language_modeling This code + article references the ELI5 dataset. ELI5 is no longer available, as the ELI5 dataset page states: https://huggingface.co/datasets/eli5 \"Defunct: Dataset \"eli5\" is defunct and no longer accessible due to unavailability of the source data. Reddit recently",
+            "path_hints": []
+          },
+          {
+            "id": 6441,
+            "title": "Trouble Loading a Gated Dataset For User with Granted Permission",
+            "labels": [],
+            "created_at": "2023-11-21T19:24:36Z",
+            "summary": "Trouble Loading a Gated Dataset For User with Granted Permission ### Describe the bug I have granted permissions to several users to access a gated huggingface dataset. The users accepted the invite and when trying to load the dataset using their access token they get `FileNotFoundError: Couldn't find a dataset script at .....` . Also when they try to click the url link for the dataset they get a 404 error. ### Steps",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7364,
+          "top_3_issue_ids": [
+            7364,
+            6441,
+            6605
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7364,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7356",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"adding\", \"and\", \"can\", \"contribution\", \"datasetdict\", \"depending\", \"differently\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7883,
+            "title": "Data.to_csv() cannot be recognized by pylance",
+            "labels": [],
+            "created_at": "2025-11-26T16:16:56Z",
+            "summary": "Data.to_csv() cannot be recognized by pylance ### Describe the bug Hi, everyone ! I am a beginner with datasets. I am testing reading multiple CSV files from a zip archive. The result of reading the dataset shows success, and it can ultimately be correctly saved to CSV. Intermediate results: ``` Generating train split: 62973 examples [00:00, 175939.01 examples/s] DatasetDict({ train: Dataset({ features: ['\u4ea4\u6613\u65f6\u95f4\\t', '\u6536",
+            "path_hints": []
+          },
+          {
+            "id": 6349,
+            "title": "Can't load ds = load_dataset(\"imdb\")",
+            "labels": [],
+            "created_at": "2023-10-25T13:29:51Z",
+            "summary": "Can't load ds = load_dataset(\"imdb\") ### Describe the bug I did `from datasets import load_dataset, load_metric` and then `ds = load_dataset(\"imdb\")` and it gave me the error: ExpectedMoreDownloadedFiles: {'http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz'} I tried doing `ds = load_dataset(\"imdb\",download_mode=\"force_redownload\")` as well as reinstalling dataset. I still face this problem. ### Steps to ",
+            "path_hints": []
+          },
+          {
+            "id": 7433,
+            "title": "`Dataset.map` ignores existing caches and remaps when ran with different `num_proc`",
+            "labels": [],
+            "created_at": "2025-03-03T05:51:26Z",
+            "summary": "`Dataset.map` ignores existing caches and remaps when ran with different `num_proc` ### Describe the bug If you `map` a dataset and save it to a specific `cache_file_name` with a specific `num_proc`, and then call map again with that same existing `cache_file_name` but a different `num_proc`, the dataset will be re-mapped. ### Steps to reproduce the bug 1. Download a dataset ```python import datasets dataset = datase",
+            "path_hints": []
+          },
+          {
+            "id": 7356,
+            "title": "How about adding a feature to pass the key when performing map on DatasetDict?",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2025-01-06T08:13:52Z",
+            "summary": "How about adding a feature to pass the key when performing map on DatasetDict? ### Feature request Add a feature to pass the key of the DatasetDict when performing map ### Motivation I often preprocess using map on DatasetDict. Sometimes, I need to preprocess train and valid data differently depending on the task. So, I thought it would be nice to pass the key (like train, valid) when performing map on DatasetDict. W",
+            "path_hints": []
+          },
+          {
+            "id": 6287,
+            "title": "map() not recognizing \"text\"",
+            "labels": [],
+            "created_at": "2023-10-09T10:27:30Z",
+            "summary": "map() not recognizing \"text\" ### Describe the bug The [map() documentation](https://huggingface.co/docs/datasets/v2.14.5/en/package_reference/main_classes#datasets.Dataset.map) reads: ` ds = ds.map(lambda x: tokenizer(x['text'], truncation=True, padding=True), batched=True)` I have been trying to reproduce it in my code as: `tokenizedDataset = dataset.map(lambda x: tokenizer(x['text']), batched=True)` But it doesn't ",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7356,
+          "top_3_issue_ids": [
+            7356,
+            7883,
+            7433
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7356,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7347",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"achieve\", \"arrow\", \"btw\", \"can\", \"cc3m\", \"cc3m_1\", \"connection\", \"conversion\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7347,
+            "title": "Converting Arrow to WebDataset TAR Format for Offline Use",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2024-12-27T01:40:44Z",
+            "summary": "Converting Arrow to WebDataset TAR Format for Offline Use ### Feature request Hi, I've downloaded an Arrow-formatted dataset offline using the hugggingface's datasets library by: ``` import json from datasets import load_dataset dataset = load_dataset(\"pixparse/cc3m-wds\") dataset.save_to_disk(\"./cc3m_1\") ``` now I need to convert it to WebDataset's TAR format for offline data ingestion. Is there a straightforward met",
+            "path_hints": []
+          },
+          {
+            "id": 6891,
+            "title": "Unable to load JSON saved using `to_json`",
+            "labels": [],
+            "created_at": "2024-05-12T01:02:51Z",
+            "summary": "Unable to load JSON saved using `to_json` ### Describe the bug Datasets stored in the JSON format cannot be loaded using `json.load()` ### Steps to reproduce the bug ``` import json from datasets import load_dataset dataset = load_dataset(\"squad\") train_dataset, test_dataset = dataset[\"train\"], dataset[\"validation\"] test_dataset.to_json(\"full_dataset.json\") # This works loaded_test = load_dataset(\"json\", data_files=\"",
+            "path_hints": []
+          },
+          {
+            "id": 6088,
+            "title": "Loading local data files initiates web requests",
+            "labels": [],
+            "created_at": "2023-07-28T04:06:26Z",
+            "summary": "Loading local data files initiates web requests As documented in the [official docs](https://huggingface.co/docs/datasets/v2.14.0/en/package_reference/loading_methods#datasets.load_dataset.example-2), I tried to load datasets from local files by ```python # Load a JSON file from datasets import load_dataset ds = load_dataset('json', data_files='path/to/local/my_dataset.json') ``` But this failed on a web request beca",
+            "path_hints": []
+          },
+          {
+            "id": 6949,
+            "title": "load_dataset error",
+            "labels": [],
+            "created_at": "2024-06-04T01:24:45Z",
+            "summary": "load_dataset error ### Describe the bug Why does the program get stuck when I use load_dataset method, and it still gets stuck after loading for several hours? In fact, my json file is only 21m, and I can load it in one go using open('', 'r'). ### Steps to reproduce the bug 1. pip install datasets==2.19.2 2. from datasets import Dataset, DatasetDict, NamedSplit, Split, load_dataset 3. data = load_dataset('json', data",
+            "path_hints": []
+          },
+          {
+            "id": 6982,
+            "title": "cannot split dataset when using load_dataset",
+            "labels": [],
+            "created_at": "2024-06-19T08:07:16Z",
+            "summary": "cannot split dataset when using load_dataset ### Describe the bug when I use load_dataset methods to load mozilla-foundation/common_voice_7_0, it can successfully download and extracted the dataset but It cannot generating the arrow document, This bug happened in my server, my laptop, so as #6906 , but it won't happen in the google colab. I work for it for days, even I load the datasets from local path, it can Genera",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7347,
+          "top_3_issue_ids": [
+            7347,
+            6088,
+            6949
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7347,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7286",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"and\", \"anywhere\", \"but\", \"can\", \"com\", \"concurrent\", \"contribute\", \"contribution\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7286,
+            "title": "Concurrent loading in `load_from_disk` - `num_proc` as a param ",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2024-11-08T23:21:40Z",
+            "summary": "Concurrent loading in `load_from_disk` - `num_proc` as a param ### Feature request https://github.com/huggingface/datasets/pull/6464 mentions a `num_proc` param while loading dataset from disk, but can't find that in the documentation and code anywhere ### Motivation Make loading large datasets from disk faster ### Your contribution Happy to contribute if given pointers",
+            "path_hints": []
+          },
+          {
+            "id": 7010,
+            "title": "Re-enable raising error from huggingface-hub FutureWarning in CI",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2024-06-28T07:23:40Z",
+            "summary": "Re-enable raising error from huggingface-hub FutureWarning in CI Re-enable raising error from huggingface-hub FutureWarning in CI, which was disabled by PR: - #6876 Note that this can only be done once transformers releases the fix: - https://github.com/huggingface/transformers/pull/31007",
+            "path_hints": []
+          },
+          {
+            "id": 7994,
+            "title": "Bump fsspec upper bound constraint",
+            "labels": [],
+            "created_at": "2026-02-06T11:37:54Z",
+            "summary": "Bump fsspec upper bound constraint Would it be possible to bump fsspec upper bound to the latest (2026.2.0)? I saw you had some API compat issues in the past (https://github.com/huggingface/datasets/issues/7326) and I understand the need for an upper bound. But I wonder if you think your CI and tests are a good proxy to catch fsspec API breakage? If that's the case then triggering dataset CI with the latest version o",
+            "path_hints": []
+          },
+          {
+            "id": 7841,
+            "title": "DOC: `mode` parameter on pdf and video features unused",
+            "labels": [],
+            "created_at": "2025-11-02T12:37:47Z",
+            "summary": "DOC: `mode` parameter on pdf and video features unused Following up on https://github.com/huggingface/datasets/pull/7840 I asked claude code to check for undocumented parameters for other features and it found: - mode parameter on video is documented but unused: https://github.com/huggingface/datasets/blob/main/src/datasets/features/video.py#L48-L49 - the same goes for the mode parameter on the pdf feature: https://g",
+            "path_hints": [
+              "src/datasets/features/pdf.py",
+              "src/datasets/features/video.py"
+            ]
+          },
+          {
+            "id": 6225,
+            "title": "Conversion from RGB to BGR in Object Detection tutorial",
+            "labels": [],
+            "created_at": "2023-09-08T06:49:19Z",
+            "summary": "Conversion from RGB to BGR in Object Detection tutorial The [tutorial](https://huggingface.co/docs/datasets/main/en/object_detection) mentions the necessity of conversion the input image from BGR to RGB > albumentations expects the image to be in BGR format, not RGB, so you\u2019ll have to convert the image before applying the transform. [Link to tutorial](https://github.com/huggingface/datasets/blob/0a068dbf3b446417ffd89",
+            "path_hints": [
+              "docs/source/object_detection.md"
+            ]
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7286,
+          "top_3_issue_ids": [
+            7286,
+            7010,
+            7994
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7286,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7241",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"add\", \"anything\", \"argument\", \"can\", \"contribution\", \"couldn\", \"create\", \"deleting\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7780,
+            "title": "BIGPATENT dataset inaccessible (deprecated script loader)",
+            "labels": [],
+            "created_at": "2025-09-18T08:25:34Z",
+            "summary": "BIGPATENT dataset inaccessible (deprecated script loader) dataset: https://huggingface.co/datasets/NortheasternUniversity/big_patent When I try to load it with the datasets library, it fails with: RuntimeError: Dataset scripts are no longer supported, but found big_patent.py Could you please publish a Parquet/Arrow export of BIGPATENT on the Hugging Face so that it can be accessed with datasets>=4.x.",
+            "path_hints": []
+          },
+          {
+            "id": 6376,
+            "title": "Caching problem when deleting a dataset ",
+            "labels": [],
+            "created_at": "2023-11-02T10:15:58Z",
+            "summary": "Caching problem when deleting a dataset ### Describe the bug Pushing a dataset with n + m features to a repo which was deleted, but contained n features, will fail. ### Steps to reproduce the bug 1. Create a dataset with n features per row 2. `dataset.push_to_hub(YOUR_PATH, SPLIT, token=TOKEN)` 3. Go on the hub, delete the repo at `YOUR_PATH` 4. Update your local dataset to have n + m features per row 5. `dataset.pus",
+            "path_hints": []
+          },
+          {
+            "id": 6947,
+            "title": "FileNotFoundError\uff1aerror  when loading C4 dataset",
+            "labels": [],
+            "created_at": "2024-06-03T13:06:33Z",
+            "summary": "FileNotFoundError\uff1aerror when loading C4 dataset ### Describe the bug can't load c4 datasets When I replace the datasets package to 2.12.2 I get raise datasets.utils.info_utils.ExpectedMoreSplits: {'train'} How can I fix this\uff1f ### Steps to reproduce the bug 1.from datasets import load_dataset 2.dataset = load_dataset('allenai/c4', data_files={'validation': 'en/c4-validation.00003-of-00008.json.gz'}, split='validation'",
+            "path_hints": []
+          },
+          {
+            "id": 7573,
+            "title": "No Samsum dataset",
+            "labels": [],
+            "created_at": "2025-05-20T09:54:35Z",
+            "summary": "No Samsum dataset ### Describe the bug https://huggingface.co/datasets/Samsung/samsum dataset not found error 404 Originated from https://github.com/meta-llama/llama-cookbook/issues/948 ### Steps to reproduce the bug go to website https://huggingface.co/datasets/Samsung/samsum see the error also downloading it with python throws ``` Couldn't find 'Samsung/samsum' on the Hugging Face Hub either: FileNotFoundError: Sam",
+            "path_hints": []
+          },
+          {
+            "id": 7241,
+            "title": "`push_to_hub` overwrite argument",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2024-10-20T03:23:26Z",
+            "summary": "`push_to_hub` overwrite argument ### Feature request Add an `overwrite` argument to the `push_to_hub` method. ### Motivation I want to overwrite a repo without deleting it on Hugging Face. Is this possible? I couldn't find anything in the documentation or tutorials. ### Your contribution I can create a PR.",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7241,
+          "top_3_issue_ids": [
+            7241,
+            6947,
+            6376
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7241,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7192",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"able\", \"achieve\", \"add\", \"additional\", \"and\", \"automatically\", \"benefit\", \"com\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 6451,
+            "title": "Unable to read \"marsyas/gtzan\" data",
+            "labels": [],
+            "created_at": "2023-11-25T15:13:17Z",
+            "summary": "Unable to read \"marsyas/gtzan\" data Hi, this is my code and the error: ``` from datasets import load_dataset gtzan = load_dataset(\"marsyas/gtzan\", \"all\") ``` [error_trace.txt](https://github.com/huggingface/datasets/files/13464397/error_trace.txt) [audio_yml.txt](https://github.com/huggingface/datasets/files/13464410/audio_yml.txt) Python 3.11.5 Jupyter Notebook 6.5.4 Windows 10 I'm able to download and work with oth",
+            "path_hints": []
+          },
+          {
+            "id": 6830,
+            "title": "Add a doc page for the convert_to_parquet CLI",
+            "labels": [
+              "documentation"
+            ],
+            "created_at": "2024-04-23T09:49:04Z",
+            "summary": "Add a doc page for the convert_to_parquet CLI Follow-up to https://github.com/huggingface/datasets/pull/6795. Useful for https://github.com/huggingface/dataset-viewer/issues/2742. cc @albertvillanova",
+            "path_hints": []
+          },
+          {
+            "id": 7611,
+            "title": "Code example for dataset.add_column() does not reflect correct way to use function",
+            "labels": [],
+            "created_at": "2025-06-12T19:42:29Z",
+            "summary": "Code example for dataset.add_column() does not reflect correct way to use function https://github.com/huggingface/datasets/blame/38d4d0e11e22fdbc4acf373d2421d25abeb43439/src/datasets/arrow_dataset.py#L5925C10-L5925C10 The example seems to suggest that dataset.add_column() can add column inplace, however, this is wrong -- it cannot. It returns a new dataset with the column added to it.",
+            "path_hints": [
+              "src/datasets/arrow_dataset.py"
+            ]
+          },
+          {
+            "id": 6507,
+            "title": "where is glue_metric.py> @Frankie123421 what was the resolution to this?",
+            "labels": [],
+            "created_at": "2023-12-17T09:58:25Z",
+            "summary": "where is glue_metric.py> @Frankie123421 what was the resolution to this? > @Frankie123421 what was the resolution to this? use glue_metric.py instead of glue.py in load_metric _Originally posted by @Frankie123421 in https://github.com/huggingface/datasets/issues/2117#issuecomment-905093763_",
+            "path_hints": []
+          },
+          {
+            "id": 7192,
+            "title": "Add repeat() for iterable datasets",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2024-10-02T17:48:13Z",
+            "summary": "Add repeat() for iterable datasets ### Feature request It would be useful to be able to straightforwardly repeat iterable datasets indefinitely, to provide complete control over starting and ending of iteration to the user. An IterableDataset.repeat(n) function could do this automatically ### Motivation This feature was discussed in this issue https://github.com/huggingface/datasets/issues/7147, and would resolve the",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7192,
+          "top_3_issue_ids": [
+            7192,
+            6830,
+            7611
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7192,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      },
+      {
+        "task_id": "triage_7178",
+        "task_type": "triage",
+        "difficulty": "easy",
+        "issue": "IssueTriage: choose the single best issue for the contributor profile.\n\nContributor profile: {\"focus_labels\": [\"enhancement\"], \"focus_paths\": [], \"focus_terms\": [\"https\", \"org\", \"pep\", \"peps\"], \"summary\": \"Contributor profile derived from historically beginner-friendly issues with overlapping labels, repo areas, and bug vocabulary.\"}",
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": 7178,
+            "title": "Support Python 3.11",
+            "labels": [
+              "enhancement"
+            ],
+            "created_at": "2024-09-27T08:50:47Z",
+            "summary": "Support Python 3.11 Support Python 3.11: https://peps.python.org/pep-0664/",
+            "path_hints": []
+          },
+          {
+            "id": 6136,
+            "title": "CI check_code_quality error: E721 Do not compare types, use `isinstance()`",
+            "labels": [
+              "maintenance"
+            ],
+            "created_at": "2023-08-10T10:19:50Z",
+            "summary": "CI check_code_quality error: E721 Do not compare types, use `isinstance()` After latest release of `ruff` (https://pypi.org/project/ruff/0.0.284/), we get the following CI error: ``` src/datasets/utils/py_utils.py:689:12: E721 Do not compare types, use `isinstance()` ```",
+            "path_hints": [
+              "src/datasets/utils/py_utils.py"
+            ]
+          },
+          {
+            "id": 6894,
+            "title": "Better document defaults of to_json",
+            "labels": [
+              "documentation"
+            ],
+            "created_at": "2024-05-13T13:30:54Z",
+            "summary": "Better document defaults of to_json Better document defaults of `to_json`: the default format is [JSON-Lines](https://jsonlines.org/). Related to: - #6891",
+            "path_hints": []
+          },
+          {
+            "id": 6384,
+            "title": "Load the local dataset folder from other place",
+            "labels": [],
+            "created_at": "2023-11-06T13:07:04Z",
+            "summary": "Load the local dataset folder from other place This is from https://github.com/huggingface/diffusers/issues/5573",
+            "path_hints": []
+          },
+          {
+            "id": 6513,
+            "title": "Support huggingface-hub 0.20.0",
+            "labels": [],
+            "created_at": "2023-12-19T15:15:46Z",
+            "summary": "Support huggingface-hub 0.20.0 CI to test the support of `huggingface-hub` 0.20.0: https://github.com/huggingface/datasets/compare/main...ci-test-huggingface-hub-v0.20.0.rc1 We need to merge: - #6510 - #6512 - #6516",
+            "path_hints": []
+          }
+        ],
+        "ground_truth": {
+          "best_issue_id": 7178,
+          "top_3_issue_ids": [
+            7178,
+            6894,
+            6136
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7178,
+          "profile_labels": [
+            "enhancement"
+          ]
+        }
+      }
+    ],
+    "duplicate": [
+      {
+        "task_id": "duplicate_6560",
+        "task_type": "duplicate",
+        "difficulty": "medium",
+        "issue": "DuplicateDetection: return duplicate issue IDs for the new issue, or an empty list if none apply.\n\nNew issue #6560: Support Video \n\nSupport Video ### Feature request HF datasets are awesome in supporting text and images. Will be great to see such a support in videos :) ### Motivation Video generation :) ### Your contribution Will probably be limited to raising this feature request ;)",
+        "candidates": [
+          {
+            "id": 6450,
+            "title": "Support multiple image/audio columns in ImageFolder/AudioFolder",
+            "labels": [
+              "duplicate",
+              "enhancement"
+            ],
+            "summary": "Support multiple image/audio columns in ImageFolder/AudioFolder ### Feature request Have a metadata.csv file with multiple columns that point to relative image or audio files. ### Motivation Currently, ImageFolder allows one column, called `file_name`, pointing to relative image "
+          },
+          {
+            "id": 6400,
+            "title": "Safely load datasets by disabling execution of dataset loading script",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Safely load datasets by disabling execution of dataset loading script ### Feature request Is there a way to disable execution of dataset loading script using `load_dataset`? This is a security vulnerability that could lead to arbitrary code execution. Any suggested workarounds ar"
+          },
+          {
+            "id": 7063,
+            "title": "Add `batch` method to `Dataset`",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Add `batch` method to `Dataset` ### Feature request Add a `batch` method to the Dataset class, similar to the one recently implemented for `IterableDataset` in PR #7054. ### Motivation A batched iteration speeds up data loading significantly (see e.g. #6279) ### Your contribution"
+          },
+          {
+            "id": 7406,
+            "title": "Adding Core Maintainer List to CONTRIBUTING.md",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Adding Core Maintainer List to CONTRIBUTING.md ### Feature request I propose adding a core maintainer list to the `CONTRIBUTING.md` file. ### Motivation The Transformers and Liger-Kernel projects maintain lists of core maintainers for each module. However, the Datasets project do"
+          },
+          {
+            "id": 7153,
+            "title": "Support data files with .ndjson extension",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support data files with .ndjson extension ### Feature request Support data files with `.ndjson` extension. ### Motivation We already support data files with `.jsonl` extension. ### Your contribution I am opening a PR."
+          },
+          {
+            "id": 6467,
+            "title": "New version release request",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "New version release request ### Feature request Hi! I am using `datasets` in library `xtuner` and am highly interested in the features introduced since v2.15.0. To avoid installation from source in our pypi wheels, we are eagerly waiting for the new release. So, Does your team ha"
+          },
+          {
+            "id": 7442,
+            "title": "Flexible Loader",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Flexible Loader ### Feature request Can we have a utility function that will use `load_from_disk` when given the local path and `load_dataset` if given an HF dataset? It can be something as simple as this one: ``` def load_hf_dataset(path_or_name): if os.path.exists(path_or_name)"
+          },
+          {
+            "id": 7241,
+            "title": "`push_to_hub` overwrite argument",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "`push_to_hub` overwrite argument ### Feature request Add an `overwrite` argument to the `push_to_hub` method. ### Motivation I want to overwrite a repo without deleting it on Hugging Face. Is this possible? I couldn't find anything in the documentation or tutorials. ### Your cont"
+          },
+          {
+            "id": 7286,
+            "title": "Concurrent loading in `load_from_disk` - `num_proc` as a param ",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Concurrent loading in `load_from_disk` - `num_proc` as a param ### Feature request https://github.com/huggingface/datasets/pull/6464 mentions a `num_proc` param while loading dataset from disk, but can't find that in the documentation and code anywhere ### Motivation Make loading"
+          },
+          {
+            "id": 7741,
+            "title": "Preserve tree structure when loading HDF5",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Preserve tree structure when loading HDF5 ### Feature request https://github.com/huggingface/datasets/pull/7740#discussion_r2285605374 ### Motivation `datasets` has the `Features` class for representing nested features. HDF5 files have groups of datasets which are nested, though "
+          },
+          {
+            "id": 6984,
+            "title": "Convert polars DataFrame back to datasets",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Convert polars DataFrame back to datasets ### Feature request This returns error. ```python from datasets import Dataset dsdf = Dataset.from_dict({\"x\": [[1, 2], [3, 4, 5]], \"y\": [\"a\", \"b\"]}) Dataset.from_polars(dsdf.to_polars()) ``` ValueError: Arrow type large_list<item: int64> "
+          },
+          {
+            "id": 7356,
+            "title": "How about adding a feature to pass the key when performing map on DatasetDict?",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "How about adding a feature to pass the key when performing map on DatasetDict? ### Feature request Add a feature to pass the key of the DatasetDict when performing map ### Motivation I often preprocess using map on DatasetDict. Sometimes, I need to preprocess train and valid data"
+          },
+          {
+            "id": 6360,
+            "title": " Add support for `Sequence(Audio/Image)` feature in `push_to_hub`",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Add support for `Sequence(Audio/Image)` feature in `push_to_hub` ### Feature request Allow for `Sequence` of `Image` (or `Audio`) to be embedded inside the shards. ### Motivation Currently, thanks to #3685, when `embed_external_files` is set to True (which is the default) in `pus"
+          },
+          {
+            "id": 7591,
+            "title": "Add num_proc parameter to push_to_hub",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Add num_proc parameter to push_to_hub ### Feature request A number of processes parameter to the dataset.push_to_hub method ### Motivation Shards are currently uploaded serially which makes it slow for many shards, uploading can be done in parallel and much faster"
+          },
+          {
+            "id": 6745,
+            "title": "Scraping the whole of github including private repos is bad; kindly stop",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Scraping the whole of github including private repos is bad; kindly stop ### Feature request https://github.com/bigcode-project/opt-out-v2 - opt out is not consent. kindly quit this ridiculous nonsense. ### Motivation [EDITED: insults not tolerated] ### Your contribution [EDITED:"
+          },
+          {
+            "id": 6740,
+            "title": "Support for loading geotiff files as a part of the ImageFolder",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support for loading geotiff files as a part of the ImageFolder ### Feature request Request for adding rasterio support to load geotiff as a part of ImageFolder, instead of using PIL ### Motivation As of now, there are many datasets in HuggingFace Hub which are predominantly focus"
+          },
+          {
+            "id": 6139,
+            "title": "Offline dataset viewer",
+            "labels": [
+              "dataset-viewer",
+              "enhancement"
+            ],
+            "summary": "Offline dataset viewer ### Feature request The dataset viewer feature is very nice. It enables to the user to easily view the dataset. However, when working for private companies we cannot always upload the dataset to the hub. Is there a way to create dataset viewer offline? I.e."
+          },
+          {
+            "id": 6599,
+            "title": "Easy way to segment into 30s snippets given an m4a file and a vtt file ",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Easy way to segment into 30s snippets given an m4a file and a vtt file ### Feature request Uploading datasets is straightforward thanks to the ability to push Audio to hub. However, it would be nice if the data (text and audio) could be segmented when being pushed (if not possibl"
+          },
+          {
+            "id": 6756,
+            "title": "Support SQLite files?",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support SQLite files? ### Feature request Support loading a dataset from a SQLite file https://huggingface.co/datasets/severo/test_iris_sqlite/tree/main ### Motivation SQLite is a popular file format. ### Your contribution See discussion on slack: https://huggingface.slack.com/ar"
+          },
+          {
+            "id": 6299,
+            "title": "Support for newer versions of JAX",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support for newer versions of JAX ### Feature request Hi, I like your idea of adapting the datasets library to be usable with JAX. Thank you for that. However, in your [setup.py](https://github.com/huggingface/datasets/blob/main/setup.py), you enforce old versions of JAX <= 0.3.."
+          }
+        ],
+        "ground_truth": {
+          "duplicate_issue_ids": [
+            6450
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 6560,
+          "label_marked_duplicate": true,
+          "explicit_duplicate_refs": []
+        }
+      },
+      {
+        "task_id": "duplicate_6450",
+        "task_type": "duplicate",
+        "difficulty": "medium",
+        "issue": "DuplicateDetection: return duplicate issue IDs for the new issue, or an empty list if none apply.\n\nNew issue #6450: Support multiple image/audio columns in ImageFolder/AudioFolder\n\nSupport multiple image/audio columns in ImageFolder/AudioFolder ### Feature request Have a metadata.csv file with multiple columns that point to relative image or audio files. ### Motivation Currently, ImageFolder allows one column, called `file_name`, pointing to relative image files. On the same model, AudioFolder allows one column, called `file_name`, pointing to relative audio files. But it's not possible to have two image columns, or to have two audio column, or to have one audio column and one image column. ### Your contribution no specific contribution",
+        "candidates": [
+          {
+            "id": 6560,
+            "title": "Support Video ",
+            "labels": [
+              "duplicate",
+              "enhancement"
+            ],
+            "summary": "Support Video ### Feature request HF datasets are awesome in supporting text and images. Will be great to see such a support in videos :) ### Motivation Video generation :) ### Your contribution Will probably be limited to raising this feature request ;)"
+          },
+          {
+            "id": 6691,
+            "title": "load_dataset() does not support tsv",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "load_dataset() does not support tsv ### Feature request the load_dataset() for local functions support file types like csv, json etc but not of type tsv (tab separated values). ### Motivation cant easily load files of type tsv, have to convert them to another type like csv then l"
+          },
+          {
+            "id": 6360,
+            "title": " Add support for `Sequence(Audio/Image)` feature in `push_to_hub`",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Add support for `Sequence(Audio/Image)` feature in `push_to_hub` ### Feature request Allow for `Sequence` of `Image` (or `Audio`) to be embedded inside the shards. ### Motivation Currently, thanks to #3685, when `embed_external_files` is set to True (which is the default) in `pus"
+          },
+          {
+            "id": 7286,
+            "title": "Concurrent loading in `load_from_disk` - `num_proc` as a param ",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Concurrent loading in `load_from_disk` - `num_proc` as a param ### Feature request https://github.com/huggingface/datasets/pull/6464 mentions a `num_proc` param while loading dataset from disk, but can't find that in the documentation and code anywhere ### Motivation Make loading"
+          },
+          {
+            "id": 7442,
+            "title": "Flexible Loader",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Flexible Loader ### Feature request Can we have a utility function that will use `load_from_disk` when given the local path and `load_dataset` if given an HF dataset? It can be something as simple as this one: ``` def load_hf_dataset(path_or_name): if os.path.exists(path_or_name)"
+          },
+          {
+            "id": 6599,
+            "title": "Easy way to segment into 30s snippets given an m4a file and a vtt file ",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Easy way to segment into 30s snippets given an m4a file and a vtt file ### Feature request Uploading datasets is straightforward thanks to the ability to push Audio to hub. However, it would be nice if the data (text and audio) could be segmented when being pushed (if not possibl"
+          },
+          {
+            "id": 6740,
+            "title": "Support for loading geotiff files as a part of the ImageFolder",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support for loading geotiff files as a part of the ImageFolder ### Feature request Request for adding rasterio support to load geotiff as a part of ImageFolder, instead of using PIL ### Motivation As of now, there are many datasets in HuggingFace Hub which are predominantly focus"
+          },
+          {
+            "id": 6202,
+            "title": "avoid downgrading jax version",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "avoid downgrading jax version ### Feature request Whenever I `pip install datasets[jax]` it downgrades jax to version 0.3.25. I seem to be able to install this library first then upgrade jax back to version 0.4.13. ### Motivation It would be nice to not overwrite currently instal"
+          },
+          {
+            "id": 6745,
+            "title": "Scraping the whole of github including private repos is bad; kindly stop",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Scraping the whole of github including private repos is bad; kindly stop ### Feature request https://github.com/bigcode-project/opt-out-v2 - opt out is not consent. kindly quit this ridiculous nonsense. ### Motivation [EDITED: insults not tolerated] ### Your contribution [EDITED:"
+          },
+          {
+            "id": 7063,
+            "title": "Add `batch` method to `Dataset`",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Add `batch` method to `Dataset` ### Feature request Add a `batch` method to the Dataset class, similar to the one recently implemented for `IterableDataset` in PR #7054. ### Motivation A batched iteration speeds up data loading significantly (see e.g. #6279) ### Your contribution"
+          },
+          {
+            "id": 7241,
+            "title": "`push_to_hub` overwrite argument",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "`push_to_hub` overwrite argument ### Feature request Add an `overwrite` argument to the `push_to_hub` method. ### Motivation I want to overwrite a repo without deleting it on Hugging Face. Is this possible? I couldn't find anything in the documentation or tutorials. ### Your cont"
+          },
+          {
+            "id": 7406,
+            "title": "Adding Core Maintainer List to CONTRIBUTING.md",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Adding Core Maintainer List to CONTRIBUTING.md ### Feature request I propose adding a core maintainer list to the `CONTRIBUTING.md` file. ### Motivation The Transformers and Liger-Kernel projects maintain lists of core maintainers for each module. However, the Datasets project do"
+          },
+          {
+            "id": 6116,
+            "title": "[Docs] The \"Process\" how-to guide lacks description of `select_columns` function",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "[Docs] The \"Process\" how-to guide lacks description of `select_columns` function ### Feature request The [how to process dataset guide](https://huggingface.co/docs/datasets/main/en/process) currently does not mention the [`select_columns`](https://huggingface.co/docs/datasets/mai"
+          },
+          {
+            "id": 6756,
+            "title": "Support SQLite files?",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support SQLite files? ### Feature request Support loading a dataset from a SQLite file https://huggingface.co/datasets/severo/test_iris_sqlite/tree/main ### Motivation SQLite is a popular file format. ### Your contribution See discussion on slack: https://huggingface.slack.com/ar"
+          },
+          {
+            "id": 7741,
+            "title": "Preserve tree structure when loading HDF5",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Preserve tree structure when loading HDF5 ### Feature request https://github.com/huggingface/datasets/pull/7740#discussion_r2285605374 ### Motivation `datasets` has the `Features` class for representing nested features. HDF5 files have groups of datasets which are nested, though "
+          },
+          {
+            "id": 6984,
+            "title": "Convert polars DataFrame back to datasets",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Convert polars DataFrame back to datasets ### Feature request This returns error. ```python from datasets import Dataset dsdf = Dataset.from_dict({\"x\": [[1, 2], [3, 4, 5]], \"y\": [\"a\", \"b\"]}) Dataset.from_polars(dsdf.to_polars()) ``` ValueError: Arrow type large_list<item: int64> "
+          },
+          {
+            "id": 7356,
+            "title": "How about adding a feature to pass the key when performing map on DatasetDict?",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "How about adding a feature to pass the key when performing map on DatasetDict? ### Feature request Add a feature to pass the key of the DatasetDict when performing map ### Motivation I often preprocess using map on DatasetDict. Sometimes, I need to preprocess train and valid data"
+          },
+          {
+            "id": 6467,
+            "title": "New version release request",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "New version release request ### Feature request Hi! I am using `datasets` in library `xtuner` and am highly interested in the features introduced since v2.15.0. To avoid installation from source in our pypi wheels, we are eagerly waiting for the new release. So, Does your team ha"
+          },
+          {
+            "id": 7607,
+            "title": "Video and audio decoding with torchcodec",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Video and audio decoding with torchcodec ### Feature request Pytorch is migrating video processing to torchcodec and it's pretty cool. It would be nice to migrate both the audio and video features to use torchcodec instead of torchaudio/video. ### Motivation My use case is I'm wo"
+          },
+          {
+            "id": 6203,
+            "title": "Support loading from a DVC remote repository",
+            "labels": [
+              "enhancement"
+            ],
+            "summary": "Support loading from a DVC remote repository ### Feature request Adding support for loading a file from a DVC repository, tracked remotely on a SCM. ### Motivation DVC is a popular version control system to version and manage datasets. The files are stored on a remote object stor"
+          }
+        ],
+        "ground_truth": {
+          "duplicate_issue_ids": [
+            6560
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 6450,
+          "label_marked_duplicate": true,
+          "explicit_duplicate_refs": []
+        }
+      },
+      {
+        "task_id": "duplicate_6184",
+        "task_type": "duplicate",
+        "difficulty": "medium",
+        "issue": "DuplicateDetection: return duplicate issue IDs for the new issue, or an empty list if none apply.\n\nNew issue #6184: Map cache does not detect function changes in another module\n\nMap cache does not detect function changes in another module ```python # dataset.py import os import datasets if not os.path.exists('/tmp/test.json'): with open('/tmp/test.json', 'w') as file: file.write('[{\"text\": \"hello\"}]') def transform(example): text = example['text'] # text += ' world' return {'text': text} data = datasets.load_dataset('json', data_files=['/tmp/test.json'], split='train') data = data.map(transform) ``` ```python # test.py import dataset print(next(iter(dataset.data))) ``` Initialize cache ``` python3 test.py # {'text': 'hello'} ``` Edit dataset.py and uncomment the commented line, ru",
+        "candidates": [
+          {
+            "id": 6450,
+            "title": "Support multiple image/audio columns in ImageFolder/AudioFolder",
+            "labels": [
+              "duplicate",
+              "enhancement"
+            ],
+            "summary": "Support multiple image/audio columns in ImageFolder/AudioFolder ### Feature request Have a metadata.csv file with multiple columns that point to relative image or audio files. ### Motivation Currently, ImageFolder allows one column, called `file_name`, pointing to relative image "
+          },
+          {
+            "id": 6560,
+            "title": "Support Video ",
+            "labels": [
+              "duplicate",
+              "enhancement"
+            ],
+            "summary": "Support Video ### Feature request HF datasets are awesome in supporting text and images. Will be great to see such a support in videos :) ### Motivation Video generation :) ### Your contribution Will probably be limited to raising this feature request ;)"
+          },
+          {
+            "id": 6731,
+            "title": "Unexpected behavior when using load_dataset with streaming=True in a for loop",
+            "labels": [],
+            "summary": "Unexpected behavior when using load_dataset with streaming=True in a for loop ### Describe the bug ### My Code ``` from datasets import load_dataset res=[] for i in [0,1]: di=load_dataset( \"json\", data_files='path_to.json', split='train', streaming=True, ).map(lambda x: {\"source\""
+          },
+          {
+            "id": 6559,
+            "title": "Latest version 2.16.1, when load dataset error occurs. ValueError: BuilderConfig 'allenai--c4' not found. Available: ['default']",
+            "labels": [],
+            "summary": "Latest version 2.16.1, when load dataset error occurs. ValueError: BuilderConfig 'allenai--c4' not found. Available: ['default'] ### Describe the bug python script is: ``` from datasets import load_dataset cache_dir = 'path/to/your/cache/directory' dataset = load_dataset('allenai"
+          },
+          {
+            "id": 6949,
+            "title": "load_dataset error",
+            "labels": [],
+            "summary": "load_dataset error ### Describe the bug Why does the program get stuck when I use load_dataset method, and it still gets stuck after loading for several hours? In fact, my json file is only 21m, and I can load it in one go using open('', 'r'). ### Steps to reproduce the bug 1. pi"
+          },
+          {
+            "id": 6126,
+            "title": "Private datasets do not load when passing token",
+            "labels": [
+              "bug"
+            ],
+            "summary": "Private datasets do not load when passing token ### Describe the bug Since the release of `datasets` 2.14, private/gated datasets do not load when passing `token`: they raise `EmptyDatasetError`. This is a non-planned backward incompatible breaking change. Note that private datas"
+          },
+          {
+            "id": 6746,
+            "title": "ExpectedMoreSplits error when loading C4 dataset",
+            "labels": [],
+            "summary": "ExpectedMoreSplits error when loading C4 dataset ### Describe the bug I encounter bug when running the example command line ```python python main.py \\ --model decapoda-research/llama-7b-hf \\ --prune_method wanda \\ --sparsity_ratio 0.5 \\ --sparsity_type unstructured \\ --save out/l"
+          },
+          {
+            "id": 6841,
+            "title": "Unable to load wiki_auto_asset_turk from GEM",
+            "labels": [],
+            "summary": "Unable to load wiki_auto_asset_turk from GEM ### Describe the bug I am unable to load the wiki_auto_asset_turk dataset. I get a fatal error while trying to access wiki_auto_asset_turk and load it with datasets.load_dataset. The error (TypeError: expected str, bytes or os.PathLike"
+          },
+          {
+            "id": 6977,
+            "title": "load json file error with v2.20.0",
+            "labels": [],
+            "summary": "load json file error with v2.20.0 ### Describe the bug ``` load_dataset(path=\"json\", data_files=\"./test.json\") ``` ``` Generating train split: 0 examples [00:00, ? examples/s] Traceback (most recent call last): File \"/usr/local/lib/python3.10/dist-packages/datasets/packaged_modul"
+          },
+          {
+            "id": 7433,
+            "title": "`Dataset.map` ignores existing caches and remaps when ran with different `num_proc`",
+            "labels": [],
+            "summary": "`Dataset.map` ignores existing caches and remaps when ran with different `num_proc` ### Describe the bug If you `map` a dataset and save it to a specific `cache_file_name` with a specific `num_proc`, and then call map again with that same existing `cache_file_name` but a differen"
+          },
+          {
+            "id": 7678,
+            "title": "To support decoding audio data, please install 'torchcodec'.",
+            "labels": [],
+            "summary": "To support decoding audio data, please install 'torchcodec'. In the latest version of datasets==4.0.0, i cannot print the audio data on the Colab notebook. But it works on the 3.6.0 version. !pip install -q -U datasets huggingface_hub fsspec from datasets import load_dataset down"
+          },
+          {
+            "id": 7707,
+            "title": "load_dataset() in 4.0.0 failed when decoding audio",
+            "labels": [],
+            "summary": "load_dataset() in 4.0.0 failed when decoding audio ### Describe the bug Cannot decode audio data. ### Steps to reproduce the bug ```python from datasets import load_dataset dataset = load_dataset(\"hf-internal-testing/librispeech_asr_demo\", \"clean\", split=\"validation\") print(datas"
+          },
+          {
+            "id": 6183,
+            "title": "Load dataset with  non-existent file",
+            "labels": [],
+            "summary": "Load dataset with non-existent file ### Describe the bug When load a dataset from datasets and pass a wrong path to json with the data, error message does not contain something abount \"wrong path\" or \"file do not exist\" - ```SchemaInferenceError: Please pass `features` or at leas"
+          },
+          {
+            "id": 6697,
+            "title": "Unable to Load Dataset in Kaggle",
+            "labels": [],
+            "summary": "Unable to Load Dataset in Kaggle ### Describe the bug Having installed the latest versions of transformers==4.38.1 and datasets==2.17.1 Unable to load the dataset in a kaggle notebook. Get this Error: ``` ---------------------------------------------------------------------------"
+          },
+          {
+            "id": 6110,
+            "title": "[BUG] Dataset initialized from in-memory data does not create cache.",
+            "labels": [],
+            "summary": "[BUG] Dataset initialized from in-memory data does not create cache. ### Describe the bug `Dataset` initialized from in-memory data (dictionary in my case, haven't tested with other types) does not create cache when processed with the `map` method, unlike `Dataset` initialized by"
+          },
+          {
+            "id": 6641,
+            "title": "unicodedecodeerror: 'utf-8' codec can't decode byte 0xac in position 25: invalid start byte",
+            "labels": [],
+            "summary": "unicodedecodeerror: 'utf-8' codec can't decode byte 0xac in position 25: invalid start byte ### Describe the bug unicodedecodeerror: 'utf-8' codec can't decode byte 0xac in position 25: invalid start byte ### Steps to reproduce the bug ``` import sys sys.getdefaultencoding() 'utf"
+          },
+          {
+            "id": 6770,
+            "title": "[Bug Report] `datasets==2.18.0` is not compatible with `fsspec==2023.12.2`",
+            "labels": [],
+            "summary": "[Bug Report] `datasets==2.18.0` is not compatible with `fsspec==2023.12.2` ### Describe the bug `Datasets==2.18.0` is not compatible with `fsspec==2023.12.2`. I have to downgrade fsspec to `fsspec==2023.10.0` to make `Datasets==2.18.0` work properly. ### Steps to reproduce the bu"
+          },
+          {
+            "id": 7868,
+            "title": "Data duplication with `split_dataset_by_node` and `interleaved_dataset`",
+            "labels": [],
+            "summary": "Data duplication with `split_dataset_by_node` and `interleaved_dataset` ### Describe the bug Data duplication in different rank, when process a iterabledataset with first `split_dataset_by_node` and then `interleaved_dataset` ### Steps to reproduce the bug I have provide a minimu"
+          },
+          {
+            "id": 6140,
+            "title": "Misalignment between file format specified in configs metadata YAML and the inferred builder",
+            "labels": [
+              "bug"
+            ],
+            "summary": "Misalignment between file format specified in configs metadata YAML and the inferred builder There is a misalignment between the format of the `data_files` specified in the configs metadata YAML (CSV): ```yaml configs: - config_name: default data_files: - split: train path: data."
+          },
+          {
+            "id": 6196,
+            "title": "Split order is not preserved",
+            "labels": [
+              "bug"
+            ],
+            "summary": "Split order is not preserved I have noticed that in some cases the split order is not preserved. For example, consider a no-script dataset with configs: ```yaml configs: - config_name: default data_files: - split: train path: train.csv - split: test path: test.csv ``` - Note the "
+          }
+        ],
+        "ground_truth": {
+          "duplicate_issue_ids": [
+            6450
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 6184,
+          "label_marked_duplicate": true,
+          "explicit_duplicate_refs": []
+        }
+      }
+    ],
+    "patch_loc": [
+      {
+        "task_id": "patch_loc_8038",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #8038: Typo in iterable_dataset.py\n\nTypo in iterable_dataset.py ### Describe the bug `streaming=True**kwargs,` should be `streaming=True, **kwargs,` https://github.com/huggingface/datasets/blob/81027be09d5cd9f06a6d64ef1a8a3e9ebd0f86fd/src/datasets/iterable_dataset.py#L2950 ### Steps to reproduce the bug ``` from Datasets import Dataset IterableDataset.from_csv(\"file.csv\") ``` ### Expected behavior Load the csv file as an iterable dataset. ### Environment info - `datasets` version: 4.6.1 - Platform: Linux-6.14.0-37-generic-x86_64-with-glibc2.39 - Python version: 3.13.11 - `huggingface_hub` version: 1.5.0 - PyArrow version: 23.0.1 - Pandas version: 3.",
+        "candidates": [
+          {
+            "path": "src/datasets/dataset_dict.py"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "src/datasets/features/video.py"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "src/datasets/utils/filelock.py"
+          },
+          {
+            "path": "src/datasets/iterable_dataset.py"
+          },
+          {
+            "path": "src/services/worker/src/worker/job_runners/dataset/config_names.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/iterable_dataset.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 8038
+        }
+      },
+      {
+        "task_id": "patch_loc_7998",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7998: [doc] Inconsistant ENV VAR Name for Progress Bar Toggle\n\n[doc] Inconsistant ENV VAR Name for Progress Bar Toggle Code uses env var name `HF_DATASETS_DISABLE_PROGRESS_BARS`. https://github.com/huggingface/datasets/blob/025593f2f0722f31fc136e0ae45da4ff44d4416a/src/datasets/config.py#L221-L226 Docstrings and warnings report env var name `HF_DATASETS_DISABLE_PROGRESS_BAR` without the ending `S`. https://github.com/huggingface/datasets/blob/025593f2f0722f31fc136e0ae45da4ff44d4416a/src/datasets/utils/tqdm.py#L61-L73 https://github.com/huggingface/datasets/blob/025593f2f0722f31fc136e0ae45da4ff44d4416a/src/datasets/utils/tqdm.py#L78-L90 https://github.com/huggingface/datasets/blob/025593f2f0722f31fc136e0ae4",
+        "candidates": [
+          {
+            "path": "src/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "tests/test_search.py"
+          },
+          {
+            "path": "src/datasets/utils/tqdm.py"
+          },
+          {
+            "path": "tests/test_inspect.py"
+          },
+          {
+            "path": "src/datasets/dataset_dict.py"
+          },
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "tests/test_metric_common.py"
+          },
+          {
+            "path": "src/datasets/features/audio.py"
+          },
+          {
+            "path": "src/datasets/download/download_manager.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/config.py",
+            "src/datasets/utils/tqdm.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7998
+        }
+      },
+      {
+        "task_id": "patch_loc_7936",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7936: _add_retries_to_file_obj_read_method makes file_obj invalid for pyarrow\n\n_add_retries_to_file_obj_read_method makes file_obj invalid for pyarrow ### Describe the bug I'm trying to use `load_dataset` to construct a dataset that read parquet data on HDFS streamingly, like ```python ds = load_dataset( \"parquet\", data_files={ \"train\": \"hdfs://xxx/train*.parquet\", \"test\": \"hdfs://xxx/test*.parquet\" }, streaming=True, ) ``` I encountered an error <img width=\"1784\" height=\"662\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/14f25602-ef37-4a84-83fc-dac426451163\" /> In file src/datasets/packaged_modules/parquet/parquet.py, ```python with open(file, \"rb\") as f: self.info.features = datasets.F",
+        "candidates": [
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/inspect.py"
+          },
+          {
+            "path": "src/datasets/features/pdf.py"
+          },
+          {
+            "path": "tests/test_table.py"
+          },
+          {
+            "path": "setup.py"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "tests/test_formatting.py"
+          },
+          {
+            "path": "src/datasets/io/generator.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/parquet/parquet.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/packaged_modules/parquet/parquet.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7936
+        }
+      },
+      {
+        "task_id": "patch_loc_7911",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7911: IndexError when saving few large examples to disk\n\nIndexError when saving few large examples to disk ### Describe the bug I ran into this issue when processing a file (900MB) with just one example but simplified for a quicker reproducer below. The problem is that, if `num_shards` is not explicitly set, we calculate it manually using https://github.com/huggingface/datasets/blob/main/src/datasets/utils/py_utils.py#L96 with the default `config.MAX_SHARD_SIZE` which is 500MB. If a single example is now larger than this, we run into an index error since the shards should be processed individually. An easy workaround is: `dataset.save_to_disk(output_path, max_shard_size=\"1GB\")` or `dataset.save_",
+        "candidates": [
+          {
+            "path": "src/sdd/data/dataset.py"
+          },
+          {
+            "path": "src/datasets/builder.py"
+          },
+          {
+            "path": "tests/test_table.py"
+          },
+          {
+            "path": "src/datasets/utils/py_utils.py"
+          },
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "tests/test_py_utils.py"
+          },
+          {
+            "path": "tests/test_hub.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/text/text.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/utils/py_utils.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7911
+        }
+      },
+      {
+        "task_id": "patch_loc_7842",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7842: Transform with columns parameter triggers on non-specified column access\n\nTransform with columns parameter triggers on non-specified column access ### Describe the bug Iterating over a [`Column`](https://github.com/huggingface/datasets/blob/8b1bd4ec1cc9e9ce022f749abb6485ef984ae7c0/src/datasets/arrow_dataset.py#L633-L692) iterates through the parent [`Dataset`](https://github.com/huggingface/datasets/blob/8b1bd4ec1cc9e9ce022f749abb6485ef984ae7c0/src/datasets/arrow_dataset.py#L695) and applies all formatting/transforms on each row, regardless of which column is being accessed. This causes an error when transforms depend on columns not present in the projection. ### Steps to reproduce the bug ### Load a dataset with multiple columns ```",
+        "candidates": [
+          {
+            "path": "tests/test_load.py"
+          },
+          {
+            "path": "src/datasets/data_files.py"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "tests/test_metric_common.py"
+          },
+          {
+            "path": "src/datasets/arrow_dataset.py"
+          },
+          {
+            "path": "src/datasets/features/pdf.py"
+          },
+          {
+            "path": "tests/test_arrow_dataset.py"
+          },
+          {
+            "path": "src/services/worker/src/worker/job_runners/dataset/config_names.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/arrow_dataset.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7842
+        }
+      },
+      {
+        "task_id": "patch_loc_7841",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7841: DOC: `mode` parameter on pdf and video features unused\n\nDOC: `mode` parameter on pdf and video features unused Following up on https://github.com/huggingface/datasets/pull/7840 I asked claude code to check for undocumented parameters for other features and it found: - mode parameter on video is documented but unused: https://github.com/huggingface/datasets/blob/main/src/datasets/features/video.py#L48-L49 - the same goes for the mode parameter on the pdf feature: https://github.com/huggingface/datasets/blob/main/src/datasets/features/pdf.py#L47-L48 I assume checking if these modes can be supported and otherwise removing them is the way to go here.",
+        "candidates": [
+          {
+            "path": "src/datasets/utils/tqdm.py"
+          },
+          {
+            "path": "src/datasets/download/download_manager.py"
+          },
+          {
+            "path": "tests/test_table.py"
+          },
+          {
+            "path": "src/datasets/utils/filelock.py"
+          },
+          {
+            "path": "src/datasets/features/video.py"
+          },
+          {
+            "path": "src/datasets/data_files.py"
+          },
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "src/datasets/features/pdf.py"
+          },
+          {
+            "path": "tests/test_inspect.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/features/pdf.py",
+            "src/datasets/features/video.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7841
+        }
+      },
+      {
+        "task_id": "patch_loc_7837",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7837: mono parameter to the Audio feature is missing\n\nmono parameter to the Audio feature is missing According to the docs, there is a \"mono\" parameter to the Audio feature, which turns any stereo into mono. In practice the signal is not touched and the mono parameter, even though documented, does not exist. https://github.com/huggingface/datasets/blob/41c05299348a499807432ab476e1cdc4143c8772/src/datasets/features/audio.py#L52C1-L54C22",
+        "candidates": [
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "src/datasets/download/download_manager.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/generator/generator.py"
+          },
+          {
+            "path": "src/datasets/utils/tqdm.py"
+          },
+          {
+            "path": "tests/test_hub.py"
+          },
+          {
+            "path": "tests/test_load.py"
+          },
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "src/datasets/features/audio.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/features/audio.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7837
+        }
+      },
+      {
+        "task_id": "patch_loc_7744",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7744: dtype: ClassLabel is not parsed correctly in `features.py`\n\ndtype: ClassLabel is not parsed correctly in `features.py` `dtype: ClassLabel` in the README.md yaml metadata is parsed incorrectly and causes the data viewer to fail. This yaml in my metadata ([source](https://huggingface.co/datasets/BrentLab/yeast_genome_resources/blob/main/README.md), though i changed `ClassLabel` to `string` to using different dtype in order to avoid the error): ```yaml license: mit pretty_name: BrentLab Yeast Genome Resources size_categories: - 1K<n<10K language: - en dataset_info: features: - name: start dtype: int32 description: Start coordinate (1-based, **inclusive**) - name: end dtype: int32",
+        "candidates": [
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "src/datasets/iterable_dataset.py"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "src/datasets/features/audio.py"
+          },
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "src/datasets/utils/file_utils.py"
+          },
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/packaged_modules/webdataset/webdataset.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "README.md"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7744
+        }
+      },
+      {
+        "task_id": "patch_loc_7611",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7611: Code example for dataset.add_column() does not reflect correct way to use function\n\nCode example for dataset.add_column() does not reflect correct way to use function https://github.com/huggingface/datasets/blame/38d4d0e11e22fdbc4acf373d2421d25abeb43439/src/datasets/arrow_dataset.py#L5925C10-L5925C10 The example seems to suggest that dataset.add_column() can add column inplace, however, this is wrong -- it cannot. It returns a new dataset with the column added to it.",
+        "candidates": [
+          {
+            "path": "src/datasets/iterable_dataset.py"
+          },
+          {
+            "path": "src/services/worker/src/worker/job_runners/dataset/config_names.py"
+          },
+          {
+            "path": "tests/test_py_utils.py"
+          },
+          {
+            "path": "tests/test_formatting.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/generator/generator.py"
+          },
+          {
+            "path": "src/datasets/arrow_dataset.py"
+          },
+          {
+            "path": "src/datasets/builder.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/folder_based_builder/folder_based_builder.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/arrow_dataset.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7611
+        }
+      },
+      {
+        "task_id": "patch_loc_7600",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7600: `push_to_hub` is not concurrency safe (dataset schema corruption)\n\n`push_to_hub` is not concurrency safe (dataset schema corruption) ### Describe the bug Concurrent processes modifying and pushing a dataset can overwrite each others' dataset card, leaving the dataset unusable. Consider this scenario: - we have an Arrow dataset - there are `N` configs of the dataset - there are `N` independent processes operating on each of the individual configs (e.g. adding a column, `new_col`) - each process calls `push_to_hub` on their particular config when they're done processing - all calls to `push_to_hub` succeed - the `README.md` now has some configs with `new_col` added and some with `new_col` missing Any attempt to load a conf",
+        "candidates": [
+          {
+            "path": "src/datasets/packaged_modules/text/text.py"
+          },
+          {
+            "path": "docs/source/object_detection.md"
+          },
+          {
+            "path": "setup.py"
+          },
+          {
+            "path": "tests/test_arrow_dataset.py"
+          },
+          {
+            "path": "src/datasets/features/audio.py"
+          },
+          {
+            "path": "src/datasets/features/features.py"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "README.md"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "README.md"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7600
+        }
+      },
+      {
+        "task_id": "patch_loc_7536",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7536: [Errno 13] Permission denied: on `.incomplete` file\n\n[Errno 13] Permission denied: on `.incomplete` file ### Describe the bug When downloading a dataset, we frequently hit the below Permission Denied error. This looks to happen (at least) across datasets in HF, S3, and GCS. It looks like the `temp_file` being passed [here](https://github.com/huggingface/datasets/blob/main/src/datasets/utils/file_utils.py#L412) can sometimes be created with `000` permissions leading to the permission denied error (the user running the code is still the owner of the file). Deleting that particular file and re-running the code with 0 changes will usually succeed. Is there some race condition happening with the [u",
+        "candidates": [
+          {
+            "path": "src/datasets/data_files.py"
+          },
+          {
+            "path": "src/datasets/download/download_manager.py"
+          },
+          {
+            "path": "src/datasets/utils/file_utils.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/parquet/parquet.py"
+          },
+          {
+            "path": "docs/source/object_detection.md"
+          },
+          {
+            "path": "src/datasets/features/features.py"
+          },
+          {
+            "path": "src/datasets/features/audio.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/webdataset/webdataset.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/utils/file_utils.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7536
+        }
+      },
+      {
+        "task_id": "patch_loc_7486",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7486: `shared_datadir` fixture is missing\n\n`shared_datadir` fixture is missing ### Describe the bug Running the tests for the latest release fails due to missing `shared_datadir` fixture. ### Steps to reproduce the bug Running `pytest` while building a package for Arch Linux leads to these errors: ``` ==================================== ERRORS ==================================== _________ ERROR at setup of test_pdf_feature_encode_example[<lambda>1] _________ [gw44] linux -- Python 3.13.2 /build/python-datasets/src/datasets-3.5.0/test-env/bin/python file /build/python-datasets/src/datasets-3.5.0/tests/features/test_pdf.py, line 8 @require_pdfplumber @pytest.mark",
+        "candidates": [
+          {
+            "path": "src/datasets/load.py"
+          },
+          {
+            "path": "src/datasets/utils/filelock.py"
+          },
+          {
+            "path": "src/datasets-3.5.0/tests/features/test_pdf.py"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "src/datasets/io/generator.py"
+          },
+          {
+            "path": "tests/test_arrow_dataset.py"
+          },
+          {
+            "path": "src/datasets/features/video.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets-3.5.0/tests/features/test_pdf.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7486
+        }
+      },
+      {
+        "task_id": "patch_loc_7471",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7471: Adding argument to `_get_data_files_patterns`\n\nAdding argument to `_get_data_files_patterns` ### Feature request How about adding if the user already know about the pattern? https://github.com/huggingface/datasets/blob/a256b85cbc67aa3f0e75d32d6586afc507cf535b/src/datasets/data_files.py#L252 ### Motivation While using this load_dataset people might use 10M of images for the local files. However, due to searching all the appropriate file pattern in fsspec, purely searching this pattern takes more than 10 hours (real use-case). ### Your contribution Yeah I can make this happen if this seems valid. @lhoestq WDYT? such like ``` def _get_data_files_patterns(pattern_resolver: Callable[",
+        "candidates": [
+          {
+            "path": "src/datasets/load.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/parquet/parquet.py"
+          },
+          {
+            "path": "src/datasets/data_files.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/generator/generator.py"
+          },
+          {
+            "path": "src/datasets/features/pdf.py"
+          },
+          {
+            "path": "src/datasets/utils/filelock.py"
+          },
+          {
+            "path": "src/datasets/features/features.py"
+          },
+          {
+            "path": "README.md"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/data_files.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7471
+        }
+      },
+      {
+        "task_id": "patch_loc_7297",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7297: wrong return type for `IterableDataset.shard()`\n\nwrong return type for `IterableDataset.shard()` ### Describe the bug `IterableDataset.shard()` has the wrong typing for its return as `\"Dataset\"`. It should be `\"IterableDataset\"`. Makes my IDE unhappy. ### Steps to reproduce the bug look at [the source code](https://github.com/huggingface/datasets/blob/main/src/datasets/iterable_dataset.py#L2668)? ### Expected behavior Correct return type as `\"IterableDataset\"` ### Environment info datasets==3.1.0",
+        "candidates": [
+          {
+            "path": "src/datasets/packaged_modules/folder_based_builder/folder_based_builder.py"
+          },
+          {
+            "path": "src/datasets/iterable_dataset.py"
+          },
+          {
+            "path": "src/datasets/features/pdf.py"
+          },
+          {
+            "path": "tests/test_formatting.py"
+          },
+          {
+            "path": "src/sdd/data/dataset.py"
+          },
+          {
+            "path": "src/datasets/features/video.py"
+          },
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "src/datasets/download/download_manager.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/iterable_dataset.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7297
+        }
+      },
+      {
+        "task_id": "patch_loc_7183",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7183: CI is broken for deps-latest\n\nCI is broken for deps-latest See: https://github.com/huggingface/datasets/actions/runs/11106149906/job/30853879890 ``` =========================== short test summary info ============================ FAILED tests/test_arrow_dataset.py::BaseDatasetTest::test_filter_caching_on_disk - AssertionError: Lists differ: [{'fi[44 chars] {'filename': '/tmp/tmp6xcyyjs4/cache-9533fe2601cd3e48.arrow'}] != [{'fi[44 chars] {'filename': '/tmp/tmp6xcyyjs4/cache-e6e0a8b830976289.arrow'}] First differing element 1: {'filename': '/tmp/tmp6xcyyjs4/cache-9533fe2601cd3e48.arrow'} {'filename': '/tmp/tmp6xcyyjs4/cache-e6e0a8b830976289.ar",
+        "candidates": [
+          {
+            "path": "src/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "setup.py"
+          },
+          {
+            "path": "src/datasets/arrow_dataset.py"
+          },
+          {
+            "path": "src/datasets/builder.py"
+          },
+          {
+            "path": "tests/test_inspect.py"
+          },
+          {
+            "path": "tests/test_py_utils.py"
+          },
+          {
+            "path": "src/datasets/features/audio.py"
+          },
+          {
+            "path": "tests/test_arrow_dataset.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "tests/test_arrow_dataset.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7183
+        }
+      },
+      {
+        "task_id": "patch_loc_7137",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7137: [BUG] dataset_info sequence unexpected behavior in README.md YAML\n\n[BUG] dataset_info sequence unexpected behavior in README.md YAML ### Describe the bug When working on `dataset_info` yaml, I find my data column with format `list[dict[str, str]]` cannot be coded correctly. My data looks like ``` {\"answers\":[{\"text\": \"ADDRESS\", \"label\": \"abc\"}]} ``` My `dataset_info` in README.md is: ``` dataset_info: - config_name: default features: - name: answers sequence: - name: text dtype: string - name: label dtype: string ``` **Error log**: ``` pyarrow.lib.ArrowNotImplementedError: Unsupported cast from list<item: struct<text: string, label: string>> to struct using function ca",
+        "candidates": [
+          {
+            "path": "src/datasets/features/video.py"
+          },
+          {
+            "path": "src/datasets/io/generator.py"
+          },
+          {
+            "path": "src/datasets/iterable_dataset.py"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "src/datasets/download/download_manager.py"
+          },
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/inspect.py"
+          },
+          {
+            "path": "tests/test_hub.py"
+          },
+          {
+            "path": "README.md"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "README.md"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7137
+        }
+      },
+      {
+        "task_id": "patch_loc_7109",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7109: ConnectionError for gated datasets and unauthenticated users\n\nConnectionError for gated datasets and unauthenticated users Since the Hub returns dataset info for gated datasets and unauthenticated users, there is dead code: https://github.com/huggingface/datasets/blob/98fdc9e78e6d057ca66e58a37f49d6618aab8130/src/datasets/load.py#L1846-L1852 We should remove the dead code and properly handle this case: currently we are raising a `ConnectionError` instead of a `DatasetNotFoundError` (as before). See: - https://github.com/huggingface/dataset-viewer/issues/3025 - https://github.com/huggingface/huggingface_hub/issues/2457",
+        "candidates": [
+          {
+            "path": "src/datasets/packaged_modules/generator/generator.py"
+          },
+          {
+            "path": "setup.py"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "docs/source/object_detection.md"
+          },
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "tests/test_search.py"
+          },
+          {
+            "path": "src/datasets/load.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/load.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7109
+        }
+      },
+      {
+        "task_id": "patch_loc_7073",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7073: CI is broken for convert_to_parquet: Invalid rev id: refs/pr/1 404 error causes RevisionNotFoundError\n\nCI is broken for convert_to_parquet: Invalid rev id: refs/pr/1 404 error causes RevisionNotFoundError See: https://github.com/huggingface/datasets/actions/runs/10095313567/job/27915185756 ``` FAILED tests/test_hub.py::test_convert_to_parquet - huggingface_hub.utils._errors.RevisionNotFoundError: 404 Client Error. (Request ID: Root=1-66a25839-31ce7b475e70e7db1e4d44c2;b0c8870f-d5ef-4bf2-a6ff-0191f3df0f64) Revision Not Found for url: https://hub-ci.huggingface.co/api/datasets/__DUMMY_TRANSFORMERS_USER__/test-dataset-5188a8-17219154347516/preupload/refs%2Fpr%2F1. Invalid rev id: refs/pr/1 ``` ``` /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/datasets/hub.py:86: in co",
+        "candidates": [
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/inspect.py"
+          },
+          {
+            "path": "src/datasets/dataset_dict.py"
+          },
+          {
+            "path": "tests/test_table.py"
+          },
+          {
+            "path": "tests/test_hub.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/parquet/parquet.py"
+          },
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "src/datasets/io/generator.py"
+          },
+          {
+            "path": "src/datasets/features/features.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "tests/test_hub.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7073
+        }
+      },
+      {
+        "task_id": "patch_loc_7055",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7055: WebDataset with different prefixes are unsupported\n\nWebDataset with different prefixes are unsupported ### Describe the bug Consider a WebDataset with multiple images for each item where the number of images may vary: [example](https://huggingface.co/datasets/bigdata-pw/fashion-150k) Due to this [code](https://github.com/huggingface/datasets/blob/87f4c2088854ff33e817e724e75179e9975c1b02/src/datasets/packaged_modules/webdataset/webdataset.py#L76-L80) an error is given. ``` The TAR archives of the dataset should be in WebDataset format, but the files in the archive don't share the same prefix or the same types. ``` The purpose of this check is unclear because PyArrow supports different",
+        "candidates": [
+          {
+            "path": "src/datasets/dataset_dict.py"
+          },
+          {
+            "path": "src/datasets/features/features.py"
+          },
+          {
+            "path": "tests/test_search.py"
+          },
+          {
+            "path": "src/datasets/utils/tqdm.py"
+          },
+          {
+            "path": "src/datasets-3.5.0/tests/features/test_pdf.py"
+          },
+          {
+            "path": "src/datasets/features/image.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "tests/test_arrow_dataset.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/packaged_modules/webdataset/webdataset.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7055
+        }
+      },
+      {
+        "task_id": "patch_loc_7033",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7033: `from_generator` does not allow to specify the split name\n\n`from_generator` does not allow to specify the split name ### Describe the bug I'm building train, dev, and test using `from_generator`; however, in all three cases, the logger prints `Generating train split:` It's not possible to change the split name since it seems to be hardcoded: https://github.com/huggingface/datasets/blob/main/src/datasets/packaged_modules/generator/generator.py ### Steps to reproduce the bug ``` In [1]: from datasets import Dataset In [2]: def gen(): ...: yield {\"pokemon\": \"bulbasaur\", \"type\": \"grass\"} ...: In [3]: ds = Dataset.from_generator(gen) Generating train split: 1 examples [00:00, 133.89 examp",
+        "candidates": [
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "tests/test_table.py"
+          },
+          {
+            "path": "src/services/worker/src/worker/job_runners/dataset/config_names.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/generator/generator.py"
+          },
+          {
+            "path": "src/datasets-3.5.0/tests/features/test_pdf.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/packaged_modules/generator/generator.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7033
+        }
+      },
+      {
+        "task_id": "patch_loc_7013",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7013: CI is broken for faiss tests on Windows: node down: Not properly terminated\n\nCI is broken for faiss tests on Windows: node down: Not properly terminated Faiss tests on Windows make the CI run indefinitely until maximum execution time (360 minutes) is reached. See: https://github.com/huggingface/datasets/actions/runs/9712659783 ``` test (integration, windows-latest, deps-minimum) The job running on runner GitHub Actions 60 has exceeded the maximum execution time of 360 minutes. test (integration, windows-latest, deps-latest) The job running on runner GitHub Actions 238 has exceeded the maximum execution time of 360 minutes. ``` ``` ____________________________ tests/test_search.py _____________________________ [gw1] win32 -- Python",
+        "candidates": [
+          {
+            "path": "src/datasets-3.5.0/tests/features/test_pdf.py"
+          },
+          {
+            "path": "tests/test_search.py"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "src/datasets/load.py"
+          },
+          {
+            "path": "src/datasets/download/streaming_download_manager.py"
+          },
+          {
+            "path": "src/datasets/data_files.py"
+          },
+          {
+            "path": "src/datasets/arrow_dataset.py"
+          },
+          {
+            "path": "src/datasets/io/generator.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "tests/test_search.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7013
+        }
+      },
+      {
+        "task_id": "patch_loc_7006",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #7006: CI is broken after ruff-0.5.0: E721\n\nCI is broken after ruff-0.5.0: E721 After ruff-0.5.0 release (https://github.com/astral-sh/ruff/releases/tag/0.5.0), our CI is broken due to E721 rule. See: https://github.com/huggingface/datasets/actions/runs/9707641618/job/26793170961?pr=6983 > src/datasets/features/features.py:844:12: E721 Use `is` and `is not` for type comparisons, or `isinstance()` for isinstance checks",
+        "candidates": [
+          {
+            "path": "src/datasets/utils/tqdm.py"
+          },
+          {
+            "path": "README.md"
+          },
+          {
+            "path": "src/huggingface_hub/utils/__init__.py"
+          },
+          {
+            "path": "src/datasets/features/features.py"
+          },
+          {
+            "path": "src/sdd/data/dataset.py"
+          },
+          {
+            "path": "src/datasets/utils/filelock.py"
+          },
+          {
+            "path": "src/datasets/utils/file_utils.py"
+          },
+          {
+            "path": "src/datasets/features/image.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/features/features.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 7006
+        }
+      },
+      {
+        "task_id": "patch_loc_6997",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #6997: CI is broken for tests using hf-internal-testing/librispeech_asr_dummy\n\nCI is broken for tests using hf-internal-testing/librispeech_asr_dummy CI is broken: https://github.com/huggingface/datasets/actions/runs/9657882317/job/26637998686?pr=6996 ``` FAILED tests/test_inspect.py::test_get_dataset_config_names[hf-internal-testing/librispeech_asr_dummy-expected4] - AssertionError: assert ['clean'] == ['clean', 'other'] Right contains one more item: 'other' Full diff: [ 'clean', - 'other', ] FAILED tests/test_inspect.py::test_get_dataset_default_config_name[hf-internal-testing/librispeech_asr_dummy-None] - AssertionError: assert 'clean' is None ``` Note that repository was recently converted",
+        "candidates": [
+          {
+            "path": "src/services/worker/.venv/lib/python3.9/site-packages/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "tests/test_hub.py"
+          },
+          {
+            "path": "tests/test_inspect.py"
+          },
+          {
+            "path": "src/datasets/load.py"
+          },
+          {
+            "path": "src/sdd/data/dataset.py"
+          },
+          {
+            "path": "src/datasets/config.py"
+          },
+          {
+            "path": "src/services/worker/src/worker/job_runners/dataset/config_names.py"
+          },
+          {
+            "path": "tests/test_table.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "tests/test_inspect.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 6997
+        }
+      },
+      {
+        "task_id": "patch_loc_6905",
+        "task_type": "patch_loc",
+        "difficulty": "hard",
+        "issue": "PatchLocalization: return a ranked list of up to 5 file paths most likely to require edits.\n\nIssue #6905: Extraction protocol for arrow files is not defined\n\nExtraction protocol for arrow files is not defined ### Describe the bug Passing files with `.arrow` extension into data_files argument, at least when `streaming=True` is very slow. ### Steps to reproduce the bug Basically it goes through the `_get_extraction_protocol` method located [here](https://github.com/huggingface/datasets/blob/main/src/datasets/utils/file_utils.py#L820) The method then looks at some base known extensions where `arrow` is not defined so it proceeds to determine the compression with the magic number method which is slow when dealing with a lot of files which are stored in s3 and by looking at this predefined list, I",
+        "candidates": [
+          {
+            "path": "src/datasets/io/generator.py"
+          },
+          {
+            "path": "src/datasets/dataset_dict.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/webdataset/webdataset.py"
+          },
+          {
+            "path": "src/datasets/features/video.py"
+          },
+          {
+            "path": "src/datasets/load.py"
+          },
+          {
+            "path": "src/datasets/utils/file_utils.py"
+          },
+          {
+            "path": "src/datasets/packaged_modules/text/text.py"
+          },
+          {
+            "path": "tests/test_py_utils.py"
+          }
+        ],
+        "ground_truth": {
+          "files": [
+            "src/datasets/utils/file_utils.py"
+          ]
+        },
+        "metadata": {
+          "source_issue_id": 6905
+        }
+      }
+    ]
+  }
+}

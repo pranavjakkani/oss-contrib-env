@@ -1,7 +1,7 @@
 ---
 title: OSS Contrib Env
-emoji: "🛠️"
-colorFrom: blue
+emoji: 🧰
+colorFrom: yellow
 colorTo: green
 sdk: docker
 pinned: false
@@ -9,369 +9,160 @@ app_port: 8000
 base_path: /web
 tags:
   - openenv
-  - reinforcement-learning
-  - code-agents
-  - debugging
+  - rl
+  - open-source
 ---
 
 # OSS Contrib Env
 
-OSS Contrib Env is an OpenEnv environment that simulates a lightweight open source contribution workflow.  
-An agent receives a bug report, reads buggy Python code, submits a fix or diagnosis, and gets reward feedback based on how correct the submission is.
+`oss-contrib-env` is an offline OpenEnv benchmark for training and evaluating LLM agents on realistic open-source contribution tasks. It replays cached GitHub history from `huggingface/datasets` and grades the agent on three tasks:
 
-This project was built for the Meta PyTorch x Scaler OpenEnv Hackathon Round 1, where the goal is to create a real-world environment with:
+1. `triage` (`easy`): choose the best issue for a contributor profile.
+2. `duplicate` (`medium`): return duplicate issue IDs from a candidate set.
+3. `patch_loc` (`hard`): return a ranked list of likely file paths to edit.
 
-- typed action, observation, and state models
-- `reset()`, `step()`, and `state()` support
-- at least 3 graded tasks
-- reward values in the range `0.0` to `1.0`
-- a working baseline inference script
-- a working Dockerfile and Hugging Face deployment
+The benchmark is offline at runtime. `data/snapshot.json` is the cached GitHub issue history, and `data/benchmark.json` is the curated benchmark built from that snapshot for task-ready episodes and ground truth.
 
-Live Space: [BhargaviThati/oss_contrib_env](https://huggingface.co/spaces/BhargaviThati/oss_contrib_env)
-
-## Why This Environment
-
-Many coding benchmarks focus only on final correctness. Real engineering work is more structured:
-
-- understand an issue report
-- inspect broken code
-- produce the right format of response
-- improve over multiple attempts
-- learn from partial feedback
-
-OSS Contrib Env turns that workflow into a compact environment that is easy to run, easy to grade, and meaningful for agent evaluation.
-
-## Round 1 Scope
-
-Round 1 focuses on a complete and deployable OpenEnv environment.
-
-This repository includes:
-
-- 3 tasks: `easy`, `medium`, `hard`
-- task-specific graders
-- partial reward signals
-- HTTP endpoints for `reset`, `step`, and `state`
-- Docker support
-- Hugging Face Spaces deployment
-- a reproducible `inference.py` baseline using the OpenAI client
-
-## Tasks
-
-### Easy
-The agent must identify:
-
-- which function contains the bug
-- what type of error it is
-
-Reward logic:
-
-- `1.0` if both function and error type are correct
-- `0.5` if only the function is correct
-- `0.0` otherwise
-
-### Medium
-The agent must return only the corrected Python function for `reverse_string`.
-
-Reward logic:
-
-- score is based on test cases passed
-- final reward includes an attempt penalty after repeated tries
-
-### Hard
-The agent must return the full corrected file content for multiple broken utility functions.
-
-Reward logic:
-
-- score is based on the full test suite
-- final reward includes an attempt penalty after repeated tries
-
-## Environment API
-
-### Reset
-
-```http
-POST /reset
-Content-Type: application/json
-```
-
-Example body:
-
-```json
-{"task_id":"easy"}
-```
-
-### Step
-
-```http
-POST /step
-Content-Type: application/json
-```
-
-Example body:
-
-```json
-{
-  "action": {
-    "response": "The bug is in calculate_average and it is an off-by-one error."
-  }
-}
-```
-
-### State
-
-```http
-GET /state
-```
-
-## Typed Spaces
-
-### Action
-
-`OSSAction`
-
-```python
-response: str
-```
-
-The action is the agent submission. Depending on the task, this can be:
-
-- a diagnosis
-- a corrected function
-- a corrected full file
-
-### Observation
-
-`OSSObservation`
-
-```python
-task_id: str
-difficulty: Literal["easy", "medium", "hard"]
-issue: str
-code: str
-test_output: Optional[str]
-attempts_remaining: int
-done: bool
-reward: float
-```
-
-The observation contains the bug report, the buggy code, reward feedback, and remaining attempts.
-
-### State
-
-`OSSState`
-
-```python
-episode_id: str
-step_count: int
-current_task: str
-difficulty: str
-```
+The environment now supports interactive multi-step routes. An agent can inspect candidates or paths first, then submit a final answer later in the trajectory. This makes the environment closer to a long-running workflow instead of a single-shot classifier with retries.
 
 ## Reward Design
 
-Rewards are intentionally shaped to reflect real debugging progress:
+Rewards stay close to the task metric, with mild negative shaping for clearly wrong or malformed actions.
 
-- correct submissions receive `1.0`
-- partially correct submissions can receive intermediate scores
-- repeated attempts reduce reward through an attempt penalty
-- all rewards are clamped to the required `0.0` to `1.0` range
+- `triage`: `1.0`, `0.5`, `0.2`, or `0.0` based on whether the chosen issue lands in the top 3.
+- `duplicate`: F1 score over predicted duplicate issue IDs.
+- `patch_loc`: `MRR + 0.1 * recall@5`, capped at `1.0`.
+- Wrong-action shaping: malformed actions and repeated fully wrong attempts can push the final reward mildly negative, down to `-0.2`.
+- Exploration actions such as `inspect ...` are allowed during the trajectory and keep the episode alive for later submission.
+- `info["progress"]` always reports the unpenalized task progress so logs still show partial learning signal clearly.
 
-This makes the environment more useful than a binary pass/fail benchmark.
+## Observation Shape
 
-## Project Structure
+The environment returns:
+
+- `task_id`
+- `task_type`
+- `difficulty`
+- `issue`
+- `candidates`
+- `attempts_remaining`
+- `reward`
+- `done`
+- `info`
+
+The `info` payload includes:
+
+- `progress`
+- `penalty`
+- `malformed`
+- `prediction`
+- `metrics`
+
+## Quick Demo
+
+Run the server locally:
+
+```bash
+uvicorn server.app:app --reload
+```
+
+Reset a task:
+
+```bash
+curl -X POST http://localhost:8000/reset \
+  -H "Content-Type: application/json" \
+  -d '{"task_id":"triage"}'
+```
+
+Submit an action:
+
+```bash
+curl -X POST http://localhost:8000/step \
+  -H "Content-Type: application/json" \
+  -d '{"action":{"response":"7931"}}'
+```
+
+Example action formats:
+
+- `triage`: `"submit 7931"`
+- `duplicate`: `"submit [6450]"`
+- `patch_loc`: `"submit [\"src/datasets/iterable_dataset.py\", \"tests/test_iterable_dataset.py\"]"`
+- inspect route: `"inspect 7931"` or `"inspect src/datasets/iterable_dataset.py"`
+
+## Benchmark Builder
+
+Use the committed snapshot as-is:
+
+```bash
+python3 scripts/fetch_data.py
+```
+
+Refresh the raw snapshot from GitHub first, then rebuild the benchmark:
+
+```bash
+export GITHUB_TOKEN=your_token_here
+python3 scripts/fetch_data.py --fetch-snapshot
+```
+
+This writes:
+
+- `data/snapshot.json`: cached raw issue history
+- `data/benchmark.json`: curated episodes for `triage`, `duplicate`, and `patch_loc`
+
+## Agent Baseline
+
+`inference.py` runs a hybrid baseline:
+
+- heuristic reranking for each task
+- optional LLM refinement if `HF_TOKEN` is set and the OpenAI-compatible client is available
+- fallback to heuristic-only execution otherwise
+- route-aware behavior that can inspect first and submit later, producing multi-step trajectories in the logs
+
+Run it against a local server:
+
+```bash
+python3 inference.py
+```
+
+Step logs include both final reward and `progress`.
+
+## Tests
+
+Run the offline test suite:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+The tests cover:
+
+- benchmark data validation
+- semantic environment reset and stepping
+- reward math and negative-penalty clamping
+- baseline heuristic action generation
+
+## Project Layout
 
 ```text
 oss_contrib_env/
-├── README.md
-├── openenv.yaml
-├── pyproject.toml
-├── uv.lock
-├── __init__.py
-├── client.py
+├── benchmark.py
+├── baseline_agent.py
+├── grading.py
 ├── inference.py
+├── client.py
 ├── models.py
-├── REVIEW_INFERENCE.md
+├── openenv.yaml
+├── data/
+│   ├── snapshot.json
+│   └── benchmark.json
+├── scripts/
+│   └── fetch_data.py
+├── tests/
+│   ├── test_baseline_agent.py
+│   ├── test_benchmark_data.py
+│   ├── test_environment_reset.py
+│   └── test_grading.py
 └── server/
     ├── app.py
-    ├── Dockerfile
-    ├── __init__.py
-    ├── oss_contrib_env_environment.py
-    └── requirements.txt
+    └── oss_contrib_env_environment.py
 ```
-
-## Local Setup
-
-### 1. Install dependencies
-
-```bash
-cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
-uv sync
-```
-
-### 2. Run the server
-
-```bash
-uv run python -m server.app --port 8000
-```
-
-### 3. Test the API
-
-Health:
-
-```bash
-curl -sS http://localhost:8000/health
-```
-
-Reset:
-
-```bash
-curl -sS -X POST http://localhost:8000/reset \
-  -H "Content-Type: application/json" \
-  -d '{"task_id":"easy"}'
-```
-
-Step:
-
-```bash
-curl -sS -X POST http://localhost:8000/step \
-  -H "Content-Type: application/json" \
-  -d '{"action":{"response":"The bug is in calculate_average and it is an off-by-one error."}}'
-```
-
-## Baseline Inference Script
-
-The baseline runner is:
-
-- [inference.py](/Users/bhargavi/oss-contrib-env/oss_contrib_env/inference.py)
-
-It:
-
-- uses the OpenAI client for all LLM calls
-- reads `API_BASE_URL`, `MODEL_NAME`, `HF_TOKEN`, and `ENV_URL`
-- runs all tasks: `easy`, `medium`, `hard`
-- emits strict structured logs with `[START]`, `[STEP]`, and `[END]`
-- stays within the expected runtime envelope for Round 1
-
-### Environment Variables
-
-```python
-API_BASE_URL = os.environ.get("API_BASE_URL", "https://huggingface.co/api/inference-proxy/together")
-MODEL_NAME = os.environ.get("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
-HF_TOKEN = os.environ.get("HF_TOKEN", "")
-ENV_URL = os.environ.get("ENV_URL", "http://localhost:8000")
-```
-
-### Run the baseline
-
-Start the server in one terminal:
-
-```bash
-cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
-uv run python -m server.app --port 8000
-```
-
-Run inference in another terminal:
-
-```bash
-cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
-uv run --with openai python /Users/bhargavi/oss-contrib-env/oss_contrib_env/inference.py
-```
-
-## Docker
-
-Build:
-
-```bash
-cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
-docker build -t oss-contrib-env -f server/Dockerfile .
-```
-
-Run:
-
-```bash
-docker run --rm -p 8000:8000 oss-contrib-env
-```
-
-The Dockerized server was validated with:
-
-- `GET /health`
-- `POST /reset`
-- `POST /step`
-
-## Hugging Face Deployment
-
-This environment is deployed as a Hugging Face Space and can be pushed with:
-
-```bash
-cd /Users/bhargavi/oss-contrib-env/oss_contrib_env
-openenv push
-```
-
-Deployed Space:
-
-- [https://huggingface.co/spaces/BhargaviThati/oss_contrib_env](https://huggingface.co/spaces/BhargaviThati/oss_contrib_env)
-
-## Round 2 Direction: MCP-Connected OSS Workflow
-
-Round 1 proves that the environment, grader, baseline, Docker setup, and HF deployment all work.
-
-For Round 2, the goal is to evolve this from a compact debugging benchmark into a richer agent workflow powered by MCP-connected tools.
-
-### What MCP Adds
-
-Model Context Protocol can let the agent interact with external tools and structured context instead of relying only on a static prompt.
-
-Planned Round 2 MCP-connected capabilities:
-
-- GitHub MCP
-  - fetch real issues, PRs, comments, and repository context
-  - ground tasks in live open source workflows
-- Filesystem / codebase MCP
-  - inspect project files directly
-  - support multi-file debugging and repo-aware fixes
-- Test runner MCP
-  - execute tests, inspect failures, and retry with richer feedback
-- Search / docs MCP
-  - fetch framework or library documentation relevant to the task
-- Patch / edit MCP
-  - move from “submit an answer” to “propose or apply a patch”
-
-### Round 2 Vision
-
-The Round 2 version of this environment can simulate a fuller contribution loop:
-
-1. read a real issue
-2. inspect a repository through MCP tools
-3. run tests
-4. generate a patch
-5. get graded on correctness, efficiency, and tool usage
-
-That would move the benchmark from isolated bug fixing toward realistic agentic software engineering.
-
-### Why This Matters
-
-This gives us a strong bridge from Round 1 to Round 2:
-
-- Round 1: OpenEnv compliance, baseline reproducibility, deployability
-- Round 2: MCP-native agent workflows, richer tooling, more realistic contribution tasks
-
-## Submission Checklist
-
-This repository is structured to satisfy the key Round 1 expectations:
-
-- working OpenEnv environment
-- typed models
-- `reset`, `step`, and `state` support
-- minimum 3 graded tasks
-- reward range `0.0` to `1.0`
-- working Dockerfile
-- working Hugging Face Space
-- baseline `inference.py`
-- reproducible local evaluation flow
-
-## References
-
-- Scaler Meta PyTorch Hackathon Dashboard: [https://www.scaler.com/school-of-technology/meta-pytorch-hackathon/dashboard](https://www.scaler.com/school-of-technology/meta-pytorch-hackathon/dashboard)
-- Hugging Face Space: [https://huggingface.co/spaces/BhargaviThati/oss_contrib_env](https://huggingface.co/spaces/BhargaviThati/oss_contrib_env)
-
