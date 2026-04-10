@@ -18,6 +18,8 @@ HTTP_TIMEOUT_SECONDS = 30
 MODEL_TIMEOUT_SECONDS = 90
 MAX_COMPLETION_TOKENS = 700
 TEMPERATURE = 0.2
+MIN_EPISODE_SCORE = 0.0001
+MAX_EPISODE_SCORE = 0.9999
 
 SYSTEM_PROMPT = textwrap.dedent(
     """
@@ -75,6 +77,13 @@ def log_end(task: str, success: bool, steps: int, score: float) -> None:
         f"[END] task={sanitize_log_value(task)} success={str(success).lower()} steps={steps} score={score:.4f}",
         flush=True,
     )
+
+
+def bounded_episode_score(progresses: List[float]) -> float:
+    if not progresses:
+        return MIN_EPISODE_SCORE
+    average_progress = sum(progresses) / len(progresses)
+    return round(max(MIN_EPISODE_SCORE, min(MAX_EPISODE_SCORE, average_progress)), 4)
 
 
 def post_json(url: str, payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -177,6 +186,13 @@ def normalize_action(observation: Dict[str, Any], action: str, heuristic_action:
     if not cleaned:
         return heuristic_action
 
+    if "inspect " in cleaned.lower() and "submit " in cleaned.lower():
+        return heuristic_action
+    if cleaned.lower().count("inspect ") > 1:
+        return heuristic_action
+    if cleaned in {"[]", "submit []"} and heuristic_action not in {"[]", "submit []"}:
+        return heuristic_action
+
     inspected_targets = {str(item) for item in observation.get("info", {}).get("inspected_targets", [])}
     lowered = cleaned.lower()
     if lowered.startswith("inspect "):
@@ -191,16 +207,20 @@ def choose_hybrid_action(client, observation: Dict[str, Any], step: int, history
     heuristic_action = choose_route_action(observation)
     if client is None:
         return heuristic_action
-    model_action = get_model_response(client, observation, step, history, heuristic_action)
+    try:
+        model_action = get_model_response(client, observation, step, history, heuristic_action)
+    except Exception:
+        return heuristic_action
     return normalize_action(observation, model_action, heuristic_action)
 
 
 def run_task(client, task_name: str) -> None:
     history: List[str] = []
-    score = 0.0
+    score = MIN_EPISODE_SCORE
     steps_taken = 0
     success = False
     progress = 0.0
+    progress_history: List[float] = []
     current_observation: Dict[str, Any] = {}
 
     log_start(task_name, ENV_URL, MODEL_NAME if client is not None else "heuristic-baseline")
@@ -226,21 +246,28 @@ def run_task(client, task_name: str) -> None:
                 step_payload = post_json(f"{ENV_URL.rstrip('/')}/step", {"action": {"response": action}})
                 current_observation, score, done = split_result(step_payload)
                 progress = float(current_observation.get("info", {}).get("progress", 0.0) or 0.0)
+                progress_history.append(progress)
                 success = done and progress >= 1.0
             except error.HTTPError as exc:
                 error_message = f"HTTP {exc.code}"
-                done = True
-                score = 0.0
-                progress = 0.0
+                action = choose_route_action(current_observation)
+                try:
+                    step_payload = post_json(f"{ENV_URL.rstrip('/')}/step", {"action": {"response": action}})
+                    current_observation, score, done = split_result(step_payload)
+                    progress = float(current_observation.get("info", {}).get("progress", 0.0) or 0.0)
+                    progress_history.append(progress)
+                    error_message = None
+                    success = done and progress >= 1.0
+                except Exception:
+                    done = True
+                    progress = 0.0
             except error.URLError as exc:
                 error_message = str(exc.reason)
                 done = True
-                score = 0.0
                 progress = 0.0
             except Exception as exc:
                 error_message = str(exc)
                 done = True
-                score = 0.0
                 progress = 0.0
 
             steps_taken = step
@@ -261,6 +288,7 @@ def run_task(client, task_name: str) -> None:
     except Exception as exc:
         log_step(0, "", 0.0, True, f"{exc} during reset", 0.0)
     finally:
+        score = bounded_episode_score(progress_history)
         log_end(task_name, success, steps_taken, score)
 
 
