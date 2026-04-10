@@ -7,7 +7,7 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
-from inference import MODEL_NAME, normalize_action
+from inference import MODEL_NAME, bounded_episode_score, normalize_action
 
 
 class InferenceLogicTests(unittest.TestCase):
@@ -31,6 +31,29 @@ class InferenceLogicTests(unittest.TestCase):
         }
         action = normalize_action(observation, "inspect 6184", 'submit ["6450"]')
         self.assertEqual(action, "inspect 6184")
+
+    def test_combined_inspect_submit_falls_back_to_heuristic(self):
+        observation = {
+            "info": {
+                "inspected_targets": [],
+            }
+        }
+        action = normalize_action(observation, "inspect 6450submit []", 'inspect 6450')
+        self.assertEqual(action, "inspect 6450")
+
+    def test_empty_duplicate_submission_falls_back_to_heuristic(self):
+        observation = {
+            "info": {
+                "inspected_targets": [],
+            }
+        }
+        action = normalize_action(observation, "submit []", 'inspect 6450')
+        self.assertEqual(action, "inspect 6450")
+
+    def test_bounded_episode_score_stays_inside_open_interval(self):
+        self.assertEqual(bounded_episode_score([]), 0.0001)
+        self.assertEqual(bounded_episode_score([0.0, 1.0]), 0.5)
+        self.assertEqual(bounded_episode_score([1.0]), 0.9999)
 
 
 if __name__ == "__main__":
