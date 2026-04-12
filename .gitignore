@@ -37,3 +37,7 @@ Thumbs.db
 
 # Docker
 .dockerignore
+
+#prompts
+CLAUDE_CODE_PROMPT.md
+FETCH_DATA_PROMPT.md
