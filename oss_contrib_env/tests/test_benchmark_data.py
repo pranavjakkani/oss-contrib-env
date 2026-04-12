@@ -24,7 +24,7 @@ class BenchmarkDataTests(unittest.TestCase):
     def test_all_tasks_have_curated_episodes(self):
         episodes = self.benchmark["episodes"]
         self.assertGreater(len(episodes["triage"]), 0)
-        self.assertGreater(len(episodes["duplicate"]), 0)
+        self.assertGreaterEqual(len(episodes["duplicate"]), 10)
         self.assertGreater(len(episodes["patch_loc"]), 0)
 
     def test_validation_passes(self):

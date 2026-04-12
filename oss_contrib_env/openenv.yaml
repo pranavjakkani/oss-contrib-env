@@ -21,13 +21,13 @@ tasks:
   - id: duplicate
     description: "Given a new issue and candidate prior issues, return duplicate issue IDs"
     difficulty: medium
-    max_steps: 5
+    max_steps: 7
     reward_range: [-0.2, 1.0]
 
   - id: patch_loc
     description: "Given a bug report, return a ranked list of likely file paths to edit"
     difficulty: hard
-    max_steps: 5
+    max_steps: 7
     reward_range: [-0.2, 1.0]
 
 api:

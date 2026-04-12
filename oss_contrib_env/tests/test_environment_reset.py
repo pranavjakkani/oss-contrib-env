@@ -77,11 +77,12 @@ class EnvironmentResetTests(unittest.TestCase):
         action = self.models.OSSAction(response=f"inspect {candidate_path}")
         first = env.step(action)
         self.assertEqual(first.reward, 0.0)
-        self.assertEqual(first.attempts_remaining, 4)
+        self.assertEqual(first.attempts_remaining, 6)
         self.assertFalse(first.done)
         self.assertEqual(first.info["status"], "inspect")
         self.assertIn("progress", first.info)
         self.assertTrue(first.info["last_inspection"])
+        self.assertIn("sibling_candidates", first.info["last_inspection"])
 
     def test_submit_after_inspect_can_finish_episode(self):
         env = self.env_module.OSSContribEnvironment()
@@ -91,6 +92,17 @@ class EnvironmentResetTests(unittest.TestCase):
         second = env.step(self.models.OSSAction(response=f"submit {top_candidate_id}"))
         self.assertEqual(second.info["status"], "submit")
         self.assertIn("inspected_targets", second.info)
+
+    def test_inspect_issue_returns_overview(self):
+        env = self.env_module.OSSContribEnvironment()
+        observation = env.reset(task_id="duplicate", seed=1)
+        self.assertEqual(observation.attempts_remaining, 7)
+        inspected = env.step(self.models.OSSAction(response="inspect issue"))
+        self.assertEqual(inspected.info["status"], "inspect")
+        self.assertEqual(inspected.info["last_inspection"]["target"], "issue")
+        self.assertIn("focus_terms", inspected.info["last_inspection"])
+        self.assertIn("candidate_count", inspected.info["last_inspection"])
+        self.assertEqual(inspected.attempts_remaining, 6)
 
 
 if __name__ == "__main__":
