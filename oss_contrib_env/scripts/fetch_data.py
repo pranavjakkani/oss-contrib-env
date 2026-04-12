@@ -104,10 +104,18 @@ def main() -> None:
         action="store_true",
         help="Refresh data/snapshot.json from GitHub before building the benchmark.",
     )
+    parser.add_argument(
+        "--target",
+        type=int,
+        default=TARGET,
+        help="Number of closed issues to fetch when refreshing the snapshot.",
+    )
     args = parser.parse_args()
 
     if args.fetch_snapshot or not SNAPSHOT_PATH.exists():
-        snapshot = fetch_snapshot()
+        if args.target <= 0:
+            raise ValueError("--target must be a positive integer")
+        snapshot = fetch_snapshot(target=args.target)
         save_snapshot(snapshot, SNAPSHOT_PATH)
         print(f"\nSaved raw snapshot to {SNAPSHOT_PATH}")
     else:

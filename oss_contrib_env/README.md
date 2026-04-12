@@ -101,7 +101,7 @@ Refresh the raw snapshot from GitHub first, then rebuild the benchmark:
 
 ```bash
 export GITHUB_TOKEN=your_token_here
-python3 scripts/fetch_data.py --fetch-snapshot
+python3 scripts/fetch_data.py --fetch-snapshot --target 1000
 ```
 
 This writes:
