@@ -237,6 +237,30 @@ oss_contrib_env/
     └── oss_contrib_env_environment.py  # OpenEnv Environment implementation
 ```
 
+## Future Scope: GitHub MCP Integration
+
+The current environment is intentionally offline — all episodes are served from a pre-built `data/benchmark.json` snapshot of `huggingface/datasets`. This makes evaluation reproducible and rate-limit-free, but it ties the benchmark to a single frozen repository.
+
+The next major evolution is to wire the environment's `inspect` route to a live **GitHub MCP server** ([github/github-mcp-server](https://github.com/github/github-mcp-server)), enabling the agent to work against any public GitHub repository rather than a cached snapshot.
+
+**What changes:**
+
+| | Current (offline) | With GitHub MCP |
+|-|-------------------|-----------------|
+| Data source | `data/snapshot.json` | Any public GitHub repo, live |
+| `inspect <issue>` | Truncated cached summary | Full issue body, all comments, linked PRs |
+| `inspect <file>` | Path name + token overlap | Real file contents, blame history |
+| Episode generation | Pre-built benchmark.json | On-demand from any repo |
+| Reproducibility | Deterministic | Seeded snapshot per episode |
+
+**How it fits the architecture:**
+
+GitHub MCP acts as a *data source adapter* for the environment's `inspect` route — not a replacement for the grading or reward logic. The same three task types (triage, duplicate, patch_loc) and the same F1/MRR scoring apply. The environment delegates `inspect <target>` to MCP tool calls (`get_issue`, `get_file_contents`, `search_issues`) and formats the response into the existing observation shape.
+
+**Why this matters for multi-step trajectories:**
+
+With live file contents available on `inspect`, the agent faces genuinely novel evidence at each step rather than variations of text it could have read upfront. A `patch_loc` episode becomes a real code navigation task: inspect the issue → read the referenced function → follow the import chain → submit the file list. This is the long-running, multi-route trajectory design the benchmark is built toward.
+
 ## Design Notes
 
 **Why offline?** The benchmark runs entirely from `data/benchmark.json` with no live GitHub API calls at inference time. This makes episodes reproducible, latency-free, and suitable for large-scale RL training loops.
