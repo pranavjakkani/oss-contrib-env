@@ -13,7 +13,7 @@ HF_TOKEN = os.environ.get("HF_TOKEN", "")
 ENV_URL = os.environ.get("ENV_URL", "http://localhost:8000")
 
 TASKS = ["triage", "duplicate", "patch_loc"]
-MAX_STEPS = 5
+MAX_STEPS = 7
 HTTP_TIMEOUT_SECONDS = 30
 MODEL_TIMEOUT_SECONDS = 90
 MAX_COMPLETION_TOKENS = 700

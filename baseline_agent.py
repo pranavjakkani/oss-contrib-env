@@ -94,9 +94,9 @@ def choose_duplicate_action(observation: dict[str, Any]) -> str:
         key=lambda item: (-item[0], item[1]),
     )
 
-    picks = [issue_id for score, issue_id in labeled if score >= 0.08][:2]
+    picks = [issue_id for score, issue_id in labeled if score >= 0.08][:1]
     if not picks:
-        picks = [issue_id for score, issue_id in general if score >= 0.18][:3]
+        picks = [issue_id for score, issue_id in general if score >= 0.18][:1]
     return json.dumps(picks)
 
 
@@ -136,7 +136,7 @@ def choose_route_action(observation: dict[str, Any]) -> str:
 
     if task_type == "duplicate":
         picks = json.loads(choose_duplicate_action(observation) or "[]")
-        for issue_id in picks[:2]:
+        for issue_id in picks[:1]:
             if str(issue_id) not in inspected:
                 return f"inspect {issue_id}"
         return f"submit {json.dumps(picks)}"

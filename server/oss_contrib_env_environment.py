@@ -26,7 +26,11 @@ TASK_ALIASES = {
     "medium": "duplicate",
     "hard": "patch_loc",
 }
-MAX_ATTEMPTS = 5
+MAX_ATTEMPTS_BY_TASK = {
+    "triage": 5,
+    "duplicate": 7,
+    "patch_loc": 7,
+}
 BENCHMARK = load_benchmark()
 
 
@@ -38,6 +42,10 @@ def _resolve_task_type(task_id: str) -> str:
 
 def _default_episode(task_type: str) -> dict[str, Any]:
     return BENCHMARK["episodes"][task_type][0]
+
+
+def _max_attempts(task_type: str) -> int:
+    return MAX_ATTEMPTS_BY_TASK.get(task_type, 5)
 
 
 def _parse_action(response: str) -> dict[str, Any]:
@@ -64,6 +72,20 @@ def _parse_action(response: str) -> dict[str, Any]:
     return {"kind": "submit", "payload": text}
 
 
+def _tokenize_for_overlap(text: str) -> set[str]:
+    return {
+        token
+        for token in re.findall(r"[a-z][a-z0-9_]+", (text or "").lower())
+        if len(token) >= 3
+    }
+
+
+def _overlap_terms(issue_text: str, candidate_text: str) -> list[str]:
+    issue_tokens = _tokenize_for_overlap(issue_text)
+    candidate_tokens = _tokenize_for_overlap(candidate_text)
+    return sorted(issue_tokens & candidate_tokens)
+
+
 def _find_candidate(task_type: str, episode: dict[str, Any], target: str) -> dict[str, Any] | None:
     if task_type == "patch_loc":
         for candidate in episode["candidates"]:
@@ -81,33 +103,72 @@ def _find_candidate(task_type: str, episode: dict[str, Any], target: str) -> dic
     return None
 
 
+def _inspect_issue_overview(task_type: str, episode: dict[str, Any]) -> dict[str, Any]:
+    issue_text = episode["issue"]
+    issue_terms = sorted(_tokenize_for_overlap(issue_text))[:12]
+    overview = {
+        "target": "issue",
+        "task_type": task_type,
+        "focus_terms": issue_terms,
+        "candidate_count": len(episode["candidates"]),
+    }
+    if task_type == "patch_loc":
+        candidate_paths = [candidate["path"] for candidate in episode["candidates"]]
+        directories = sorted({
+            "/".join(path.split("/")[:-1])
+            for path in candidate_paths
+            if "/" in path
+        })
+        overview["candidate_directories"] = directories[:5]
+    else:
+        overview["candidate_ids"] = [candidate["id"] for candidate in episode["candidates"][:8]]
+    return overview
+
+
 def _inspect_details(task_type: str, episode: dict[str, Any], candidate: dict[str, Any]) -> dict[str, Any]:
     issue_text = episode["issue"]
     if task_type == "patch_loc":
         path = candidate["path"]
-        overlap = sorted({
-            token for token in re.findall(r"[a-z][a-z0-9_]+", issue_text.lower())
-            if token in path.lower()
-        })
+        overlap = _overlap_terms(issue_text, path)
+        directory = "/".join(path.split("/")[:-1])
+        sibling_paths = [
+            other["path"]
+            for other in episode["candidates"]
+            if other["path"] != path and directory and other["path"].startswith(f"{directory}/")
+        ]
+        extension = path.rsplit(".", 1)[-1] if "." in path else ""
         return {
             "target": path,
-            "directory": "/".join(path.split("/")[:-1]),
+            "directory": directory,
             "filename": path.split("/")[-1],
+            "extension": extension,
             "issue_overlap_terms": overlap[:8],
+            "sibling_candidates": sibling_paths[:3],
+            "rationale": (
+                "Inspection highlights path segments and neighboring files that align "
+                "with the issue vocabulary."
+            ),
         }
 
     summary = candidate.get("summary", "")
-    overlap = sorted({
-        token for token in re.findall(r"[a-z][a-z0-9_]+", issue_text.lower())
-        if token in summary.lower() or token in candidate.get("title", "").lower()
-    })
+    combined_text = f"{candidate.get('title', '')}\n{summary}"
+    overlap = _overlap_terms(issue_text, combined_text)
+    overlap_ratio = round(len(overlap) / max(len(_tokenize_for_overlap(issue_text)), 1), 4)
+    rationale = "Text overlap suggests this candidate is relevant."
+    if task_type == "duplicate":
+        if "duplicate" in candidate.get("labels", []):
+            rationale = "Candidate is label-marked duplicate and shares issue vocabulary."
+        else:
+            rationale = "Candidate shares issue vocabulary and is worth duplicate investigation."
     return {
         "target": candidate["id"],
         "title": candidate.get("title", ""),
         "labels": candidate.get("labels", []),
         "path_hints": candidate.get("path_hints", []),
         "issue_overlap_terms": overlap[:8],
-        "summary": summary[:240],
+        "overlap_ratio": overlap_ratio,
+        "summary": summary[:400],
+        "rationale": rationale,
     }
 
 
@@ -115,7 +176,7 @@ _shared: dict[str, Any] = {
     "task_type": "triage",
     "current_episode": _default_episode("triage"),
     "attempts": 0,
-    "max_attempts": MAX_ATTEMPTS,
+    "max_attempts": _max_attempts("triage"),
     "done": False,
     "last_score": None,
     "last_event": "loaded",
@@ -150,6 +211,7 @@ class OSSContribEnvironment(Environment):
         _shared["task_type"] = task_type
         _shared["current_episode"] = episode
         _shared["attempts"] = 0
+        _shared["max_attempts"] = _max_attempts(task_type)
         _shared["done"] = False
         _shared["last_score"] = None
         _shared["last_event"] = "loaded"
@@ -186,24 +248,29 @@ class OSSContribEnvironment(Environment):
 
         parsed_action = _parse_action(action.response)
         if parsed_action["kind"] == "inspect":
-            candidate = _find_candidate(_shared["task_type"], _shared["current_episode"], parsed_action["target"])
-            if candidate is None:
-                _shared["last_event"] = "inspect_failed"
-                _shared["last_score"] = {
-                    "progress": 0.0,
-                    "penalty": 0.01,
-                    "metrics": {},
-                    "malformed": True,
-                    "prediction": parsed_action["target"],
-                }
-                _shared["done"] = attempts_remaining == 0
-                return self._make_obs(
-                    reward=-0.01,
-                    test_output=f"Inspect target not found: {parsed_action['target']}",
-                    attempts_remaining=attempts_remaining,
-                )
+            target = parsed_action["target"].strip().lower()
+            if target in {"issue", "overview"}:
+                inspection = _inspect_issue_overview(_shared["task_type"], _shared["current_episode"])
+            else:
+                candidate = _find_candidate(_shared["task_type"], _shared["current_episode"], parsed_action["target"])
+                if candidate is None:
+                    _shared["last_event"] = "inspect_failed"
+                    _shared["last_score"] = {
+                        "progress": 0.0,
+                        "penalty": 0.01,
+                        "metrics": {},
+                        "malformed": True,
+                        "prediction": parsed_action["target"],
+                    }
+                    _shared["done"] = attempts_remaining == 0
+                    return self._make_obs(
+                        reward=-0.01,
+                        test_output=f"Inspect target not found: {parsed_action['target']}",
+                        attempts_remaining=attempts_remaining,
+                    )
 
-            inspection = _inspect_details(_shared["task_type"], _shared["current_episode"], candidate)
+                inspection = _inspect_details(_shared["task_type"], _shared["current_episode"], candidate)
+
             target_key = str(inspection["target"])
             if target_key not in _shared["inspected_targets"]:
                 _shared["inspected_targets"].append(target_key)
@@ -278,6 +345,7 @@ class OSSContribEnvironment(Environment):
                 "metrics": score["metrics"],
                 "status": _shared["last_event"],
                 "available_actions": [
+                    "inspect issue",
                     "inspect <candidate-id-or-path>",
                     "submit <final-answer>",
                 ],

@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -20,6 +21,13 @@ HEADERS = {
 BASE = "https://api.github.com"
 REPO = "huggingface/datasets"
 TARGET = 500
+DUPLICATE_MARKERS = (
+    "duplicate of #",
+    "duplicates #",
+    "dup of #",
+    "same as #",
+    "see duplicate #",
+)
 
 
 def get(url, params=None, retries=3):
@@ -42,6 +50,30 @@ def get(url, params=None, retries=3):
             print(f"\nRequest error: {error}. Retrying...")
             time.sleep(2)
     return None
+
+
+def extract_duplicate_refs(body: str) -> list[int]:
+    """Extract issue numbers from duplicate markers in issue text."""
+    text = (body or "").lower()
+    refs: list[int] = []
+    seen: set[int] = set()
+
+    for marker in DUPLICATE_MARKERS:
+        start = 0
+        while True:
+            index = text.find(marker, start)
+            if index == -1:
+                break
+            suffix = text[index + len(marker):]
+            match = re.match(r"(\d+)", suffix)
+            if match:
+                ref = int(match.group(1))
+                if ref not in seen:
+                    seen.add(ref)
+                    refs.append(ref)
+            start = index + len(marker)
+
+    return refs
 
 
 def fetch_snapshot(target: int = TARGET) -> list[dict]:
@@ -75,6 +107,7 @@ def fetch_snapshot(target: int = TARGET) -> list[dict]:
     for issue in issues_raw[:target]:
         body = issue.get("body") or ""
         labels = [label["name"] for label in issue.get("labels", [])]
+        duplicate_refs = extract_duplicate_refs(body)
         snapshot.append({
             "id": issue["number"],
             "title": issue["title"],
@@ -86,7 +119,8 @@ def fetch_snapshot(target: int = TARGET) -> list[dict]:
                 label.lower() in {"good first issue", "good-first-issue", "help wanted"}
                 for label in labels
             ),
-            "duplicate_of": None,
+            "duplicate_of": duplicate_refs[0] if duplicate_refs else None,
+            "duplicate_refs": duplicate_refs,
             "pr_files": [],
         })
     return snapshot
@@ -104,10 +138,18 @@ def main() -> None:
         action="store_true",
         help="Refresh data/snapshot.json from GitHub before building the benchmark.",
     )
+    parser.add_argument(
+        "--target",
+        type=int,
+        default=TARGET,
+        help="Number of closed issues to fetch when refreshing the snapshot.",
+    )
     args = parser.parse_args()
 
     if args.fetch_snapshot or not SNAPSHOT_PATH.exists():
-        snapshot = fetch_snapshot()
+        if args.target <= 0:
+            raise ValueError("--target must be a positive integer")
+        snapshot = fetch_snapshot(target=args.target)
         save_snapshot(snapshot, SNAPSHOT_PATH)
         print(f"\nSaved raw snapshot to {SNAPSHOT_PATH}")
     else:

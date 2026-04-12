@@ -35,11 +35,11 @@ dev = [
 ]
 
 [project.scripts]
-# Server entry point - enables running via: uv run --project . server
-# or: python -m oss_contrib_env.server.app
-server = "oss_contrib_env.server.app:main"
+# Server entry point - enables running via: uv run server
+# or: python -m server.app
+server = "server.app:main"
 
 [tool.setuptools]
 include-package-data = true
-packages = ["oss_contrib_env", "oss_contrib_env.server"]
-package-dir = { "oss_contrib_env" = ".", "oss_contrib_env.server" = "server" }
+packages = ["server"]
+package-dir = { "server" = "server" }
