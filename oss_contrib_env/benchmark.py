@@ -85,6 +85,28 @@ def extract_duplicate_refs(text: str) -> list[int]:
     return sorted(refs)
 
 
+def merge_duplicate_refs(row: dict[str, Any], text_refs: list[int]) -> list[int]:
+    refs: list[int] = []
+    seen: set[int] = set()
+
+    for value in row.get("duplicate_refs", []):
+        if isinstance(value, int) and value not in seen:
+            seen.add(value)
+            refs.append(value)
+
+    duplicate_of = row.get("duplicate_of")
+    if isinstance(duplicate_of, int) and duplicate_of not in seen:
+        seen.add(duplicate_of)
+        refs.append(duplicate_of)
+
+    for value in text_refs:
+        if value not in seen:
+            seen.add(value)
+            refs.append(value)
+
+    return refs
+
+
 def build_issue_features(rows: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
     features: dict[int, dict[str, Any]] = {}
     for row in rows:
@@ -94,7 +116,7 @@ def build_issue_features(rows: list[dict[str, Any]]) -> dict[int, dict[str, Any]
         text = normalize_text(f"{title}\n{body}")
         tokens = tokenize(f"{title} {body}")
         paths = extract_path_hints(text)
-        duplicate_refs = extract_duplicate_refs(text)
+        duplicate_refs = merge_duplicate_refs(row, extract_duplicate_refs(text))
         features[row["id"]] = {
             **row,
             "labels_norm": labels,
@@ -220,15 +242,23 @@ def build_duplicate_episodes(features: dict[int, dict[str, Any]], limit: int = 1
     ]
     episodes: list[dict[str, Any]] = []
     for issue in seeds:
+        explicit_candidates = [
+            features[ref]
+            for ref in issue["duplicate_refs"]
+            if ref in features and ref != issue["id"]
+        ]
+        explicit_ids = {candidate["id"] for candidate in explicit_candidates}
         candidate_pool = sorted(
             (
                 (similarity_score(issue, other), other)
                 for other in features.values()
-                if other["id"] != issue["id"]
+                if other["id"] != issue["id"] and other["id"] not in explicit_ids
             ),
             key=lambda item: (-item[0], item[1]["id"]),
         )
-        candidates = [other for score, other in candidate_pool if score > 0][:20]
+        candidates = list(explicit_candidates)
+        candidates.extend(other for score, other in candidate_pool if score > 0)
+        candidates = candidates[:20]
         if len(candidates) < 5:
             continue
         duplicate_ids = infer_duplicate_truth(issue, candidates)
